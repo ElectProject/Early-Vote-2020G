@@ -421,7 +421,7 @@ Source:  `r state_stats[34,2]`
 
 ### Discussion
 
-North Carolina is the first state to begin general election voting. Election officials start sending ballots to voters on September 4.
+North Carolina is the first state to begin general election voting. Election officials start sending ballots to voters on Friday, Sept. 4.
 
 ### Mail Ballot Requests by Party Registration
 
