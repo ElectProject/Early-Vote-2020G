@@ -1,5 +1,10 @@
 ---
 title: "2020 General Election Early Vote Statistics"
+knit: (function(input_file, encoding) {
+  out_dir <- "docs";
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 output: html_document
 ---
 
@@ -421,7 +426,7 @@ Source:  `r state_stats[34,2]`
 
 ### Discussion
 
-North Carolina is the first state to begin general election voting. Election officials start sending ballots to voters on Friday, Sept. 4.
+North Carolina is the first state to begin general election voting. Election officials start sending ballots to voters on September 4.
 
 ### Mail Ballot Requests by Party Registration
 
