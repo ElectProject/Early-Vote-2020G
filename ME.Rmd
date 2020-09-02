@@ -1,0 +1,86 @@
+---
+title: "Florida Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "Hispanic"
+race_shell[4,1] <- "Non-Hispanic Asian American"
+race_shell[5,1] <- "Non-Hispanic Native American"
+race_shell[6,1] <- "Other/Multiple/Unknown"
+race_shell[7,1] <- "TOTAL"
+
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+# Maine
+
+ME_req_send_party <- party_shell
+
+ME_req_send_party[1,2] <- state_stats[20,10] 
+ME_req_send_party[2,2] <- state_stats[20,11] 
+ME_req_send_party[3,2] <- state_stats[20,12] 
+ME_req_send_party[4,2] <- state_stats[20,13] 
+ME_req_send_party[5,2] <- state_stats[20,5] 
+
+ME_req_send_party$Percent <- 100*ME_req_send_party$Count/ME_req_send_party[5,2]
+```
+Last Report: `r state_stats[20,9]`  
+Source:  `r state_stats[20,2]`
+
+### Discussion
+
+Maine only provides party registration on its absentee ballot file.
+
+### Mail Ballot Requests by Party Registration
+
+``` {r echo = FALSE}
+kable(ME_req_send_party,format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Maine registered Democrats have a **`r format(as.numeric(FL_req_send_party[1,2]-FL_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
