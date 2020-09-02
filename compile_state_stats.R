@@ -183,7 +183,26 @@ state_stats <- state_stats %>%
                                                TRUE ~ as.double(mail_sent_req_2020_male))) %>%
   mutate(mail_sent_req_2020_unk = case_when(state == "NC" ~ as.double(NC_2020g_ab_req_count_gender[3,2]),
                                                TRUE ~ as.double(mail_sent_req_2020_unk)))
-  
+
+# NC county analysis
+
+NC_vr <- read_tsv("D:/DropBox/Dropbox/Voter Files/NC/current/ncvoter_Statewide.txt", col_types = readcols)
+
+NC_county_vr <- NC_vr %>%
+  count(county_desc) %>%
+  rename(Reg.Voters = n) %>%
+  rename(County = county_desc)
+
+NC_county_reqs <- NC_2020g %>%
+  group_by(county_name) %>%
+  summarise(Mail.Ballot.Requests = sum(group_count)) %>%
+  rename(County = county_name)
+
+NC_2020g_county_data <- left_join(NC_county_vr, NC_county_reqs, by = "County")
+
+NC_2020g_county_data <- mutate(NC_2020g_county_data, Pct.Request = 100*Mail.Ballot.Requests/Reg.Voters)
+
+write_csv(NC_2020g_county_data, "D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
 
 ###################
 # Pennsylvania
