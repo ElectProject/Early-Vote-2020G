@@ -1,0 +1,123 @@
+---
+title: "Colorado Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "Hispanic"
+race_shell[4,1] <- "Non-Hispanic Asian American"
+race_shell[5,1] <- "Non-Hispanic Native American"
+race_shell[6,1] <- "Other/Multiple/Unknown"
+race_shell[7,1] <- "TOTAL"
+
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+# Colorado
+
+CO_req_send_party <- party_shell
+
+CO_req_send_party[1,2] <- state_stats[6,10] 
+CO_req_send_party[2,2] <- state_stats[6,11] 
+CO_req_send_party[3,2] <- state_stats[6,12] 
+CO_req_send_party[4,2] <- state_stats[6,13] 
+CO_req_send_party[5,2] <- state_stats[6,5] 
+
+CO_req_send_party$Percent <- 100*CO_req_send_party$Count/CO_req_send_party[5,2]
+
+CO_req_send_gender <- gender_shell
+
+CO_req_send_gender[1,2] <- sum(state_stats[6,21])
+CO_req_send_gender[2,2] <- sum(state_stats[6,20]) 
+CO_req_send_gender[3,2] <- sum(state_stats[6,22]) 
+CO_req_send_gender[4,2] <- sum(state_stats[6,5]) 
+
+CO_req_send_gender$Percent <- 100 * CO_req_send_gender$Count/CO_req_send_gender[4,2]
+
+CO_req_send_age <- age_shell
+
+CO_req_send_age[1,2] <- state_stats[6,23] 
+CO_req_send_age[2,2] <- state_stats[6,24] 
+CO_req_send_age[3,2] <- state_stats[6,25] 
+CO_req_send_age[4,2] <- state_stats[6,26] 
+CO_req_send_age[5,2] <- state_stats[6,27] 
+CO_req_send_age[6,2] <- state_stats[6,28] 
+CO_req_send_age[7,2] <- state_stats[6,5] 
+
+CO_req_send_age$Percent <- 100*CO_req_send_age$Count/CO_req_send_age[7,2]
+```
+Last Report: `r state_stats[6,9]`  
+Source:  `r state_stats[6,2]`
+
+### Discussion
+
+Colorado is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+
+### Mail Ballot Requests by Party Registration
+
+``` {r echo = FALSE}
+kable(CO_req_send_party,format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Colorado registered Democrats have a **`r format(as.numeric(CO_req_send_party[1,2]-CO_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+
+### Mail Ballot Requests by Age
+
+``` {r echo = FALSE}
+kable(CO_req_send_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requests by Gender
+
+``` {r echo = FALSE}
+kable(CO_req_send_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
