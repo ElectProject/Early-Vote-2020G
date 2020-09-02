@@ -123,12 +123,14 @@ Last updated: `r format(as.POSIXct(Sys.time(), format = "%y%m%d %H:%M"), "%m/%d/
 
 There are a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballot requests in the reporting states.
 
-Detailed state statistics and analyses  
-[CO](https://electproject.github.io/Early-Vote-2020G/CO.html) | [FL](https://electproject.github.io/Early-Vote-2020G/FL.html) | [IL](https://electproject.github.io/Early-Vote-2020G/IL.html) | [NC](https://electproject.github.io/Early-Vote-2020G/NC.html) | [OH](https://electproject.github.io/Early-Vote-2020G/OH.html) | [PA](https://electproject.github.io/Early-Vote-2020G/PA.html) | [SC](https://electproject.github.io/Early-Vote-2020G/SC.html)  
+Detailed state statistics and analyses for reporting states  
+[CO](https://electproject.github.io/Early-Vote-2020G/CO.html) | [FL](https://electproject.github.io/Early-Vote-2020G/FL.html) | [IL](https://electproject.github.io/Early-Vote-2020G/IL.html) | [ME](https://electproject.github.io/Early-Vote-2020G/ME.html) | [NC](https://electproject.github.io/Early-Vote-2020G/NC.html) | [OH](https://electproject.github.io/Early-Vote-2020G/OH.html) | [PA](https://electproject.github.io/Early-Vote-2020G/PA.html) | [SC](https://electproject.github.io/Early-Vote-2020G/SC.html)  
+
+These states are those where I have current data on mail ballot activity. More states will be added as state reports become available.
 
 ### Mail Ballot Requests by Party Registration
 
-Reporting states with party registration data: CO, FL, NC, PA  
+Reporting states with party registration data: CO, FL, ME, NC, PA  
 
 ``` {r echo = FALSE}
 
