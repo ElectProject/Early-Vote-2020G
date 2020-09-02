@@ -3,6 +3,13 @@ title: "2020 General Election Early Vote Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
 # Setup
 
 party_shell <- data.frame(Party=character(),

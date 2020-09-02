@@ -1,9 +1,0 @@
-name: "Early-Vote-2020G"
-output_dir: "docs"
-navbar:
-  title: "U.S. Elections Project"
-  left:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
