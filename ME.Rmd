@@ -1,5 +1,5 @@
 ---
-title: "Florida Early Voting Statistics"
+title: "Maine Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -83,4 +83,4 @@ kable(ME_req_send_party,format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Maine registered Democrats have a **`r format(as.numeric(FL_req_send_party[1,2]-FL_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+Maine registered Democrats have a **`r format(as.numeric(ME_req_send_party[1,2]-ME_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
