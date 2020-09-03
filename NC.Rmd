@@ -97,11 +97,11 @@ NC_req_send_gender$Percent <- 100 * NC_req_send_gender$Count/NC_req_send_gender[
 
 NC_req_send_age <- NC_age_shell
 
-NC_req_send_age[1,2] <- sum(NC_stats$Mail.Req.Age.1825, rm.na = T)
-NC_req_send_age[2,2] <- sum(NC_stats$Mail.Req.Age.2640, rm.na = T) 
-NC_req_send_age[3,2] <- sum(NC_stats$Mail.Req.Age.4165, rm.na = T) 
-NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.65up, rm.na = T) 
-NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, rm.na = T)
+NC_req_send_age[1,2] <- sum(NC_stats$Mail.Req.Age.1825, na.rm = T)
+NC_req_send_age[2,2] <- sum(NC_stats$Mail.Req.Age.2640, na.rm = T) 
+NC_req_send_age[3,2] <- sum(NC_stats$Mail.Req.Age.4165, na.rm = T) 
+NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.65up, na.rm = T) 
+NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
 
 NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
 
