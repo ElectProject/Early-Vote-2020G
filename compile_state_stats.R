@@ -66,7 +66,7 @@ state_stats <- state_stats %>%
 # Illinois
 ###################
 
-IL_report_date <- "08/31/2020"
+IL_report_date <- "09/2/2020"
 
 url <- "https://elections.il.gov/DocDisplay.aspx?Doc=Downloads/VotingAndRegistrationSystems/Counts/PreElection/Pre-election%20Ballot%20Requests.csv"
 destfile <- "D:/DropBox/Dropbox/Mail_Ballots_2020/IL/2020G/Pre-election_Ballot_Requests.csv"
