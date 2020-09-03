@@ -8,8 +8,4 @@ Professor, University of Florida
 Web: [United States Elections Project](http://www.electproject.org/)  
 Twitter: [\@ElectProject](https://twitter.com/ElectProject)
 
-<<<<<<< HEAD
 If you would like to support this work, please consider making a donation to a charitable University of Florida fund to support [Election Science education and research](https://www.uff.ufl.edu/giving-opportunities/023435-uf-election-science-group-fund/).
-=======
-If you'd like to contribute to this effort, and to Election Sciences research and education at the University of Florida, please consider donating to this [special non-profit fund](https://www.uff.ufl.edu/giving-opportunities/023435-uf-election-science-group-fund/). All proceeds go to research and education at the university.
->>>>>>> c6de9c5fb57c2e52a250448f648ab85770a841a9
