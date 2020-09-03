@@ -56,11 +56,11 @@ NC_age_shell <- data.frame(Age=character(),
                                   Count=integer(),
                                   Percent=double(),
                                   stringsAsFactors=FALSE)
-age_shell[1,1] <- "18 to 25"
-age_shell[2,1] <- "26 to 40"
-age_shell[3,1] <- "41 to 65"
-age_shell[4,1] <- "66 to up"
-age_shell[5,1] <- "TOTAL"
+NC_age_shell[1,1] <- "18 to 25"
+NC_age_shell[2,1] <- "26 to 40"
+NC_age_shell[3,1] <- "41 to 65"
+NC_age_shell[4,1] <- "66 to up"
+NC_age_shell[5,1] <- "TOTAL"
 
 # North Carolina
 
@@ -96,11 +96,15 @@ NC_req_send_gender[4,2] <- sum(state_stats[34,5])
 NC_req_send_gender$Percent <- 100 * NC_req_send_gender$Count/NC_req_send_gender[4,2]
 
 NC_req_send_age <- NC_age_shell
-NC_req_send_age[1,2] <- sum(NC_stats$Mail.Req.Age.1825)
-NC_req_send_age[2,2] <- sum(NC_stats$Mail.Req.Age.2640) 
-NC_req_send_age[3,2] <- sum(NC_stats$Mail.Req.Age.4165) 
-NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.65up) 
-NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot)
+
+NC_req_send_age[1,2] <- sum(NC_stats$Mail.Req.Age.1825, rm.na = T)
+NC_req_send_age[2,2] <- sum(NC_stats$Mail.Req.Age.2640, rm.na = T) 
+NC_req_send_age[3,2] <- sum(NC_stats$Mail.Req.Age.4165, rm.na = T) 
+NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.65up, rm.na = T) 
+NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, rm.na = T)
+
+NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
+
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 
