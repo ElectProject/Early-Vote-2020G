@@ -7,10 +7,16 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
 NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
+
+# NC_stats <- NC_stats %>%
+#  rename("Registered Voters" = Reg.Voters) %>%
+#  rename("Mail Ballot Requests" = Mail.Ballot.Requests) %>%
+#  rename("Percent Requested" = Pct.Requests)
 
 # Setup
 
@@ -126,9 +132,14 @@ kable(NC_req_send_gender, format.args = list(big.mark = ",",
 ```
 
 ### Mail Ballot Requests by County
+North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
 
 ``` {r echo = FALSE}
-kable(NC_stats, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+#kable(NC_stats, format.args = list(big.mark = ",", 
+#  scientific = FALSE), digits = 1) %>%
+#  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+datatable(NC_stats, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','Mail.Ballot.Requests'), 0, mark = ",")
 ```
