@@ -129,33 +129,7 @@ kable(NC_req_send_party, format.args = list(big.mark = ",",
 
 North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
-### Mail Ballot Requests by Race and Ethnicity
-
-``` {r echo = FALSE}
-kable(NC_req_send_race, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-### Mail Ballot Requests by Age
-North Carolina provides mail ballot request data in age ranges inconsistent with other states' ranges. The age statistics presented here are not included in the national age statistics.
-
-``` {r echo = FALSE}
-kable(NC_req_send_age, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-
-### Mail Ballot Requests by Gender
-
-``` {r echo = FALSE}
-kable(NC_req_send_gender, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-### County Map: Mail Ballot Requests Rates ### 
+### County Map: Mail Ballot Request Rates ### 
 North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
 
 ``` {r echo = FALSE}
@@ -189,4 +163,29 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
 datatable(NC_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
+
+### Mail Ballot Requests by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(NC_req_send_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requests by Age
+North Carolina provides mail ballot request data in age ranges inconsistent with other states' ranges. The age statistics presented here are not included in the national age statistics.
+
+``` {r echo = FALSE}
+kable(NC_req_send_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requests by Gender
+
+``` {r echo = FALSE}
+kable(NC_req_send_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
