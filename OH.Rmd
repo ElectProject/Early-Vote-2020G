@@ -10,6 +10,10 @@ library(scales)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
+OH_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_OH.csv")
+
+OH_stats_requests <- select(OH_stats, COUNTY, Reg.Voters, Mail.Req.Tot, Pct.Request)
+
 # Setup
 
 party_shell <- data.frame(Party=character(),
@@ -95,4 +99,13 @@ You may see reports of Ohio mail ballot activity by "Party". I will not post par
 kable(OH_req_send_age, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requests by County
+Ohio releases a weekly update to the voter registration file. The voter registration numbers are from the most recent release and may be slightly dated.
+
+``` {r echo = FALSE}
+datatable(OH_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
 ```
