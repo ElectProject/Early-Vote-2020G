@@ -8,10 +8,12 @@ library(knitr)
 library(kableExtra)
 library(scales)
 library(DT)
+library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
 NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
+NC_FIPS <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/NC_FIPS.csv")
 
 # NC_stats <- NC_stats %>%
 #  rename("Registered Voters" = Reg.Voters) %>%
@@ -153,8 +155,31 @@ kable(NC_req_send_gender, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by County
+### County Map: Mail Ballot Requests Rates ### 
 North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent = round(100*Pct.Request, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent", name = "Percent Requested", joinby = "fips") 
+```
+
+### County Data: Mail Ballot Requests ### 
 
 ``` {r echo = FALSE}
 #kable(NC_stats, format.args = list(big.mark = ",", 
