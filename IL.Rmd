@@ -7,8 +7,10 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+IL_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_IL.csv")
 
 # Setup
 
@@ -67,6 +69,9 @@ IL_req_send_tot[1,1] <- "TOTAL"
 IL_req_send_tot[1,2] <- sum(state_stats[14,5]) 
 
 IL_req_send_tot$Percent <- 100.0
+
+
+IL_stats_requests <- select(IL_stats, County, Reg.Voters, By.Mail, Pct.Request)
 ```
 Last Report: `r state_stats[14,9]`  
 Source:  `r state_stats[14,2]`
@@ -81,4 +86,12 @@ Illinois provides only early ballot counts by county.
 kable(IL_req_send_tot, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### County Data: Mail Ballot Requests ### 
+
+``` {r echo = FALSE}
+datatable(IL_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','By.Mail'), 0, mark = ",")
 ```
