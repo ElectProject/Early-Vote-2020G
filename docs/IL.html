@@ -13,7 +13,7 @@
 
 <title>Illinois Early Voting Statistics</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -23,6 +23,14 @@
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.15/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -295,7 +303,7 @@ $(document).ready(function () {
 </div>
 
 
-<p>Last Report: 9/4/2020<br />
+<p>Last Report: 09/4/2020<br />
 Source: <a href="https://elections.il.gov/VotingAndRegistrationSystems/PreElectionCounts.aspx?MID=l0hlXuSrKL0%3d&amp;T=637317257975604269" class="uri">https://elections.il.gov/VotingAndRegistrationSystems/PreElectionCounts.aspx?MID=l0hlXuSrKL0%3d&amp;T=637317257975604269</a></p>
 <div id="discussion" class="section level3">
 <h3>Discussion</h3>
@@ -331,6 +339,11 @@ TOTAL
 </tr>
 </tbody>
 </table>
+</div>
+<div id="county-data-mail-ballot-requests" class="section level3">
+<h3>County Data: Mail Ballot Requests</h3>
+<div id="htmlwidget-a11ab3f9fb1fae5bf1fe" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a11ab3f9fb1fae5bf1fe">{"x":{"filter":"none","data":[["Adams County","Alexander County","Bond County","Boone County","Brown County","Bureau County","Calhoun County","Carroll County","Cass County","Champaign County","Christian County","Clark County","Clay County","Clinton County","Coles County","Cook County","Crawford County","Cumberland County","DeKalb County","DeWitt County","Douglas County","DuPage County","Edgar County","Edwards County","Effingham County","Fayette County","Ford County","Franklin County","Fulton County","Gallatin County","Greene County","Grundy County","Hamilton County","Hancock County","Hardin County","Henderson County","Henry County","Iroquois County","Jackson County","Jasper County","Jefferson County","Jersey County","JoDaviess County","Johnson County","Kane County","Kankakee County","Kendall County","Knox County","Lake County","LaSalle County","Lawrence County","Lee County","Livingston County","Logan County","Macon County","Macoupin County","Madison County","Marion County","Marshall County","Mason County","Massac County","McDonough County","McHenry County","McLean County","Menard County","Mercer County","Monroe County","Montgomery County","Morgan County","Moultrie County","Ogle County","Peoria County","Perry County","Piatt County","Pike County","Pope County","Pulaski County","Putnam County","Randolph County","Richland County","Rock Island County","Saline County","Sangamon County","Schuyler County","Scott County","Shelby County","Stark County","St. Clair County","Stephenson County","Tazewell County","Union County","Vermilion County","Wabash County","Warren County","Washington County","Wayne County","White County","Whiteside County","Will County","Williamson County","Winnebago County","Woodford County","City of Bloomington","City of Chicago","City of Danville","City of East St Louis","City of Galesburg","City of Rockford","Totals"],[48028,6616,11110,36306,3512,23918,3590,11375,7929,133120,22587,11921,9714,27268,31528,1643169,13358,7958,66400,10911,12088,663913,12800,4384,24753,13857,9522,29519,25296,3805,9130,35627,5664,12845,3388,4800,35075,18973,35586,7136,25517,16254,16722,8929,319445,74244,88060,15311,488897,80188,9169,22282,22415,18726,79844,32994,202239,26318,8331,9799,11306,17771,238196,64585,9262,12767,26682,17653,22556,8931,32769,130000,14658,12429,10282,2929,4415,4270,20907,11945,87684,16823,152990,5258,3608,15417,3920,177562,32973,95759,13498,30006,9023,11874,9997,12158,10560,39060,459329,48004,96585,29528,55761,1774714,18745,17926,18556,96171,8681965],[4026,0,1035,4478,0,0,0,0,930,17018,0,2,791,1835,0,207595,1416,0,4,0,0,121462,0,0,0,1028,0,1366,0,0,0,6129,536,0,235,558,5283,1961,4203,596,104,1692,2904,814,74637,7746,13532,1488,114674,5128,0,2439,2538,0,211,4929,24390,1121,1081,844,590,2230,80303,9599,936,1319,3455,0,1961,989,0,49174,0,1930,765,264,0,597,1772,1009,4736,1228,25964,644,281,1411,312,25895,4484,7893,835,2091,556,1339,1132,438,929,6071,87468,0,13214,3232,11151,339347,1422,1792,3472,14304,null],[0.0838261014408262,0,0.0931593159315932,0.123340494684074,0,0,0,0,0.117290957245554,0.127839543269231,0,0.000167771160137572,0.0814288655548693,0.0672949977996186,0,0.126338191628493,0.106003892798323,0,6.02409638554217e-05,0,0,0.182948669479284,0,0,0,0.0741863318178538,0,0.0462752803279244,0,0,0,0.172032447301204,0.0946327683615819,0,0.0693624557260921,0.11625,0.150620099786172,0.103357402624783,0.118108244815377,0.0835201793721973,0.0040757142297292,0.104097452934662,0.173663437387872,0.091163624146041,0.233645854528949,0.1043316631647,0.153667953667954,0.097185030370322,0.23455656303884,0.0639497181623186,0,0.109460551117494,0.113227749275039,0,0.00264265317368869,0.149390798326969,0.120599884295314,0.0425944220685462,0.129756331772896,0.0861312378814165,0.052184680700513,0.125485341286365,0.337129926615057,0.148625841913757,0.101058086806305,0.103313229419597,0.129488044374485,0,0.0869391736123426,0.110737879296831,0,0.378261538461538,0,0.155282001770054,0.0744018673409842,0.0901331512461591,0,0.139812646370023,0.0847563017171282,0.084470489744663,0.0540121344829159,0.0729953040480295,0.169710438590758,0.122480030429821,0.0778824833702882,0.0915223454628008,0.0795918367346939,0.145836383910972,0.13599005246717,0.0824256727827149,0.061861016446881,0.0696860627874425,0.061620303668403,0.112767390938184,0.113233970191057,0.0360256621154795,0.0879734848484848,0.155427547363031,0.190425599080398,0,0.136812134389398,0.109455432132213,0.199978479582504,0.191212217855947,0.0758602293945052,0.0999665290639295,0.18710929079543,0.148735065664285,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>County<\/th>\n      <th>Registered Voters<\/th>\n      <th>Mail Ballot Requests<\/th>\n      <th>Percent Requested<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 0, 3, \",\", \".\"); }"},{"targets":2,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 0, 3, \",\", \".\"); }"},{"targets":3,"render":"function(data, type, row, meta) { return DTWidget.formatPercentage(data, 1, 3, \",\", \".\"); }"},{"className":"dt-right","targets":[1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render"],"jsHooks":[]}</script>
 </div>
 
 
