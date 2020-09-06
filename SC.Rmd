@@ -75,6 +75,8 @@ Source:  `r state_stats[41,2]`
 
 ### Discussion
 
+South Carolina voters have cast `r state_stats[41,6]` ballots.
+
 South Carolina does not have party registration, but does provides ballot counts by race.
 
 ### Mail Ballot Requests by Race and Ethnicity
