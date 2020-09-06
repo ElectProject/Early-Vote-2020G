@@ -1,0 +1,44 @@
+---
+title: "Frequently Asked Questions"
+---
+## What Does the Early Vote Tell Us?##
+
+In a typical election, the early vote -- by mail or in-person at a polling location -- provides clues as to the state of the election. In 2016, from the early vote alone, I [correctly predicted](https://www.huffpost.com/entry/early-vote-election-eve-p_b_12853864) that Donald Trump would need to win Michigan, Pennsylvania, and Wisconsin to win the Electoral College.
+
+I made my 2016 prediction using a technique known as difference-in-difference analysis. It is important to understand how this approach works to know what the the 2020 early vote can and cannot tells us.
+
+The difference-in-difference approach starts with the early vote statistics for the current election. In a state with party registration, we can see the relative turnout among registrants of the political parties by looking at this *first difference* in the number of registered Democrats and Republicans who have voted so far. 
+
+A problem with analyzing this first difference by itself is it lacks context. Just because registered Democrats are leading Republicans in early voting, that does not mean the Republicans will not make up ground on Election Day. Indeed, registered Democrats typically lead Republicans during early voting, and Republicans vote on Election Day, a pattern that persists across many states and elections.
+
+A solution to provide more context is to examine a *second difference* which is the relative turnout of the political parties in a past comparable election. If Democrats' turnout is more or less than their turnout in a comparable election, this provides clues as to the relative enthusiasm that Democrats have and the outcome that might be expected when the votes are tallied.
+
+The difference-in-difference method works well when there is a baseline comparable election. The 2020 election is obviously different than the 2016 election. With an unprecedented number of voters casting mail ballots, particularly Democrats, there is no comparable election to draw solid conclusions from in most states. *I strongly warn that Democrats' expected unprecedented high levels of early voting should not be taken as an indicator of the final election results.*
+
+That said, there are three states with comparable past elections where a difference-in-difference analysis may work well. Colorado, Oregon, and Washington sent every registered voter a mail ballot in 2016 and are doing the so again in 2020.
+
+Furthermore, California, the District of Columbia, Hawai'i, Montana, Nevada, New Jersey, Utah, and Vermont will also send every registered voter a mail ballot. We may learn something about overall turnout if these states exceed their 2016 turnout in their early vote alone. Arizona also has a high volume of early voting and could see their 2020 early vote eclipse their 2016 total turnout if turnout levels are high.
+
+I also track the early vote as a service to monitor unusual patterns of ballot return rates and ballot rejection rates, that may be indicative of problems with the postal service or election offices.
+
+##What is the United States Elections Project?##
+
+The [United States Elections Project](http://www.electproject.org/) disseminates research and projects led by [Michael McDonald](https://sites.google.com/site/uselectionsproject/dr-mcdonald-bio), a Professor of Political Science at the University of Florida. You can follow him on Twitter at [\@ElectProject](https://twitter.com/ElectProject).
+
+Dr. McDonald has tracked early voting statistics since the 2008 election, collaborating over the years with the Associated Press and the media's national exit poll organization, Edison Media Research.
+
+Since 2000, he's produced what many consider to be the official turnout rates for the United States.
+
+Dr. McDonald is collaborating with [Azavea](https://www.azavea.com/) to continue development on the first open-source web-accessible redistricting application, called [DistrictBuilder](https://www.districtbuilder.org/). You can read about our efforts during the 2010 redistricting cycle in [The Public Mapping book](https://cornellopen.org/9781501738548/the-public-mapping-project/) (free electronic version).
+
+To enable evaluation of the political effects of redistricting plans, Dr. McDonald is leading the most comprehensive collection and dissemination of [precinct boundaries with election results](https://dataverse.harvard.edu/dataverse/electionscience).
+
+##Who supports this early voting work?##
+
+I receive no support for this work on early voting statistics, other than the kind donations by individuals. 
+
+Mark Zuckerburg, feel free to call me about that $300 million you're doling out.
+
+##You do this for free? How can I contribute?##
+
+If you would like to support this work, thanks! Please consider making a donation to a charitable University of Florida fund for [Election Science education and research](https://www.uff.ufl.edu/giving-opportunities/023435-uf-election-science-group-fund/).
