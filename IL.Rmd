@@ -80,7 +80,7 @@ Source:  `r state_stats[14,2]`
 
 ### Discussion
 
-Illinois provides only early ballot counts by county.
+Illinois voters have cast `r state_stats[14,6]` ballots.
 
 ### Mail Ballot Requests
 

@@ -71,6 +71,17 @@ NC_req_send_party[5,2] <- state_stats[34,5]
 
 NC_req_send_party$Percent <- 100*NC_req_send_party$Count/NC_req_send_party[5,2]
 
+
+NC_accept_party <- party_shell
+
+NC_accept_party[1,2] <- state_stats[34,29] 
+NC_accept_party[2,2] <- state_stats[34,30] 
+NC_accept_party[3,2] <- state_stats[34,31] 
+NC_accept_party[4,2] <- state_stats[34,32] 
+NC_accept_party[5,2] <- state_stats[34,6] 
+
+NC_accept_party$Percent <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+
 NC_req_send_race <- race_shell
 
 NC_req_send_race[1,2] <- sum(state_stats[34,14])
@@ -111,7 +122,15 @@ Source:  `r state_stats[34,2]`
 
 ### Discussion
 
-North Carolina is the first state to begin general election voting. Election officials start sending ballots to voters on September 4.
+North Carolina is the first state to begin general election voting. Election officials started sending ballots to voters on September 4.
+
+### Mail Ballots Cast by Party Registration
+
+``` {r echo = FALSE}
+kable(NC_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Mail Ballot Requests by Party Registration
 
