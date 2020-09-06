@@ -1,7 +1,7 @@
 ---
 title: "Frequently Asked Questions"
 ---
-## What Does the Early Vote Tell Us?##
+### What Does the Early Vote Tell Us?
 
 In a typical election, the early vote -- by mail or in-person at a polling location -- provides clues as to the state of the election. In 2016, from the early vote alone, I [correctly predicted](https://www.huffpost.com/entry/early-vote-election-eve-p_b_12853864) that Donald Trump would need to win Michigan, Pennsylvania, and Wisconsin to win the Electoral College.
 
@@ -21,7 +21,7 @@ Furthermore, California, the District of Columbia, Hawai'i, Montana, Nevada, New
 
 I also track the early vote as a service to monitor unusual patterns of ballot return rates and ballot rejection rates, that may be indicative of problems with the postal service or election offices.
 
-##What is the United States Elections Project?##
+### What Is the United States Elections Project?
 
 The [United States Elections Project](http://www.electproject.org/) disseminates research and projects led by [Michael McDonald](https://sites.google.com/site/uselectionsproject/dr-mcdonald-bio), a Professor of Political Science at the University of Florida. You can follow him on Twitter at [\@ElectProject](https://twitter.com/ElectProject).
 
@@ -33,12 +33,14 @@ Dr. McDonald is collaborating with [Azavea](https://www.azavea.com/) to continue
 
 To enable evaluation of the political effects of redistricting plans, Dr. McDonald is leading the most comprehensive collection and dissemination of [precinct boundaries with election results](https://dataverse.harvard.edu/dataverse/electionscience).
 
-##Who supports this early voting work?##
+### Who Supports this Early Voting Work?
 
 I receive no support for this work on early voting statistics, other than the kind donations by individuals. 
 
+I pay out of pocket for some states' data. The Colorado Secretary of State's office has generously provided me free access to their data.
+
 Mark Zuckerburg, feel free to call me about that $300 million you're doling out.
 
-##You do this for free? How can I contribute?##
+### You Do This for Free? How Can I Contribute?
 
 If you would like to support this work, thanks! Please consider making a donation to a charitable University of Florida fund for [Election Science education and research](https://www.uff.ufl.edu/giving-opportunities/023435-uf-election-science-group-fund/).
