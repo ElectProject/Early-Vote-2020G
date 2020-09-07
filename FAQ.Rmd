@@ -7,13 +7,15 @@ In a typical election, the early vote -- by mail or in-person at a polling locat
 
 I made my 2016 prediction using a technique known as difference-in-difference analysis. It is important to understand how this approach works to know what the the 2020 early vote can and cannot tells us.
 
-The difference-in-difference approach starts with the early vote statistics for the current election. In a state with party registration, we can see the relative turnout among registrants of the political parties by looking at this *first difference* in the number of registered Democrats and Republicans who have voted so far. 
+The **difference-in-difference** approach starts with the early vote statistics for the current election. In a state with party registration, we can see the relative turnout among registrants of the political parties by looking at this **first difference** in the number of registered Democrats and Republicans who have voted so far. 
 
 A problem with analyzing this first difference by itself is it lacks context. Just because registered Democrats are leading Republicans in early voting, that does not mean the Republicans will not make up ground on Election Day. Indeed, registered Democrats typically lead Republicans during early voting, and Republicans vote on Election Day, a pattern that persists across many states and elections.
 
-A solution to provide more context is to examine a *second difference* which is the relative turnout of the political parties in a past comparable election. If Democrats' turnout is more or less than their turnout in a comparable election, this provides clues as to the relative enthusiasm that Democrats have and the outcome that might be expected when the votes are tallied.
+A solution to provide more context is to examine a **second difference** which is the relative turnout of the political parties in a past comparable election. If Democrats' turnout is more or less than their turnout in a comparable election, this provides clues as to the relative enthusiasm that Democrats have and the outcome that might be expected when the votes are tallied.
 
-The difference-in-difference method works well when there is a baseline comparable election. The 2020 election is obviously different than the 2016 election. With an unprecedented number of voters casting mail ballots, particularly Democrats, there is no comparable election to draw solid conclusions from in most states. *I strongly warn that Democrats' expected unprecedented high levels of early voting should not be taken as an indicator of the final election results.*
+The difference-in-difference method works well when there is a baseline comparable election. The 2020 election is obviously different than the 2016 election. With an unprecedented number of voters casting mail ballots, particularly Democrats, there is no comparable election to draw solid conclusions from in most states. 
+
+**I strongly caution that Democrats' unprecedented high levels of early voting should not be taken as an indicator of the final election results.**
 
 That said, there are three states with comparable past elections where a difference-in-difference analysis may work well. Colorado, Oregon, and Washington sent every registered voter a mail ballot in 2016 and are doing the so again in 2020.
 
