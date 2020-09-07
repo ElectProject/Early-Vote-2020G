@@ -1,0 +1,89 @@
+---
+title: "Washington Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "Hispanic"
+race_shell[4,1] <- "Non-Hispanic Asian American"
+race_shell[5,1] <- "Non-Hispanic Native American"
+race_shell[6,1] <- "Other/Multiple/Unknown"
+race_shell[7,1] <- "TOTAL"
+
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+# Washington
+
+WA_req_send_tot <- data.frame(Total=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+
+WA_req_send_tot[1,1] <- "TOTAL"
+WA_req_send_tot[1,2] <- sum(state_stats[48,5]) 
+
+WA_req_send_tot$Percent <- 100.0
+
+
+WA_stats_requests <- select(IL_stats, County, Reg.Voters, By.Mail, Pct.Request)
+```
+Last Report: `r state_stats[48,9]`  
+Source:  `r state_stats[48,2]`
+
+### Discussion
+
+Washington is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+
+### Mail Ballot Requests
+
+``` {r echo = FALSE}
+kable(WA_req_send_tot, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
