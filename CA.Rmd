@@ -75,7 +75,7 @@ Source:  `r state_stats[5,2]`
 
 ### Discussion
 
-California is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+California is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
 
 ### Mail Ballot Requests
 
