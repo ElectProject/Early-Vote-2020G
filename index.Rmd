@@ -126,7 +126,7 @@ Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2
 Voters have requested a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballots in the reporting states.
 
 Detailed state statistics and analyses for reporting states  
-[CO](https://electproject.github.io/Early-Vote-2020G/CO.html) |  [FL](https://electproject.github.io/Early-Vote-2020G/FL.html) |  [IL](https://electproject.github.io/Early-Vote-2020G/IL.html) |  [ME](https://electproject.github.io/Early-Vote-2020G/ME.html) |  [NC](https://electproject.github.io/Early-Vote-2020G/NC.html) |  [OH](https://electproject.github.io/Early-Vote-2020G/OH.html) |  [OR](https://electproject.github.io/Early-Vote-2020G/OR.html) |  [PA](https://electproject.github.io/Early-Vote-2020G/PA.html) |  [SC](https://electproject.github.io/Early-Vote-2020G/SC.html) | 
+[CA](https://electproject.github.io/Early-Vote-2020G/CO.html) |  [CO](https://electproject.github.io/Early-Vote-2020G/CO.html) |  [FL](https://electproject.github.io/Early-Vote-2020G/FL.html) |  [IL](https://electproject.github.io/Early-Vote-2020G/IL.html) |  [ME](https://electproject.github.io/Early-Vote-2020G/ME.html) |  [NC](https://electproject.github.io/Early-Vote-2020G/NC.html) |  [OH](https://electproject.github.io/Early-Vote-2020G/OH.html) |  [OR](https://electproject.github.io/Early-Vote-2020G/OR.html) |  [PA](https://electproject.github.io/Early-Vote-2020G/PA.html) |  [SC](https://electproject.github.io/Early-Vote-2020G/SC.html) | 
 [WA](https://electproject.github.io/Early-Vote-2020G/WA.html) | 
 [WI](https://electproject.github.io/Early-Vote-2020G/WI.html)
 
@@ -134,7 +134,7 @@ These states are those where I have current data on mail ballot activity. More s
 
 ### Mail Ballot Requests by Party Registration
 
-Reporting states with party registration data: CO, FL, ME, NC, OR, PA  
+Reporting states with party registration data: CA, CO, FL, ME, NC, OR, PA  
 
 ``` {r echo = FALSE}
 
