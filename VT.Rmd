@@ -1,5 +1,5 @@
 ---
-title: "Nevada Early Voting Statistics"
+title: "Vermont Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -58,31 +58,30 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Nevada
+# Vermont
 
-NV_req_send_party <- party_shell
+VT_req_send_tot <- data.frame(Total=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
 
-NV_req_send_party[1,2] <- state_stats[29,10] 
-NV_req_send_party[2,2] <- state_stats[29,11] 
-NV_req_send_party[3,2] <- state_stats[29,12] 
-NV_req_send_party[4,2] <- state_stats[29,13] 
-NV_req_send_party[5,2] <- state_stats[29,5] 
+VT_req_send_tot[1,1] <- "TOTAL"
+VT_req_send_tot[1,2] <- sum(state_stats[46,5]) 
 
-NV_req_send_party$Percent <- 100*NV_req_send_party$Count/NV_req_send_party[5,2]
+VT_req_send_tot$Percent <- 100.0
+
 ```
-Last Report: `r state_stats[29,9]`  
-Source:  `r state_stats[29,2]`
+Last Report: `r state_stats[46,9]`  
+Source:  `r state_stats[46,2]`
 
 ### Discussion
 
-Nevada is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's active registered voters.
+Vermont is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's active registered voters.
 
 ### Mail Ballot Requests
 
 ``` {r echo = FALSE}
-kable(NV_req_send_party,format.args = list(big.mark = ",", 
+kable(VT_req_send_tot, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
-Nevada registered Democrats have a **`r format(as.numeric(NV_req_send_party[1,2]-NV_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
