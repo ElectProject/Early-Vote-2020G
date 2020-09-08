@@ -94,7 +94,7 @@ Source:  `r state_stats[6,2]`
 
 ### Discussion
 
-Colorado is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+Colorado is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
 
 ### Mail Ballot Requests by Party Registration
 

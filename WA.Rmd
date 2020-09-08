@@ -78,7 +78,7 @@ Source:  `r state_stats[48,2]`
 
 ### Discussion
 
-Washington is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+Washington is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
 
 ### Mail Ballot Requests
 
