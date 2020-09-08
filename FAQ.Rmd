@@ -23,6 +23,10 @@ Furthermore, California, the District of Columbia, Hawai'i, Montana, Nevada, New
 
 I also track the early vote as a service to monitor unusual patterns of ballot return rates and ballot rejection rates, that may be indicative of problems with the postal service or election offices.
 
+### Where is this website hosted?
+
+This website is hosted on GitHub. The code repository is [here](https://github.com/ElectProject/Early-Vote-2020G). This code primarily renders the website from a national and state spreadsheets that are generated from other programs that process these data. I have not posted these processing programs to GitHub.
+
 ### What Is the United States Elections Project?
 
 The [United States Elections Project](http://www.electproject.org/) disseminates research and projects led by [Michael McDonald](https://sites.google.com/site/uselectionsproject/dr-mcdonald-bio), a Professor of Political Science at the University of Florida. You can follow him on Twitter at [\@ElectProject](https://twitter.com/ElectProject).
@@ -37,11 +41,9 @@ To enable evaluation of the political effects of redistricting plans, Dr. McDona
 
 ### Who Supports this Early Voting Work?
 
-I receive no support for this work on early voting statistics, other than the kind donations by individuals. 
+I receive no support for my work on early voting statistics, other than individuals' kind donations. 
 
-I pay out of pocket for some states' data. The Colorado Secretary of State's office has generously provided me free access to their data.
-
-Mark Zuckerburg, feel free to call me about that $300 million you're doling out.
+I pay out of pocket for some states' data. The Colorado Secretary of State's office has generously provided me free access to their data. [Electionland](https://www.propublica.org/electionland) generously purchased Michigan data.
 
 ### You Do This for Free? How Can I Contribute?
 
