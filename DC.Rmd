@@ -75,7 +75,7 @@ Source:  `r state_stats[9,2]`
 
 ### Discussion
 
-The District of Columbia is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's registered voters.
+The District of Columbia is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the district's registered voters.
 
 ### Mail Ballot Requests
 
