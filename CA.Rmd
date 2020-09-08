@@ -1,5 +1,5 @@
 ---
-title: "Oregon Early Voting Statistics"
+title: "California Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -7,6 +7,8 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
+library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
@@ -56,32 +58,31 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Oregon
+# California
 
-OR_req_send_party <- party_shell
+CA_req_send_party <- party_shell
 
-OR_req_send_party[1,2] <- state_stats[38,10] 
-OR_req_send_party[2,2] <- state_stats[38,11] 
-OR_req_send_party[3,2] <- state_stats[38,12] 
-OR_req_send_party[4,2] <- state_stats[38,13] 
-OR_req_send_party[5,2] <- state_stats[38,5] 
+CA_req_send_party[1,2] <- state_stats[5,10] 
+CA_req_send_party[2,2] <- state_stats[5,11] 
+CA_req_send_party[3,2] <- state_stats[5,12] 
+CA_req_send_party[4,2] <- state_stats[5,13] 
+CA_req_send_party[5,2] <- state_stats[5,5] 
 
-OR_req_send_party$Percent <- 100*OR_req_send_party$Count/OR_req_send_party[5,2]
-
+CA_req_send_party$Percent <- 100*CA_req_send_party$Count/CA_req_send_party[5,2]
 ```
-Last Report: `r state_stats[38,9]`  
-Source:  `r state_stats[38,2]`
+Last Report: `r state_stats[5,9]`  
+Source:  `r state_stats[5,2]`
 
 ### Discussion
 
-Oregon is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
+California is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters
 
-### Mail Ballot Requests by Party Registration
+### Mail Ballot Requests
 
 ``` {r echo = FALSE}
-kable(OR_req_send_party,format.args = list(big.mark = ",", 
+kable(CA_req_send_party,format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Oregon registered Democrats have a **`r format(as.numeric(OR_req_send_party[1,2]-OR_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+California registered Democrats have a **`r format(as.numeric(CA_req_send_party[1,2]-CA_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
