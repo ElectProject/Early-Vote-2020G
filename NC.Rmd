@@ -114,7 +114,7 @@ NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
 NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
-
+NC_stats_returns <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Return)
 ```
 
 Last Report: `r state_stats[34,9]`  
@@ -122,7 +122,9 @@ Source:  `r state_stats[34,2]`
 
 ### Discussion
 
-North Carolina is the first state to begin general election voting. Election officials started sending ballots to voters on September 4.
+North Carolina is the first state to begin general election voting. Election officials sent ballots to voters on September 4.
+
+Military and overseas civilian voters are the first voters to return ballots. Election officials can deliver ballots to these voters electronically. In North Carolina, these voters have the option of printing, filling out, scanning, and returning their ballots electronically. These initial ballot return numbers are thus not representative of all North Carolinian voters.
 
 ### Mail Ballots Cast by Party Registration
 
@@ -131,6 +133,38 @@ kable(NC_accept_party, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
+
+### County Map: Mail Ballot Return Rates ### 
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned = round(100*Pct.Return, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned", name = "Percent Requested", joinby = "fips") 
+```
+
+### County Data: Mail Ballots Returned ### 
+
+``` {r echo = FALSE}
+datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return', 1) %>%
+  formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
+```
+
 
 ### Mail Ballot Requests by Party Registration
 
@@ -151,7 +185,7 @@ NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
 
 NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
 
-NC_2020g_map_data <- mutate(NC_2020g_map_data, percent = round(100*Pct.Request, digits = 1))
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_requested = round(100*Pct.Request, digits = 1))
 
 mapfile <- download_map_data("countries/us/us-nc-all.js")
 mapdata <- get_data_from_map(mapfile)
@@ -163,10 +197,10 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested", name = "Percent Requested", joinby = "fips") 
 ```
 
-### County Data: Mail Ballot Requests ### 
+### County Data: Mail Ballots Requested ### 
 
 ``` {r echo = FALSE}
 datatable(NC_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
