@@ -134,7 +134,7 @@ kable(NC_accept_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### County Map: Mail Ballot Return Rates ### 
+### Noeth Carolina: Mail Ballot Return Rates ### 
 
 ``` {r echo = FALSE}
 
@@ -154,7 +154,7 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned", name = "Percent Requested", joinby = "fips") 
+  value = "percent_returned", name = "Percent Returned", joinby = "fips") 
 ```
 
 ### County Data: Mail Ballots Returned ### 
@@ -176,7 +176,7 @@ kable(NC_req_send_party, format.args = list(big.mark = ",",
 
 North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
-### County Map: Mail Ballot Request Rates ### 
+### North Carolina: Mail Ballot Request Rates ### 
 North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
 
 ``` {r echo = FALSE}
