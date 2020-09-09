@@ -115,6 +115,7 @@ NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 NC_stats_returns <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Return)
+NC_stats_rejects <- select(NC_stats, County, Mail.Rtn.Tot, Mail.Reject.Tot, Pct.Reject)
 ```
 
 Last Report: `r state_stats[34,9]`  
@@ -165,6 +166,38 @@ datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
+### North Carolina: Mail Ballot Rejection Rates ### 
+
+At this point, all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected = round(100*Pct.Reject, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+```
+
+### County Data: Mail Ballots Rejected ### 
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject', 1) %>%
+  formatRound(c('Mail.Rtn.Tot','Mail.Reject.Tot'), 0, mark = ",")
+```
 
 ### Mail Ballot Requests by Party Registration
 
