@@ -168,7 +168,7 @@ datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
 
 ### North Carolina: Mail Ballot Rejection Rates ### 
 
-At this point, all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
+At this point, all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
 
 ``` {r echo = FALSE}
 
