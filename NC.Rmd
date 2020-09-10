@@ -11,7 +11,6 @@ library(DT)
 library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
-
 NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
 NC_FIPS <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/NC_FIPS.csv")
 
