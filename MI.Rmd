@@ -70,8 +70,6 @@ MI_req_send_tot[1,2] <- sum(state_stats[23,5])
 
 MI_req_send_tot$Percent <- 100.0
 
-
-MI_stats_requests <- select(IL_stats, County, Reg.Voters, By.Mail, Pct.Request)
 ```
 Last Report: `r state_stats[23,9]`  
 Source:  `r state_stats[23,2]`
