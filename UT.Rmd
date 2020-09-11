@@ -85,4 +85,4 @@ kable(UT_req_send_party,format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Utah registered Republicans have a **`r format(as.numeric(UT_req_send_party[1,2]-UT_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Democrats.
+Utah registered Republicans have a **`r format(as.numeric(UT_req_send_party[2,2]-UT_req_send_party[1,2]), big.mark =",")`** ballot request lead over registered Democrats.
