@@ -9,6 +9,7 @@ library(kableExtra)
 library(scales)
 library(DT)
 library(highcharter)
+library(flexdashboard)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
@@ -116,17 +117,17 @@ NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Requ
 NC_stats_returns <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Return)
 NC_stats_rejects <- select(NC_stats, County, Mail.Rtn.Tot, Mail.Reject.Tot, Pct.Reject)
 ```
-
+## {.tabset}
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
-
-### Discussion
 
 North Carolina is the first state to begin general election voting. Election officials sent ballots to voters on September 4.
 
 Military and overseas civilian voters are the first voters to return ballots. Election officials can deliver ballots to these voters electronically. In North Carolina, these voters have the option of printing, filling out, scanning, and returning their ballots electronically. These initial ballot return numbers are thus not representative of all North Carolinian voters.
 
-### Mail Ballots Cast by Party Registration
+### Returned
+
+#### Mail Ballots Returned and Accepted by Party Registration
 
 ``` {r echo = FALSE}
 kable(NC_accept_party, format.args = list(big.mark = ",", 
@@ -134,7 +135,7 @@ kable(NC_accept_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### North Carolina: Mail Ballot Return Rates ### 
+#### North Carolina: Mail Ballot Return Rates
 
 ``` {r echo = FALSE}
 
@@ -157,7 +158,7 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_returned", name = "Percent Returned", joinby = "fips") 
 ```
 
-### County Data: Mail Ballots Returned ### 
+#### County Data: Mail Ballots Returned
 
 ``` {r echo = FALSE}
 datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
@@ -165,7 +166,9 @@ datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
-### North Carolina: Mail Ballot Rejection Rates ### 
+### Rejected
+
+#### North Carolina: Mail Ballot Rejection Rates
 
 At this point, all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
 
@@ -190,7 +193,7 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
 ```
 
-### County Data: Mail Ballots Rejected ### 
+#### County Data: Mail Ballots Rejected
 
 ``` {r echo = FALSE}
 datatable(NC_stats_rejects, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
@@ -198,7 +201,9 @@ datatable(NC_stats_rejects, colnames = c("County", "Mail Ballots Returned", "Mai
   formatRound(c('Mail.Rtn.Tot','Mail.Reject.Tot'), 0, mark = ",")
 ```
 
-### Mail Ballot Requests by Party Registration
+### Requested
+
+#### Mail Ballot Requests by Party Registration
 
 ``` {r echo = FALSE}
 kable(NC_req_send_party, format.args = list(big.mark = ",", 
@@ -208,7 +213,7 @@ kable(NC_req_send_party, format.args = list(big.mark = ",",
 
 North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
-### North Carolina: Mail Ballot Request Rates ### 
+#### North Carolina: Mail Ballot Request Rates 
 North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
 
 ``` {r echo = FALSE}
@@ -232,7 +237,7 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_requested", name = "Percent Requested", joinby = "fips") 
 ```
 
-### County Data: Mail Ballots Requested ### 
+#### County Data: Mail Ballots Requested
 
 ``` {r echo = FALSE}
 datatable(NC_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
@@ -240,7 +245,7 @@ datatable(NC_stats_requests, colnames = c("County", "Registered Voters", "Mail B
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
 ```
 
-### Mail Ballot Requests by Race and Ethnicity
+#### Mail Ballot Requests by Race and Ethnicity
 
 ``` {r echo = FALSE}
 kable(NC_req_send_race, format.args = list(big.mark = ",", 
@@ -248,7 +253,7 @@ kable(NC_req_send_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by Age
+#### Mail Ballot Requests by Age
 North Carolina provides mail ballot request data in age ranges inconsistent with other states' ranges. The age statistics presented here are not included in the national age statistics.
 
 ``` {r echo = FALSE}
@@ -257,7 +262,7 @@ kable(NC_req_send_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by Gender
+#### Mail Ballot Requests by Gender
 
 ``` {r echo = FALSE}
 kable(NC_req_send_gender, format.args = list(big.mark = ",", 
