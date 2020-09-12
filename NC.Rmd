@@ -71,7 +71,6 @@ NC_req_send_party[5,2] <- state_stats[34,5]
 
 NC_req_send_party$Percent <- 100*NC_req_send_party$Count/NC_req_send_party[5,2]
 
-
 NC_accept_party <- party_shell
 
 NC_accept_party[1,2] <- state_stats[34,29] 
@@ -81,6 +80,16 @@ NC_accept_party[4,2] <- state_stats[34,32]
 NC_accept_party[5,2] <- state_stats[34,6] 
 
 NC_accept_party$Percent <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+
+NC_reject_party <- party_shell
+
+NC_reject_party[1,2] <- state_stats[34,49] 
+NC_reject_party[2,2] <- state_stats[34,50] 
+NC_reject_party[3,2] <- state_stats[34,51] 
+NC_reject_party[4,2] <- state_stats[34,52] 
+NC_reject_party[5,2] <- state_stats[34,48] 
+
+NC_reject_party$Percent <- 100*NC_reject_party$Count/NC_reject_party[5,2]
 
 NC_req_send_race <- race_shell
 
@@ -114,16 +123,26 @@ NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
 NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+NC_stats_requests_Dem <- select(NC_stats, County, Reg.Voters.Dem, Mail.Req.Dem, Pct.Request.Dem)
+NC_stats_requests_Rep <- select(NC_stats, County, Reg.Voters.Rep, Mail.Req.Rep, Pct.Request.Rep)
+NC_stats_requests_NPA <- select(NC_stats, County, Reg.Voters.NPA, Mail.Req.NPA, Pct.Request.NPA)
+NC_stats_requests_Minor <- select(NC_stats, County, Reg.Voters.Minor, Mail.Req.Minor, Pct.Request.Minor)
 NC_stats_returns <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Return)
+NC_stats_returns_Dem <- select(NC_stats, County, Mail.Req.Dem, Mail.Rtn.Dem, Pct.Return.Dem)
+NC_stats_returns_Rep <- select(NC_stats, County, Mail.Req.Rep, Mail.Rtn.Rep, Pct.Return.Rep)
+NC_stats_returns_NPA <- select(NC_stats, County, Mail.Req.NPA, Mail.Rtn.NPA, Pct.Return.NPA)
+NC_stats_returns_Minor <- select(NC_stats, County, Mail.Req.Minor, Mail.Rtn.Minor, Pct.Return.Minor)
 NC_stats_rejects <- select(NC_stats, County, Mail.Rtn.Tot, Mail.Reject.Tot, Pct.Reject)
+NC_stats_rejects_Dem <- select(NC_stats, County, Mail.Rtn.Dem, Mail.Reject.Dem, Pct.Reject.Dem)
+NC_stats_rejects_Rep <- select(NC_stats, County, Mail.Rtn.Rep, Mail.Reject.Rep, Pct.Reject.Rep)
+NC_stats_rejects_NPA <- select(NC_stats, County, Mail.Rtn.NPA, Mail.Reject.NPA, Pct.Reject.NPA)
+NC_stats_rejects_Minor <- select(NC_stats, County, Mail.Rtn.Minor, Mail.Reject.Minor, Pct.Reject.Minor)
 ```
 ## {.tabset}
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
 
 North Carolina is the first state to begin general election voting. Election officials sent ballots to voters on September 4.
-
-Military and overseas civilian voters are the first voters to return ballots. Election officials can deliver ballots to these voters electronically. In North Carolina, these voters have the option of printing, filling out, scanning, and returning their ballots electronically. These initial ballot return numbers are thus not representative of all North Carolinian voters.
 
 ### Returned
 
@@ -135,7 +154,11 @@ kable(NC_accept_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-#### North Carolina: Mail Ballot Return Rates
+##### Mail Ballot Return Rates {.tabset .tabset-pills}
+
+**County plots may not be shaded using the same scale**  
+
+###### All
 
 ``` {r echo = FALSE}
 
@@ -158,19 +181,145 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_returned", name = "Percent Returned", joinby = "fips") 
 ```
 
-#### County Data: Mail Ballots Returned
-
 ``` {r echo = FALSE}
 datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
   formatPercentage('Pct.Return', 1) %>%
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
+###### Dem
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned_dem = round(100*Pct.Return.Dem, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned_dem", name = "Percent Returned", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_returns_Dem, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return.Dem', 1) %>%
+  formatRound(c('Mail.Req.Dem','Mail.Rtn.Dem'), 0, mark = ",")
+```
+
+###### Rep
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned_rep = round(100*Pct.Return.Rep, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned_rep", name = "Percent Returned", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_returns_Rep, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return.Rep', 1) %>%
+  formatRound(c('Mail.Req.Rep','Mail.Rtn.Rep'), 0, mark = ",")
+```
+
+###### NPA
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned_NPA = round(100*Pct.Return.NPA, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned_NPA", name = "Percent Returned", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_returns_NPA, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return.NPA', 1) %>%
+  formatRound(c('Mail.Req.NPA','Mail.Rtn.NPA'), 0, mark = ",")
+```
+
+###### Minor
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned_minor = round(100*Pct.Return.Minor, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned_minor", name = "Percent Returned", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_returns_Minor, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return.Minor', 1) %>%
+  formatRound(c('Mail.Req.Minor','Mail.Rtn.Minor'), 0, mark = ",")
+```
+
 ### Rejected
 
-#### North Carolina: Mail Ballot Rejection Rates
+All `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
 
-At this point, all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
+#### Mail Ballots Rejected by Party Registration
+
+``` {r echo = FALSE}
+kable(NC_reject_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+##### Mail Ballot Return Rates {.tabset .tabset-pills}
+
+**County plots may not be shaded using the same scale**  
+
+###### All
 
 ``` {r echo = FALSE}
 
@@ -193,17 +342,133 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
 ```
 
-#### County Data: Mail Ballots Rejected
-
 ``` {r echo = FALSE}
 datatable(NC_stats_rejects, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject', 1) %>%
   formatRound(c('Mail.Rtn.Tot','Mail.Reject.Tot'), 0, mark = ",")
 ```
 
+###### Dem
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected_dem = round(100*Pct.Reject.Dem, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected_dem", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_Dem, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.Dem', 1) %>%
+  formatRound(c('Mail.Rtn.Dem','Mail.Reject.Dem'), 0, mark = ",")
+```
+
+###### Rep
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected_rep = round(100*Pct.Reject.Rep, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected_rep", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_Rep, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.Rep', 1) %>%
+  formatRound(c('Mail.Rtn.Rep','Mail.Reject.Rep'), 0, mark = ",")
+```
+
+###### NPA
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected_npa = round(100*Pct.Reject.NPA, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected_npa", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_NPA, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.NPA', 1) %>%
+  formatRound(c('Mail.Rtn.NPA','Mail.Reject.NPA'), 0, mark = ",")
+```
+
+###### Minor
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected_minor = round(100*Pct.Reject.Minor, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected_minor", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_Minor, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.Minor', 1) %>%
+  formatRound(c('Mail.Rtn.Minor','Mail.Reject.Minor'), 0, mark = ",")
+```
+
 ### Requested
 
 #### Mail Ballot Requests by Party Registration
+
+North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
 ``` {r echo = FALSE}
 kable(NC_req_send_party, format.args = list(big.mark = ",", 
@@ -211,10 +476,12 @@ kable(NC_req_send_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+##### Mail Ballot Request Rates {.tabset .tabset-pills}
+North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.  
 
-#### North Carolina: Mail Ballot Request Rates 
-North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.
+**County plots may not be shaded using the same scale**  
+
+###### All 
 
 ``` {r echo = FALSE}
 
@@ -237,12 +504,126 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
   value = "percent_requested", name = "Percent Requested", joinby = "fips") 
 ```
 
-#### County Data: Mail Ballots Requested
-
 ``` {r echo = FALSE}
 datatable(NC_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
+
+###### Dem
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_requested_dem = round(100*Pct.Request.Dem, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_requested_dem", name = "Percent Requested", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_requests_Dem, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request.Dem', 1) %>%
+  formatRound(c('Reg.Voters.Dem','Mail.Req.Dem'), 0, mark = ",")
+```
+
+###### Rep
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_requested_rep = round(100*Pct.Request.Rep, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_requested_rep", name = "Percent Requested", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_requests_Rep, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request.Rep', 1) %>%
+  formatRound(c('Reg.Voters.Rep','Mail.Req.Rep'), 0, mark = ",")
+```
+
+###### NPA
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_requested_npa = round(100*Pct.Request.NPA, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_requested_npa", name = "Percent Requested", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_requests_NPA, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request.NPA', 1) %>%
+  formatRound(c('Reg.Voters.NPA','Mail.Req.NPA'), 0, mark = ",")
+```
+
+###### Minor
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_requested_minor = round(100*Pct.Request.Minor, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_requested_minor", name = "Percent Requested", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_requests_Minor, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request.Minor', 1) %>%
+  formatRound(c('Reg.Voters.Minor','Mail.Req.Minor'), 0, mark = ",")
 ```
 
 #### Mail Ballot Requests by Race and Ethnicity
