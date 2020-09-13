@@ -121,7 +121,7 @@ Twitter: [\@ElectProject](https://twitter.com/ElectProject)
 
 Last updated: `r format(as.POSIXct(Sys.time(), format = "%y%m%d %H:%M"), "%m/%d/%Y %I:%M %p")` Eastern Time
 
-Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states of IL, NC, and SC. Military and overseas civilians have primarily cast these ballots.
+Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states of IL, NC, and SC. NC voters have cast nearly all of these ballots.
 
 Voters have requested a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballots in the reporting states.
 
