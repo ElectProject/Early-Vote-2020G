@@ -9,6 +9,8 @@ library(kableExtra)
 library(scales)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+FL_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_FL.csv")
+FL_FIPS <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/FL_FIPS.csv")
 
 # Setup
 
@@ -67,17 +69,74 @@ FL_req_send_party[4,2] <- state_stats[10,13]
 FL_req_send_party[5,2] <- state_stats[10,5] 
 
 FL_req_send_party$Percent <- 100*FL_req_send_party$Count/FL_req_send_party[5,2]
+
+FL_return_party <- party_shell
+
+FL_return_party[1,2] <- state_stats[10,29] 
+FL_return_party[2,2] <- state_stats[10,30] 
+FL_return_party[3,2] <- state_stats[10,31] 
+FL_return_party[4,2] <- state_stats[10,32] 
+FL_return_party[5,2] <- state_stats[10,6] 
+
+FL_return_party$Percent <- 100*FL_return_party$Count/FL_return_party[5,2]
+
+
+FL_stats_requests <- select(FL_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+FL_stats_returns <- select(FL_stats, County, Mail.Req.Tot, Mail.Return.Tot, Pct.Return)
 ```
 Last Report: `r state_stats[10,9]`  
 Source:  `r state_stats[10,2]`
 
-### Discussion
+## {.tabset}
 
-Florida's ballot requests are good through two general elections. All August primary ballot requests are good for November, unless a voter notifies election officials they wish to cancel their request.
+### Returned
+
+#### Mail Ballots Returned by Party Registration
+
+``` {r echo = FALSE}
+kable(FL_return_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballot Return Rates
+
+**County plots may not be shaded using the same scale**  
+
+``` {r echo = FALSE}
+
+FL_2020g_map_data <- left_join(FL_stats, FL_FIPS, by = "County")
+
+FL_2020g_map_data$fips <- as.character(FL_2020g_map_data$FIPS_NUM)
+
+FL_2020g_map_data <- mutate(FL_2020g_map_data, percent_returned = round(100*Pct.Return, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-fl-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+FL_2020g_map_data <- left_join(FL_2020g_map_data, mapdata, by = "fips")
+
+FL_2020g_map_data <- arrange(FL_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-fl-all", data = FL_2020g_map_data,
+  value = "percent_returned", name = "Percent Returned", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(FL_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return', 1) %>%
+  formatRound(c('Mail.Req.Tot','Mail.Return.Tot'), 0, mark = ",")
+```
+
+### Requested
+
+Only some Florida counties are reporting mail ballot requests for the general election. I use request data from the August state primary if a county is not yet reporting for the general election. Florida's ballot requests are good through two general elections. All August primary ballot requests are good for November, unless a voter notifies election officials they wish to cancel their request. 
 
 To calculate the number of requested ballots from the Florida Division of Elections website, add the rows *Vote-by-Mail Provided (Not Yet Returned)* and *Voted Vote-by-Mail*.
 
-### Mail Ballot Requests by Party Registration
+#### Mail Ballot Requests by Party Registration
 
 ``` {r echo = FALSE}
 kable(FL_req_send_party,format.args = list(big.mark = ",", 
@@ -86,3 +145,36 @@ kable(FL_req_send_party,format.args = list(big.mark = ",",
 ```
 
 Florida registered Democrats have a **`r format(as.numeric(FL_req_send_party[1,2]-FL_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+
+#### Mail Ballot Request Rates
+
+Voter Registration Statistics are as of July 31, 2020.
+
+**County plots may not be shaded using the same scale**  
+
+``` {r echo = FALSE}
+
+FL_2020g_map_data <- left_join(FL_stats, FL_FIPS, by = "County")
+
+FL_2020g_map_data$fips <- as.character(FL_2020g_map_data$FIPS_NUM)
+
+FL_2020g_map_data <- mutate(FL_2020g_map_data, percent_requested = round(100*Pct.Request, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-fl-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+FL_2020g_map_data <- left_join(FL_2020g_map_data, mapdata, by = "fips")
+
+FL_2020g_map_data <- arrange(FL_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-fl-all", data = FL_2020g_map_data,
+  value = "percent_requested", name = "Percent Requested", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(FL_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
