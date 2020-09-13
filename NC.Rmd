@@ -305,7 +305,7 @@ datatable(NC_stats_returns_Minor, colnames = c("County", "Mail Ballots Requested
 
 ### Rejected
 
-All `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
+Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
 
 #### Mail Ballots Rejected by Party Registration
 
