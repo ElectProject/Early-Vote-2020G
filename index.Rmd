@@ -56,7 +56,23 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# National
+# National Statistics
+
+US_req_send_party <- party_shell
+
+# Returned or Accepted (depends on how states report data)
+
+US_accepted_party <- party_shell
+
+US_accepted_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
+US_accepted_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
+US_accepted_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
+US_accepted_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
+US_accepted_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_accepted_party$Percent <- 100*US_accepted_party$Count/US_accepted_party[5,2]
+
+# Requested
 
 US_req_send_party <- party_shell
 
@@ -113,17 +129,13 @@ US_req_send_gender[4,2] <- sum(state_stats$mail_sent_req_2020_female) +
 
 US_req_send_gender$Percent <- 100*US_req_send_gender$Count/US_req_send_gender[4,2]
 
+US_state_data <- state_stats %>%
+  select(state, total_ballots_2016, mail_sent_req_2020, mail_accept_2020)
 ```
-Michael McDonald  
-Professor, University of Florida  
-Web: [United States Elections Project](http://www.electproject.org/)  
-Twitter: [\@ElectProject](https://twitter.com/ElectProject)
-
 Last updated: `r format(as.POSIXct(Sys.time(), format = "%y%m%d %H:%M"), "%m/%d/%Y %I:%M %p")` Eastern Time
 
-Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states of FL, IL, NC, and SC. NC voters have cast nearly all of these ballots.
-
-Voters have requested a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballots in the reporting states.
+Michael McDonald • Professor, University of Florida  
+Web: [United States Elections Project](http://www.electproject.org/) • Twitter: [\@ElectProject](https://twitter.com/ElectProject)
 
 Detailed state statistics and analyses for reporting states  
 [CA](https://electproject.github.io/Early-Vote-2020G/CA.html) |  [CO](https://electproject.github.io/Early-Vote-2020G/CO.html) |  [DC](https://electproject.github.io/Early-Vote-2020G/DC.html) |  [FL](https://electproject.github.io/Early-Vote-2020G/FL.html) |  [HI](https://electproject.github.io/Early-Vote-2020G/HI.html) |  [IL](https://electproject.github.io/Early-Vote-2020G/IL.html) |  [ME](https://electproject.github.io/Early-Vote-2020G/ME.html) |  [MI](https://electproject.github.io/Early-Vote-2020G/MI.html) |  [MT](https://electproject.github.io/Early-Vote-2020G/MT.html) |  [NC](https://electproject.github.io/Early-Vote-2020G/NC.html) |  [NJ](https://electproject.github.io/Early-Vote-2020G/NJ.html) |  [NV](https://electproject.github.io/Early-Vote-2020G/NV.html) |  [OH](https://electproject.github.io/Early-Vote-2020G/OH.html) |  [OR](https://electproject.github.io/Early-Vote-2020G/OR.html) |  [PA](https://electproject.github.io/Early-Vote-2020G/PA.html) |  [SC](https://electproject.github.io/Early-Vote-2020G/SC.html) | 
@@ -134,7 +146,63 @@ Detailed state statistics and analyses for reporting states
 
 These states are those where I have current data on mail ballot activity. More states will be added as state reports become available.
 
-### Mail Ballot Requests by Party Registration
+## Summary Statistics for Reporting States {.tabset} 
+
+### Returned
+
+Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states of FL, IL, NC, and SC. NC voters have cast nearly all of these ballots.
+
+``` {r echo = FALSE}
+US_2020g_map_data <- state_stats
+
+US_2020g_map_data <- arrange(US_2020g_map_data, hc_order)
+
+hcoptslang <- getOption("highcharter.lang")
+hcoptslang$thousandsSep <- ","
+options(highcharter.lang = hcoptslang)
+
+US_2020g_map_data <- US_2020g_map_data %>%
+  mutate(display_data = mail_accept_2020) %>%
+  mutate(display_data = na_if(display_data, 0))
+
+hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
+  value = "display_data", name = "Returned Ballots") 
+```
+
+#### Mail Ballots Returned by Party Registration
+
+Reporting states with party registration data: FL, NC  
+
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_accepted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Requested
+
+Voters have requested a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballots in the reporting states.
+
+``` {r echo = FALSE}
+US_2020g_map_data <- state_stats
+
+US_2020g_map_data <- arrange(US_2020g_map_data, hc_order)
+
+hcoptslang <- getOption("highcharter.lang")
+hcoptslang$thousandsSep <- ","
+options(highcharter.lang = hcoptslang)
+
+US_2020g_map_data <- US_2020g_map_data %>%
+  mutate(display_data = mail_sent_req_2020) %>%
+  mutate(display_data = na_if(display_data, 0))
+
+hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
+  value = "display_data", name = "Requested Ballots") 
+```
+
+#### Mail Ballots Requested by Party Registration
 
 Reporting states with party registration data: CA, CO, DC, FL, ME, NC, NJ, NV, OR, PA, UT  
 
@@ -149,7 +217,7 @@ Registered Democrats have a **`r format(as.numeric(US_req_send_party[1,2]-US_req
 
 *Note:* Party registration statistics are for states that have party registration. These statistics are not actual votes. By federal law, election officials do not begin counting ballots until Election Day, although they may start the process of preparing ballots for counting in advance. 
 
-### Mail Ballot Requests by Race and Ethnicity
+#### Mail Ballots Requested by Race and Ethnicity
 
 Reporting states with race or ethnicity data: NC, SC   
 
@@ -163,7 +231,7 @@ kable(US_req_send_race, valign = 't', format.args = list(big.mark = ",", scienti
 
 *Note:* Race and ethnicity statistics are for states that ask registered voters to provide their race and ethnicity. 
 
-### Mail Ballot Requests by Age
+#### Mail Ballots Requested by Age
 
 Reporting states with age data: CO, OH (partial), PA   
 
@@ -173,7 +241,7 @@ kable(US_req_send_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by Gender
+#### Mail Ballots Requested by Gender
 
 Reporting states with gender data: CO, NC   
 
