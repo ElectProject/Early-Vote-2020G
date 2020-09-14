@@ -305,7 +305,7 @@ datatable(NC_stats_returns_Minor, colnames = c("County", "Mail Ballots Requested
 
 ### Rejected
 
-Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE".
+Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE". North Carolina election officials are required by state law to follow up with these voters. If you are a North Carolina voter concerned about your mail ballot, you can track the status of your ballot at the [North Carolina State Board of Elections website](https://northcarolina.ballottrax.net/voter/). 
 
 #### Mail Ballots Rejected by Party Registration
 
