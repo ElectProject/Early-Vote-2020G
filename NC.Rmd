@@ -216,22 +216,6 @@ datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
-#### Mail Ballots Returned and Accepted by 2016 Vote History
-
-``` {r echo = FALSE}
-kable(NC_accept_voted, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-#### Mail Ballots Returned and Accepted by Race and Ethnicity
-
-``` {r echo = FALSE}
-kable(NC_accept_race, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
 ###### Dem
 
 ``` {r echo = FALSE}
@@ -346,6 +330,22 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
 datatable(NC_stats_returns_Minor, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
   formatPercentage('Pct.Return.Minor', 1) %>%
   formatRound(c('Mail.Req.Minor','Mail.Rtn.Minor'), 0, mark = ",")
+```
+
+#### Mail Ballots Returned and Accepted by 2016 Vote History
+
+``` {r echo = FALSE}
+kable(NC_accept_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Returned and Accepted by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(NC_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
 ### Rejected
