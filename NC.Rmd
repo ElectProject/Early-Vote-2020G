@@ -56,7 +56,7 @@ NC_age_shell <- data.frame(Age=character(),
 NC_age_shell[1,1] <- "18 to 25"
 NC_age_shell[2,1] <- "26 to 40"
 NC_age_shell[3,1] <- "41 to 65"
-NC_age_shell[4,1] <- "66 to up"
+NC_age_shell[4,1] <- "66 and up"
 NC_age_shell[5,1] <- "TOTAL"
 
 
@@ -141,15 +141,34 @@ NC_req_send_gender[4,2] <- sum(state_stats[34,5])
 
 NC_req_send_gender$Percent <- 100 * NC_req_send_gender$Count/NC_req_send_gender[4,2]
 
+NC_accept_gender <- gender_shell
+
+NC_accept_gender[1,2] <- sum(state_stats[34,39])
+NC_accept_gender[2,2] <- sum(state_stats[34,40]) 
+NC_accept_gender[3,2] <- sum(state_stats[34,41]) 
+NC_accept_gender[4,2] <- sum(state_stats[34,6]) 
+
+NC_accept_gender$Percent <- 100 * NC_accept_gender$Count/NC_accept_gender[4,2]
+
 NC_req_send_age <- NC_age_shell
 
 NC_req_send_age[1,2] <- sum(NC_stats$Mail.Req.Age.1825, na.rm = T)
 NC_req_send_age[2,2] <- sum(NC_stats$Mail.Req.Age.2640, na.rm = T) 
 NC_req_send_age[3,2] <- sum(NC_stats$Mail.Req.Age.4165, na.rm = T) 
-NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.65up, na.rm = T) 
+NC_req_send_age[4,2] <- sum(NC_stats$Mail.Req.Age.66up, na.rm = T) 
 NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
 
 NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
+
+NC_accept_age <- NC_age_shell
+
+NC_accept_age[1,2] <- sum(NC_stats$Mail.Rtn.Age.1825, na.rm = T)
+NC_accept_age[2,2] <- sum(NC_stats$Mail.Rtn.Age.2640, na.rm = T) 
+NC_accept_age[3,2] <- sum(NC_stats$Mail.Rtn.Age.4165, na.rm = T) 
+NC_accept_age[4,2] <- sum(NC_stats$Mail.Rtn.Age.66up, na.rm = T) 
+NC_accept_age[5,2] <- sum(NC_stats$Mail.Rtn.Tot, na.rm = T)
+
+NC_accept_age$Percent <- 100 * NC_accept_age$Count/NC_accept_age[5,2]
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 NC_stats_requests_Dem <- select(NC_stats, County, Reg.Voters.Dem, Mail.Req.Dem, Pct.Request.Dem)
@@ -344,6 +363,22 @@ kable(NC_accept_voted, format.args = list(big.mark = ",",
 
 ``` {r echo = FALSE}
 kable(NC_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Returned and Accepted by Age
+
+``` {r echo = FALSE}
+kable(NC_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Returned and Accepted by Gender
+
+``` {r echo = FALSE}
+kable(NC_accept_gender, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
