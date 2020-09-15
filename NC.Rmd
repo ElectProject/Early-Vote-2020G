@@ -59,6 +59,15 @@ NC_age_shell[3,1] <- "41 to 65"
 NC_age_shell[4,1] <- "66 to up"
 NC_age_shell[5,1] <- "TOTAL"
 
+
+Voted_shell <- data.frame(Voted=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+Voted_shell[1,1] <- "Voted in 2016 General"
+Voted_shell[2,1] <- "Did Not Vote in 2016 General"
+Voted_shell[3,1] <- "TOTAL"
+
 # North Carolina
 
 NC_req_send_party <- party_shell
@@ -102,6 +111,26 @@ NC_req_send_race[6,2] <- sum(state_stats[34,19])
 NC_req_send_race[7,2] <- sum(state_stats[34,5]) 
 
 NC_req_send_race$Percent <- 100 * NC_req_send_race$Count/NC_req_send_race[7,2]
+
+NC_accept_race <- race_shell
+
+NC_accept_race[1,2] <- sum(state_stats[34,33])
+NC_accept_race[2,2] <- sum(state_stats[34,34]) 
+NC_accept_race[3,2] <- sum(state_stats[34,35]) 
+NC_accept_race[4,2] <- sum(state_stats[34,36]) 
+NC_accept_race[5,2] <- sum(state_stats[34,37]) 
+NC_accept_race[6,2] <- sum(state_stats[34,38]) 
+NC_accept_race[7,2] <- sum(state_stats[34,6]) 
+
+NC_accept_race$Percent <- 100 * NC_accept_race$Count/NC_accept_race[7,2]
+
+NC_accept_voted <- Voted_shell
+
+NC_accept_voted[1,2] <- sum(state_stats[34,68])
+NC_accept_voted[2,2] <- sum(state_stats[34,69])
+NC_accept_voted[3,2] <- sum(state_stats[34,6])
+
+NC_accept_voted$Percent <- 100*NC_accept_voted$Count/NC_accept_voted[3,2]
 
 NC_req_send_gender <- gender_shell
 
@@ -185,6 +214,22 @@ hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
 datatable(NC_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
   formatPercentage('Pct.Return', 1) %>%
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
+```
+
+#### Mail Ballots Returned and Accepted by 2016 Vote History
+
+``` {r echo = FALSE}
+kable(NC_accept_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Returned and Accepted by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(NC_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
 ###### Dem
