@@ -198,6 +198,9 @@ NC_stats_rejects_Dem <- select(NC_stats, County, Mail.Rtn.Dem, Mail.Reject.Dem, 
 NC_stats_rejects_Rep <- select(NC_stats, County, Mail.Rtn.Rep, Mail.Reject.Rep, Pct.Reject.Rep)
 NC_stats_rejects_NPA <- select(NC_stats, County, Mail.Rtn.NPA, Mail.Reject.NPA, Pct.Reject.NPA)
 NC_stats_rejects_Minor <- select(NC_stats, County, Mail.Rtn.Minor, Mail.Reject.Minor, Pct.Reject.Minor)
+NC_stats_rejects_nh_white <- select(NC_stats, County, Mail.Rtn.nh_white, Mail.Reject.nh_white, Pct.Reject.nh_white)
+NC_stats_rejects_nh_black <- select(NC_stats, County, Mail.Rtn.nh_black, Mail.Reject.nh_black, Pct.Reject.nh_black)
+
 ```
 ## {.tabset}
 Last Report: `r state_stats[34,9]`  
@@ -207,7 +210,7 @@ North Carolina is the first state to begin general election voting. Election off
 
 ### Returned
 
-#### Mail Ballots Returned and Accepted by Party Registration
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
 ``` {r echo = FALSE}
 kable(NC_accept_party, format.args = list(big.mark = ",", 
@@ -400,7 +403,7 @@ kable(NC_accept_gender, format.args = list(big.mark = ",",
 
 Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE". North Carolina election officials are required by state law to follow up with these voters. If you are a North Carolina voter concerned about your mail ballot, you can track the status of your ballot at the [North Carolina State Board of Elections website](https://northcarolina.ballottrax.net/voter/). 
 
-#### Mail Ballots Rejected by Party Registration
+#### **Mail Ballots Rejected by Party Registration**
 
 ``` {r echo = FALSE}
 kable(NC_reject_party, format.args = list(big.mark = ",", 
@@ -408,7 +411,7 @@ kable(NC_reject_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-##### Mail Ballot Return Rates {.tabset .tabset-pills}
+##### Mail Ballot Rejection Rates {.tabset .tabset-pills}
 
 **County plots may not be shaded using the same scale**  
 
@@ -557,7 +560,7 @@ datatable(NC_stats_rejects_Minor, colnames = c("County", "Mail Ballots Returned"
   formatRound(c('Mail.Rtn.Minor','Mail.Reject.Minor'), 0, mark = ",")
 ```
 
-#### Mail Ballots Rejected by Race and Ethnicity
+#### **Mail Ballots Rejected by Race and Ethnicity**
 
 ``` {r echo = FALSE}
 kable(NC_reject_race, format.args = list(big.mark = ",", 
@@ -565,9 +568,71 @@ kable(NC_reject_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+##### Mail Ballot Rejection Rates {.tabset .tabset-pills}
+
+**County plots may not be shaded using the same scale**  
+
+###### Non-Hispanic White
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected = round(100*Pct.Reject.nh_white, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_nh_white, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.nh_white', 1) %>%
+  formatRound(c('Mail.Rtn.nh_white','Mail.Reject.nh_white'), 0, mark = ",")
+```
+
+###### Non-Hispanic Black
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_rejected = round(100*Pct.Reject.nh_black, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_rejects_nh_black, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject.nh_black', 1) %>%
+  formatRound(c('Mail.Rtn.nh_black','Mail.Reject.nh_black'), 0, mark = ",")
+```
+
 ### Requested
 
-#### Mail Ballot Requests by Party Registration
+#### **Mail Ballot Requests by Party Registration**
 
 North Carolina registered Democrats have a **`r format(as.numeric(NC_req_send_party[1,2]-NC_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
