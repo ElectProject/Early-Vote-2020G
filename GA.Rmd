@@ -1,0 +1,118 @@
+---
+title: "Georgia Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+GA_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_GA.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "Hispanic"
+race_shell[4,1] <- "Non-Hispanic Asian American"
+race_shell[5,1] <- "Non-Hispanic Native American"
+race_shell[6,1] <- "Other/Multiple/Unknown"
+race_shell[7,1] <- "TOTAL"
+
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+# Georiga
+
+GA_req_send_tot <- data.frame(Total=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+
+GA_req_send_tot[1,1] <- "TOTAL"
+GA_req_send_tot[1,2] <- sum(state_stats[11,5]) 
+
+GA_req_send_tot$Percent <- 100.0
+
+
+GA_stats_requests <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+```
+Last Report: `r state_stats[11,9]`  
+Source:  `r state_stats[11,2]`
+
+### Mail Ballot Requests
+
+``` {r echo = FALSE}
+kable(GA_req_send_tot, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### County Map: Mail Ballot Request Rates ### 
+
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Mail.Req.Tot/Reg.Voters), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Requested", joinBy = "fips") 
+```
+
+### County Data: Mail Ballot Requests ### 
+
+``` {r echo = FALSE}
+datatable(GA_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
