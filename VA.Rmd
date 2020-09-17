@@ -1,5 +1,5 @@
 ---
-title: "Wisconsin Early Voting Statistics"
+title: "Virginia Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -56,44 +56,29 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Wisconsin
+# Virginia
 
-WI_req_send_tot <- data.frame(Total=character(),
+VA_req_send_tot <- data.frame(Total=character(),
                                   Count=integer(),
                                   Percent=double(),
                                   stringsAsFactors=FALSE)
 
-WI_req_send_tot[1,1] <- "TOTAL"
-WI_req_send_tot[1,2] <- sum(state_stats[50,5]) 
+VA_req_send_tot[1,1] <- "TOTAL"
+VA_req_send_tot[1,2] <- sum(state_stats[47,5]) 
 
-WI_req_send_tot$Percent <- 100.0
-
-WI_return_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
-
-WI_return_tot[1,1] <- "TOTAL"
-WI_return_tot[1,2] <- sum(state_stats[50,6]) 
-
-WI_req_send_tot$Percent <- 100.0
-
+VA_req_send_tot$Percent <- 100.0
 ```
-Last Report: `r state_stats[50,9]`  
-Source:  `r state_stats[50,2]`
+Last Report: `r state_stats[47,9]`  
+Source:  `r state_stats[47,2]`
+
+### Discussion
+
+Virginia provides only total ballot request counts at this time.
 
 ### Mail Ballot Requests
 
 ``` {r echo = FALSE}
-kable(WI_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-### Mail Ballot Returns
-
-``` {r echo = FALSE}
-kable(WI_return_tot, format.args = list(big.mark = ",", 
+kable(VA_req_send_tot, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
