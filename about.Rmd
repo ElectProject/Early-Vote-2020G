@@ -8,4 +8,6 @@ Professor, University of Florida
 Web: [United States Elections Project](http://www.electproject.org/)  
 Twitter: [\@ElectProject](https://twitter.com/ElectProject)
 
+The content here is distributed under a [Creative Commons Attribution-ShareAlike License](https://creativecommons.org/licenses/). This license lets others remix, adapt, and build upon this work even for commercial purposes, as long as credit is provided and license their new creations under the identical terms. 
+
 If you would like to support this work, please consider making a donation to a charitable University of Florida fund to support [Election Science education and research](https://www.uff.ufl.edu/giving-opportunities/023435-uf-election-science-group-fund/).

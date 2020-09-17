@@ -1,6 +1,9 @@
 ---
 title: "Frequently Asked Questions"
 ---
+###Who May Use These Data?
+The content here is distributed under a [Creative Commons Attribution-ShareAlike License](https://creativecommons.org/licenses/). This license lets others remix, adapt, and build upon this work even for commercial purposes, as long as credit is provided and license their new creations under the identical terms.
+
 ### What Does the Early Vote Tell Us?
 
 In a typical election, the early vote -- by mail or in-person at a polling location -- provides clues as to the state of the election. In 2016, from the early vote alone, I [correctly predicted](https://www.huffpost.com/entry/early-vote-election-eve-p_b_12853864) that Donald Trump would need to win Michigan, Pennsylvania, and Wisconsin to win the Electoral College.
