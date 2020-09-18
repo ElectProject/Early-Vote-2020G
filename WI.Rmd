@@ -111,7 +111,7 @@ WI_map_data <- left_join(WI_map_data, mapdata, by = "fips")
 WI_map_data <- arrange(WI_map_data, row)
 
 hcmap(map = "countries/us/us-wi-all", data = WI_map_data,
-      value = "percent", name = "Percent Requested", joinBy = "fips") 
+      value = "percent", name = "Percent Returned", joinBy = "fips") 
 ```
 
 
