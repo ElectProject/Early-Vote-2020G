@@ -87,7 +87,6 @@ kable(GA_req_send_tot, format.args = list(big.mark = ",",
 
 ### County Map: Mail Ballot Request Rates ### 
 
-
 ``` {r echo = FALSE}
 GA_map_data <- GA_stats
 
