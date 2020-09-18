@@ -151,7 +151,7 @@ These states are those where I have current data on mail ballot activity. More s
 
 ### Returned
 
-Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states of FL, IL, NC, and SC. NC voters have cast nearly all of these ballots.
+Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states.
 
 ``` {r echo = FALSE}
 US_2020g_map_data <- state_stats
