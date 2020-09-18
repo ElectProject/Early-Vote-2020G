@@ -1,5 +1,5 @@
 ---
-title: "Washington Early Voting Statistics"
+title: "Minnesota Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -58,29 +58,25 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Washington
+# Minnesota
 
-WA_req_send_tot <- data.frame(Total=character(),
+MN_req_send_tot <- data.frame(Total=character(),
                                   Count=integer(),
                                   Percent=double(),
                                   stringsAsFactors=FALSE)
 
-WA_req_send_tot[1,1] <- "TOTAL"
-WA_req_send_tot[1,2] <- sum(state_stats[48,5]) 
+MN_req_send_tot[1,1] <- "TOTAL"
+MN_req_send_tot[1,2] <- sum(state_stats[24,5]) 
 
-WA_req_send_tot$Percent <- 100.0
+MN_req_send_tot$Percent <- 100.0
 ```
-Last Report: `r state_stats[48,9]`  
-Source:  `r state_stats[48,2]`
-
-### Discussion
-
-Washington is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
+Last Report: `r state_stats[24,9]`  
+Source:  `r state_stats[24,2]`
 
 ### Mail Ballot Requests
 
 ``` {r echo = FALSE}
-kable(WA_req_send_tot, format.args = list(big.mark = ",", 
+kable(MN_req_send_tot, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
