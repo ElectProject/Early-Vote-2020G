@@ -73,19 +73,54 @@ GA_req_send_tot$Percent <- 100.0
 
 
 GA_stats_requests <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+GA_stats_returns <- select(GA_stats, County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
 ```
 Last Report: `r state_stats[11,9]`  
 Source:  `r state_stats[11,2]`
 
-### Mail Ballot Requests
+## {.tabset}
+
+### Returned
+Ballots Returned: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
+Return Rate: **`r paste(round(100*sum(GA_stats$Mail.Accept.Tot)/sum(GA_stats$Mail.Req.Tot), digits = 1),"%", sep = "")`**
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Mail.Accept.Tot/Mail.Req.Tot), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Accepted", joinBy = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Accept', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
+```
+
+### Requested
+
+Ballots Requested: **`r format(as.numeric(sum(WI_stats$Mail.Req.Tot)), big.mark =",")`**  
+Request Rate: **`r paste(round(100*sum(WI_stats$Mail.Req.Tot)/sum(WI_stats$Reg.Voters), digits = 1),"%", sep = "")`**
 
 ``` {r echo = FALSE}
 kable(GA_req_send_tot, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
-### County Map: Mail Ballot Request Rates ### 
 
 ``` {r echo = FALSE}
 GA_map_data <- GA_stats
@@ -108,10 +143,8 @@ hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
       value = "percent", name = "Percent Requested", joinBy = "fips") 
 ```
 
-### County Data: Mail Ballot Requests ### 
-
 ``` {r echo = FALSE}
-datatable(GA_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+datatable(GA_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballots Requested", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
 ```

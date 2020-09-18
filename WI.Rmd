@@ -116,7 +116,7 @@ hcmap(map = "countries/us/us-wi-all", data = WI_map_data,
 
 
 ``` {r echo = FALSE}
-datatable(WI_stats_returns, colnames = c("County", "Mail Ballot Requests", "Mail Ballot Returned", "Percent Returned"), rownames = F) %>%
+datatable(WI_stats_returns, colnames = c("County", "Mail Ballots Requested", "Mail Ballot Returned", "Percent Returned"), rownames = F) %>%
   formatPercentage('Pct.Return', 1) %>%
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
@@ -148,7 +148,7 @@ hcmap(map = "countries/us/us-wi-all", data = WI_map_data,
 ```
 
 ``` {r echo = FALSE}
-datatable(WI_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
+datatable(WI_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballots Requested", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
 ```
