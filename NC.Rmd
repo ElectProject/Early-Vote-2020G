@@ -206,9 +206,10 @@ NC_stats_rejects_nh_black <- select(NC_stats, County, Mail.Rtn.nh_black, Mail.Re
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
 
-North Carolina is the first state to begin general election voting. Election officials sent ballots to voters on September 4.
-
 ### Returned
+
+Ballots Returned: **`r format(as.numeric(sum(NC_stats$Mail.Rtn.Tot, na.rm = T)), big.mark =",")`**  
+Return Rate: **`r paste(round(100*sum(NC_stats$Mail.Rtn.Tot, na.rm = T)/sum(NC_stats$Mail.Req.Tot, na.rm = T), digits = 1),"%", sep = "")`**
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
@@ -400,6 +401,9 @@ kable(NC_accept_gender, format.args = list(big.mark = ",",
 ```
 
 ### Rejected
+
+Ballots Rejected: **`r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")`**  
+Rejection Rate: **`r paste(round(100*sum(NC_stats$Mail.Reject.Tot, na.rm = T)/(sum(NC_stats$Mail.Reject.Tot, na.rm = T)+sum(NC_stats$Mail.Rtn.Tot, na.rm = T)), digits = 1),"%", sep = "")`**
 
 Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE". North Carolina election officials are required by state law to follow up with these voters. If you are a North Carolina voter concerned about your mail ballot, you can track the status of your ballot at the [North Carolina State Board of Elections website](https://northcarolina.ballottrax.net/voter/). 
 
@@ -631,6 +635,9 @@ datatable(NC_stats_rejects_nh_black, colnames = c("County", "Mail Ballots Return
 ```
 
 ### Requested
+
+Ballots Requested: **`r format(as.numeric(sum(NC_stats$Mail.Req.Tot)), big.mark =",")`**  
+Request Rate: **`r paste(round(100*sum(NC_stats$Mail.Req.Tot)/(sum(NC_stats$Reg.Voters)), digits = 1),"%", sep = "")`**
 
 #### **Mail Ballot Requests by Party Registration**
 
