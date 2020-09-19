@@ -113,8 +113,8 @@ datatable(GA_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
 
 ### Requested
 
-Ballots Requested: **`r format(as.numeric(sum(WI_stats$Mail.Req.Tot)), big.mark =",")`**  
-Request Rate: **`r paste(round(100*sum(WI_stats$Mail.Req.Tot)/sum(WI_stats$Reg.Voters), digits = 1),"%", sep = "")`**
+Ballots Requested: **`r format(as.numeric(sum(GA_stats$Mail.Req.Tot)), big.mark =",")`**  
+Request Rate: **`r paste(round(100*sum(GA_stats$Mail.Req.Tot)/sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**
 
 ``` {r echo = FALSE}
 kable(GA_req_send_tot, format.args = list(big.mark = ",", 
