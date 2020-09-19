@@ -151,7 +151,7 @@ These states are those where I have current data on mail ballot activity. More s
 
 ### Returned
 
-Voters have cast a total of **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** ballots in the reporting states.
+Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
 
 ``` {r echo = FALSE}
 US_2020g_map_data <- state_stats
@@ -163,11 +163,11 @@ hcoptslang$thousandsSep <- ","
 options(highcharter.lang = hcoptslang)
 
 US_2020g_map_data <- US_2020g_map_data %>%
-  mutate(display_data = mail_accept_2020) %>%
+  mutate(display_data = total_early_2020) %>%
   mutate(display_data = na_if(display_data, 0))
 
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
-  value = "display_data", name = "Returned Ballots") 
+  value = "display_data", name = "Voted") 
 ```
 
 #### Mail Ballots Returned by Party Registration

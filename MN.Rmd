@@ -69,11 +69,33 @@ MN_req_send_tot[1,1] <- "TOTAL"
 MN_req_send_tot[1,2] <- sum(state_stats[24,5]) 
 
 MN_req_send_tot$Percent <- 100.0
+
+MN_accept_tot <- data.frame(Total=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+
+MN_accept_tot[1,1] <- "TOTAL"
+MN_accept_tot[1,2] <- sum(state_stats[24,7]) 
+
+MN_accept_tot$Percent <- 100.0
+
 ```
 Last Report: `r state_stats[24,9]`  
-Source:  `r state_stats[24,2]`
+Source:  `r state_stats[24,2]`  
 
-### Mail Ballot Requests
+## {.tabset}
+
+### Accepted
+Accepted report is from in-person voting in [Minneapolis](https://twitter.com/VoteMpls/status/1307097259734118400) only. Statewide numbers are expected Sept. 25.
+
+``` {r echo = FALSE}
+kable(MN_accept_tot, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Requested  
 
 ``` {r echo = FALSE}
 kable(MN_req_send_tot, format.args = list(big.mark = ",", 
