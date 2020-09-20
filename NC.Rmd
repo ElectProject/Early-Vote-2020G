@@ -9,7 +9,6 @@ library(kableExtra)
 library(scales)
 library(DT)
 library(highcharter)
-library(flexdashboard)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
@@ -27,6 +26,18 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -39,6 +50,19 @@ race_shell[5,1] <- "Non-Hispanic Native American"
 race_shell[6,1] <- "Other/Multiple/Unknown"
 race_shell[7,1] <- "TOTAL"
 
+race_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+race_shell_returned[1,1] <- "Non-Hispanic White"
+race_shell_returned[2,1] <- "Non-Hispanic Black"
+race_shell_returned[3,1] <- "Hispanic"
+race_shell_returned[4,1] <- "Non-Hispanic Asian American"
+race_shell_returned[5,1] <- "Non-Hispanic Native American"
+race_shell_returned[6,1] <- "Other/Multiple/Unknown"
+race_shell_returned[7,1] <- "TOTAL"
 
 gender_shell <- data.frame(Gender=character(),
                                   Count=integer(),
@@ -48,6 +72,18 @@ gender_shell[1,1] <- "Female"
 gender_shell[2,1] <- "Male"
 gender_shell[3,1] <- "Unknown"
 gender_shell[4,1] <- "TOTAL"
+
+
+NC_gender_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+NC_gender_shell_returned[1,1] <- "Female"
+NC_gender_shell_returned[2,1] <- "Male"
+NC_gender_shell_returned[3,1] <- "Unknown"
+NC_gender_shell_returned[4,1] <- "TOTAL"
 
 NC_age_shell <- data.frame(Age=character(),
                                   Count=integer(),
@@ -59,6 +95,18 @@ NC_age_shell[3,1] <- "41 to 65"
 NC_age_shell[4,1] <- "66 and up"
 NC_age_shell[5,1] <- "TOTAL"
 
+
+NC_age_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+NC_age_shell_returned[1,1] <- "18 to 25"
+NC_age_shell_returned[2,1] <- "26 to 40"
+NC_age_shell_returned[3,1] <- "41 to 65"
+NC_age_shell_returned[4,1] <- "66 and up"
+NC_age_shell_returned[5,1] <- "TOTAL"
 
 Voted_shell <- data.frame(Voted=character(),
                                   Count=integer(),
@@ -80,7 +128,7 @@ NC_req_send_party[5,2] <- state_stats[34,5]
 
 NC_req_send_party$Percent <- 100*NC_req_send_party$Count/NC_req_send_party[5,2]
 
-NC_accept_party <- party_shell
+NC_accept_party <- party_shell_returned
 
 NC_accept_party[1,2] <- state_stats[34,29] 
 NC_accept_party[2,2] <- state_stats[34,30] 
@@ -88,9 +136,18 @@ NC_accept_party[3,2] <- state_stats[34,31]
 NC_accept_party[4,2] <- state_stats[34,32] 
 NC_accept_party[5,2] <- state_stats[34,6] 
 
-NC_accept_party$Percent <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+NC_accept_party[1,4] <- state_stats[34,10] 
+NC_accept_party[2,4] <- state_stats[34,11] 
+NC_accept_party[3,4] <- state_stats[34,12] 
+NC_accept_party[4,4] <- state_stats[34,13] 
+NC_accept_party[5,4] <- state_stats[34,5] 
 
-NC_reject_party <- party_shell
+NC_accept_party$Frequency <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+NC_accept_party$Rate <- 100*NC_accept_party$Count/NC_accept_party$Count2
+
+colnames(NC_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+NC_reject_party <- party_shell_returned
 
 NC_reject_party[1,2] <- state_stats[34,49] 
 NC_reject_party[2,2] <- state_stats[34,50] 
@@ -98,7 +155,15 @@ NC_reject_party[3,2] <- state_stats[34,51]
 NC_reject_party[4,2] <- state_stats[34,52] 
 NC_reject_party[5,2] <- state_stats[34,48] 
 
-NC_reject_party$Percent <- 100*NC_reject_party$Count/NC_reject_party[5,2]
+NC_reject_party[1,4] <- state_stats[34,29] + state_stats[34,49] 
+NC_reject_party[2,4] <- state_stats[34,30] + state_stats[34,50]
+NC_reject_party[3,4] <- state_stats[34,31] + state_stats[34,51]
+NC_reject_party[4,4] <- state_stats[34,32] + state_stats[34,52]
+NC_reject_party[5,4] <- state_stats[34,6] + state_stats[34,48]
+
+NC_reject_party$Frequency <- 100*NC_reject_party$Count/NC_reject_party[5,2]
+NC_reject_party$Rate <- 100*NC_reject_party$Count/NC_reject_party$Count2
+colnames(NC_reject_party) <- c("Party", "Rejected Ballots", "Freq. Distribution", "All Returned Ballots", "Rejection Rate")
 
 NC_req_send_race <- race_shell
 
@@ -112,7 +177,7 @@ NC_req_send_race[7,2] <- sum(state_stats[34,5])
 
 NC_req_send_race$Percent <- 100 * NC_req_send_race$Count/NC_req_send_race[7,2]
 
-NC_accept_race <- race_shell
+NC_accept_race <- race_shell_returned
 
 NC_accept_race[1,2] <- sum(state_stats[34,33])
 NC_accept_race[2,2] <- sum(state_stats[34,34]) 
@@ -122,9 +187,20 @@ NC_accept_race[5,2] <- sum(state_stats[34,37])
 NC_accept_race[6,2] <- sum(state_stats[34,38]) 
 NC_accept_race[7,2] <- sum(state_stats[34,6]) 
 
-NC_accept_race$Percent <- 100 * NC_accept_race$Count/NC_accept_race[7,2]
+NC_accept_race[1,4] <- sum(state_stats[34,14])
+NC_accept_race[2,4] <- sum(state_stats[34,15]) 
+NC_accept_race[3,4] <- sum(state_stats[34,16]) 
+NC_accept_race[4,4] <- sum(state_stats[34,17]) 
+NC_accept_race[5,4] <- sum(state_stats[34,18]) 
+NC_accept_race[6,4] <- sum(state_stats[34,19]) 
+NC_accept_race[7,4] <- sum(state_stats[34,5]) 
 
-NC_reject_race <- race_shell
+NC_accept_race$Frequency <- 100 * NC_accept_race$Count/NC_accept_race[7,2]
+NC_accept_race$Rate <- 100*NC_accept_race$Count/NC_accept_race$Count2
+
+colnames(NC_accept_race) <- c("Race/Ethnicity", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+NC_reject_race <- race_shell_returned
 
 NC_reject_race[1,2] <- sum(state_stats[34,53])
 NC_reject_race[2,2] <- sum(state_stats[34,54]) 
@@ -134,8 +210,17 @@ NC_reject_race[5,2] <- sum(state_stats[34,57])
 NC_reject_race[6,2] <- sum(state_stats[34,58]) 
 NC_reject_race[7,2] <- sum(state_stats[34,48]) 
 
-NC_reject_race$Percent <- 100 * NC_reject_race$Count/NC_reject_race[7,2]
+NC_reject_race[1,4] <- sum(state_stats[34,33]) + sum(state_stats[34,53])
+NC_reject_race[2,4] <- sum(state_stats[34,34]) + sum(state_stats[34,54])
+NC_reject_race[3,4] <- sum(state_stats[34,35]) + sum(state_stats[34,55])
+NC_reject_race[4,4] <- sum(state_stats[34,36]) + sum(state_stats[34,56])
+NC_reject_race[5,4] <- sum(state_stats[34,37]) + sum(state_stats[34,57])
+NC_reject_race[6,4] <- sum(state_stats[34,38]) + sum(state_stats[34,58])
+NC_reject_race[7,4] <- sum(state_stats[34,6]) + sum(state_stats[34,48])
 
+NC_reject_race$Frequency <- 100 * NC_reject_race$Count/NC_reject_race[7,2]
+NC_reject_race$Rate <- 100*NC_reject_race$Count/NC_reject_race$Count2
+colnames(NC_reject_race) <- c("Race/Ethnicity", "Rejected Ballots", "Freq. Distribution", "All Returned Ballots", "Rejection Rate")
 
 NC_accept_voted <- Voted_shell
 
@@ -154,14 +239,22 @@ NC_req_send_gender[4,2] <- sum(state_stats[34,5])
 
 NC_req_send_gender$Percent <- 100 * NC_req_send_gender$Count/NC_req_send_gender[4,2]
 
-NC_accept_gender <- gender_shell
+NC_accept_gender <- NC_gender_shell_returned
 
 NC_accept_gender[1,2] <- sum(state_stats[34,39])
 NC_accept_gender[2,2] <- sum(state_stats[34,40]) 
 NC_accept_gender[3,2] <- sum(state_stats[34,41]) 
 NC_accept_gender[4,2] <- sum(state_stats[34,6]) 
 
-NC_accept_gender$Percent <- 100 * NC_accept_gender$Count/NC_accept_gender[4,2]
+NC_accept_gender[1,4] <- sum(state_stats[34,21])
+NC_accept_gender[2,4] <- sum(state_stats[34,20]) 
+NC_accept_gender[3,4] <- sum(state_stats[34,22]) 
+NC_accept_gender[4,4] <- sum(state_stats[34,5]) 
+
+NC_accept_gender$Frequency <- 100 * NC_accept_gender$Count/NC_accept_gender[4,2]
+NC_accept_gender$Rate <- 100*NC_accept_gender$Count/NC_accept_gender$Count2
+
+colnames(NC_accept_gender) <- c("Gender", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
 NC_req_send_age <- NC_age_shell
 
@@ -173,7 +266,7 @@ NC_req_send_age[5,2] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
 
 NC_req_send_age$Percent <- 100 * NC_req_send_age$Count/NC_req_send_age[5,2]
 
-NC_accept_age <- NC_age_shell
+NC_accept_age <- NC_age_shell_returned
 
 NC_accept_age[1,2] <- sum(NC_stats$Mail.Rtn.Age.1825, na.rm = T)
 NC_accept_age[2,2] <- sum(NC_stats$Mail.Rtn.Age.2640, na.rm = T) 
@@ -181,25 +274,49 @@ NC_accept_age[3,2] <- sum(NC_stats$Mail.Rtn.Age.4165, na.rm = T)
 NC_accept_age[4,2] <- sum(NC_stats$Mail.Rtn.Age.66up, na.rm = T) 
 NC_accept_age[5,2] <- sum(NC_stats$Mail.Rtn.Tot, na.rm = T)
 
-NC_accept_age$Percent <- 100 * NC_accept_age$Count/NC_accept_age[5,2]
+NC_accept_age[1,4] <- sum(NC_stats$Mail.Req.Age.1825, na.rm = T)
+NC_accept_age[2,4] <- sum(NC_stats$Mail.Req.Age.2640, na.rm = T) 
+NC_accept_age[3,4] <- sum(NC_stats$Mail.Req.Age.4165, na.rm = T) 
+NC_accept_age[4,4] <- sum(NC_stats$Mail.Req.Age.66up, na.rm = T) 
+NC_accept_age[5,4] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
+
+NC_accept_age$Frequency <- 100 * NC_accept_age$Count/NC_accept_age[5,2]
+NC_accept_age$Rate <- 100*NC_accept_age$Count/NC_accept_age$Count2
+
+colnames(NC_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 NC_stats_requests_Dem <- select(NC_stats, County, Reg.Voters.Dem, Mail.Req.Dem, Pct.Request.Dem)
 NC_stats_requests_Rep <- select(NC_stats, County, Reg.Voters.Rep, Mail.Req.Rep, Pct.Request.Rep)
 NC_stats_requests_NPA <- select(NC_stats, County, Reg.Voters.NPA, Mail.Req.NPA, Pct.Request.NPA)
 NC_stats_requests_Minor <- select(NC_stats, County, Reg.Voters.Minor, Mail.Req.Minor, Pct.Request.Minor)
+
 NC_stats_returns <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Return)
 NC_stats_returns_Dem <- select(NC_stats, County, Mail.Req.Dem, Mail.Rtn.Dem, Pct.Return.Dem)
 NC_stats_returns_Rep <- select(NC_stats, County, Mail.Req.Rep, Mail.Rtn.Rep, Pct.Return.Rep)
 NC_stats_returns_NPA <- select(NC_stats, County, Mail.Req.NPA, Mail.Rtn.NPA, Pct.Return.NPA)
 NC_stats_returns_Minor <- select(NC_stats, County, Mail.Req.Minor, Mail.Rtn.Minor, Pct.Return.Minor)
+
 NC_stats_rejects <- select(NC_stats, County, Mail.Rtn.Tot, Mail.Reject.Tot, Pct.Reject)
+NC_stats_rejects <- mutate(NC_stats_rejects, Mail.Rtn.Tot = Mail.Rtn.Tot + Mail.Reject.Tot)
+
 NC_stats_rejects_Dem <- select(NC_stats, County, Mail.Rtn.Dem, Mail.Reject.Dem, Pct.Reject.Dem)
+NC_stats_rejects_Dem <- mutate(NC_stats_rejects_Dem, Mail.Rtn.Dem = Mail.Rtn.Dem + Mail.Reject.Dem)
+
 NC_stats_rejects_Rep <- select(NC_stats, County, Mail.Rtn.Rep, Mail.Reject.Rep, Pct.Reject.Rep)
+NC_stats_rejects_Rep <- mutate(NC_stats_rejects_Rep, Mail.Rtn.Rep = Mail.Rtn.Rep + Mail.Reject.Rep)
+
 NC_stats_rejects_NPA <- select(NC_stats, County, Mail.Rtn.NPA, Mail.Reject.NPA, Pct.Reject.NPA)
+NC_stats_rejects_NPA <- mutate(NC_stats_rejects_NPA, Mail.Rtn.NPA = Mail.Rtn.NPA + Mail.Reject.NPA)
+
 NC_stats_rejects_Minor <- select(NC_stats, County, Mail.Rtn.Minor, Mail.Reject.Minor, Pct.Reject.Minor)
+NC_stats_rejects_Minor <- mutate(NC_stats_rejects_Minor, Mail.Rtn.Minor = Mail.Rtn.Minor + Mail.Reject.Minor)
+
 NC_stats_rejects_nh_white <- select(NC_stats, County, Mail.Rtn.nh_white, Mail.Reject.nh_white, Pct.Reject.nh_white)
+NC_stats_rejects_nh_white <- mutate(NC_stats_rejects_nh_white, Mail.Rtn.nh_white = Mail.Rtn.nh_white + Mail.Reject.nh_white)
+
 NC_stats_rejects_nh_black <- select(NC_stats, County, Mail.Rtn.nh_black, Mail.Reject.nh_black, Pct.Reject.nh_black)
+NC_stats_rejects_nh_black <- mutate(NC_stats_rejects_nh_black, Mail.Rtn.nh_black = Mail.Rtn.nh_black + Mail.Reject.nh_black)
 
 ```
 ## {.tabset}
@@ -219,9 +336,7 @@ kable(NC_accept_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-##### Mail Ballot Return Rates {.tabset .tabset-pills}
-
-**County plots may not be shaded using the same scale**  
+##### {.tabset .tabset-pills}
 
 ###### All
 
@@ -243,7 +358,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned", name = "Percent Returned", joinby = "fips") 
+  value = "percent_returned", name = "Percent Returned", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates - All") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -272,7 +389,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned_dem", name = "Percent Returned", joinby = "fips") 
+  value = "percent_returned_dem", name = "Percent Returned", joinby = "fips")  %>%
+  hc_title(text ="Mail Ballot Return Rates - Democrats") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -301,7 +420,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned_rep", name = "Percent Returned", joinby = "fips") 
+  value = "percent_returned_rep", name = "Percent Returned", joinby = "fips")  %>%
+  hc_title(text ="Mail Ballot Return Rates - Republicans") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -330,7 +451,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned_NPA", name = "Percent Returned", joinby = "fips") 
+  value = "percent_returned_NPA", name = "Percent Returned", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates - No Party Affiliation") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale") 
 ```
 
 ``` {r echo = FALSE}
@@ -359,7 +482,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_returned_minor", name = "Percent Returned", joinby = "fips") 
+  value = "percent_returned_minor", name = "Percent Returned", joinby = "fips")  %>%
+  hc_title(text ="Mail Ballot Return Rates - Minor Party") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -369,7 +494,7 @@ datatable(NC_stats_returns_Minor, colnames = c("County", "Mail Ballots Requested
 ```
 
 #### Mail Ballots Returned and Accepted by 2016 Vote History
-
+Note: North Carolina provides only aggregate request statistics, so it is impossible to generate ballot return rates by 2016 general vote.
 ``` {r echo = FALSE}
 kable(NC_accept_voted, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
@@ -407,6 +532,8 @@ Rejection Rate: **`r paste(round(100*sum(NC_stats$Mail.Reject.Tot, na.rm = T)/(s
 
 Nearly all `r format(as.numeric(sum(NC_stats$Mail.Reject.Tot, na.rm = T)), big.mark =",")` rejected mail ballots in the midst of the pandemic are for the reason noted as "WITNESS INFO INCOMPLETE". North Carolina election officials are required by state law to follow up with these voters. If you are a North Carolina voter concerned about your mail ballot, you can track the status of your ballot at the [North Carolina State Board of Elections website](https://northcarolina.ballottrax.net/voter/). 
 
+In the "All" mail ballot returned statistics, I add the mail ballots that are returned and accepted with the rejected ballots. Dividing the number of rejected by this quantity yields a rejection rate. 
+
 #### **Mail Ballots Rejected by Party Registration**
 
 ``` {r echo = FALSE}
@@ -415,9 +542,7 @@ kable(NC_reject_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-##### Mail Ballot Rejection Rates {.tabset .tabset-pills}
-
-**County plots may not be shaded using the same scale**  
+##### {.tabset .tabset-pills}
 
 ###### All
 
@@ -439,11 +564,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - All") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject', 1) %>%
   formatRound(c('Mail.Rtn.Tot','Mail.Reject.Tot'), 0, mark = ",")
 ```
@@ -468,11 +595,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected_dem", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected_dem", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - Democrats") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale") 
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_Dem, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_Dem, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.Dem', 1) %>%
   formatRound(c('Mail.Rtn.Dem','Mail.Reject.Dem'), 0, mark = ",")
 ```
@@ -497,11 +626,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected_rep", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected_rep", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - Republicans") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale") 
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_Rep, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_Rep, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.Rep', 1) %>%
   formatRound(c('Mail.Rtn.Rep','Mail.Reject.Rep'), 0, mark = ",")
 ```
@@ -526,11 +657,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected_npa", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected_npa", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - No Party Affilation") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_NPA, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_NPA, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.NPA', 1) %>%
   formatRound(c('Mail.Rtn.NPA','Mail.Reject.NPA'), 0, mark = ",")
 ```
@@ -555,11 +688,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected_minor", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected_minor", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - Minor Party") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_Minor, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_Minor, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.Minor', 1) %>%
   formatRound(c('Mail.Rtn.Minor','Mail.Reject.Minor'), 0, mark = ",")
 ```
@@ -572,9 +707,7 @@ kable(NC_reject_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-##### Mail Ballot Rejection Rates {.tabset .tabset-pills}
-
-**County plots may not be shaded using the same scale**  
+##### {.tabset .tabset-pills}
 
 ###### Non-Hispanic White
 
@@ -596,11 +729,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - Non-Hispanic White") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_nh_white, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_nh_white, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.nh_white', 1) %>%
   formatRound(c('Mail.Rtn.nh_white','Mail.Reject.nh_white'), 0, mark = ",")
 ```
@@ -625,11 +760,13 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") 
+  value = "percent_rejected", name = "Percent Rejected", joinby = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - Non-Hispanic Black") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
-datatable(NC_stats_rejects_nh_black, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+datatable(NC_stats_rejects_nh_black, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.Reject.nh_black', 1) %>%
   formatRound(c('Mail.Rtn.nh_black','Mail.Reject.nh_black'), 0, mark = ",")
 ```
@@ -649,10 +786,8 @@ kable(NC_req_send_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-##### Mail Ballot Request Rates {.tabset .tabset-pills}
+##### {.tabset .tabset-pills}
 North Carolina releases an update to the voter registration file each Saturday. The voter registration numbers are from the most recent release and may be slightly dated.  
-
-**County plots may not be shaded using the same scale**  
 
 ###### All 
 
@@ -674,7 +809,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_requested", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested", name = "Percent Requested", joinby = "fips")  %>%
+  hc_title(text ="Mail Ballot Request Rates - All") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -703,7 +840,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_requested_dem", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested_dem", name = "Percent Requested", joinby = "fips")   %>%
+  hc_title(text ="Mail Ballot Request Rates - Democrats") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale") 
 ```
 
 ``` {r echo = FALSE}
@@ -732,7 +871,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_requested_rep", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested_rep", name = "Percent Requested", joinby = "fips")   %>%
+  hc_title(text ="Mail Ballot Request Rates - Republicans") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -761,7 +902,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_requested_npa", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested_npa", name = "Percent Requested", joinby = "fips")   %>%
+  hc_title(text ="Mail Ballot Request Rates - No Party Affilation") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -790,7 +933,9 @@ NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
 NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
-  value = "percent_requested_minor", name = "Percent Requested", joinby = "fips") 
+  value = "percent_requested_minor", name = "Percent Requested", joinby = "fips")   %>%
+  hc_title(text ="Mail Ballot Request Rates - Minor Party") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
