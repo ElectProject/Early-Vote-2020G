@@ -149,7 +149,7 @@ These states are those where I have current data on mail ballot activity. More s
 
 ## Summary Statistics for Reporting States {.tabset} 
 
-### Returned
+### Mail Ballots Returned or In-Person Early Votes
 
 Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
 
@@ -170,7 +170,7 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   value = "display_data", name = "Voted") 
 ```
 
-#### Mail Ballots Returned by Party Registration
+#### Voted by Party Registration
 
 Reporting states with party registration data: FL, NC  
 
@@ -182,7 +182,7 @@ kable(US_accepted_party, valign = 't', format.args = list(big.mark = ",", scient
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Requested
+### Mail Ballots Requested
 
 Voters have requested a total of **`r format(as.numeric(sum(state_stats$mail_sent_req_2020)), big.mark =",")`** ballots in the reporting states.
 
