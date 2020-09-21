@@ -67,15 +67,31 @@ VA_req_send_tot[1,1] <- "TOTAL"
 VA_req_send_tot[1,2] <- sum(state_stats[47,5]) 
 
 VA_req_send_tot$Percent <- 100.0
+
+VA_inperson_tot <- data.frame(Total=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+
+VA_inperson_tot[1,1] <- "TOTAL"
+VA_inperson_tot[1,2] <- sum(state_stats[47,7]) 
+
+VA_inperson_tot$Percent <- 100.0
+
 ```
+## {.tabset}
 Last Report: `r state_stats[47,9]`  
 Source:  `r state_stats[47,2]`
 
-### Discussion
+### In-Person Early Votes
 
-Virginia provides only total ballot request counts at this time.
+``` {r echo = FALSE}
+kable(VA_inperson_tot, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
-### Mail Ballot Requests
+### Requested Mail Ballots
 
 ``` {r echo = FALSE}
 kable(VA_req_send_tot, format.args = list(big.mark = ",", 
