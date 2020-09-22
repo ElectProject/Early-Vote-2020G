@@ -91,7 +91,7 @@ WI_stats_returns <- mutate(WI_stats_returns, Pct.Return = Mail.Rtn.Tot/Mail.Req.
 Last Report: `r state_stats[50,9]`  
 Source:  `r state_stats[50,2]`
 
-### Returned
+### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(sum(WI_stats$Mail.Rtn.Tot)), big.mark =",")`**  
 Return Rate: **`r paste(round(100*sum(WI_stats$Mail.Rtn.Tot)/sum(WI_stats$Mail.Req.Tot), digits = 1),"%", sep = "")`**
@@ -123,11 +123,10 @@ datatable(WI_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
-### Requested
+### Mail Ballots Requested
 
 Ballots Requested: **`r format(as.numeric(sum(WI_stats$Mail.Req.Tot)), big.mark =",")`**  
 Request Rate: **`r paste(round(100*sum(WI_stats$Mail.Req.Tot)/sum(WI_stats$Reg.Voters), digits = 1),"%", sep = "")`**
-
 
 ``` {r echo = FALSE}
 WI_map_data <- WI_stats
