@@ -76,7 +76,7 @@ Source:  `r state_stats[27,2]`
 
 ### Discussion
 
-Montana gave its local election officials the option of conducting an all-mail ballot election. It is my understanding that all counties have chosen to run an all-mail ballot election. Ballot requests reported here are counts of the state's registered voters.
+Montana gave its local election officials the option of conducting an all-mail ballot election. All but 10 smaller counties have chosen to run an all-mail ballot election. Ballot requests reported here are counts of the state's registered voters.
 
 ### Mail Ballot Requests
 
