@@ -119,11 +119,11 @@ SC_stats_returns <- mutate(SC_stats_returns, Pct.Return = Mail.Rtn.Tot/Mail.Req.
 Last Report: `r state_stats[41,9]`  
 Source:  `r state_stats[41,2]`
 
-South Carolina voters have cast `r state_stats[41,6]` ballots.
-
 South Carolina does not have party registration, but does provides ballot counts by race.
 
 ### Mail Ballots Returned
+
+South Carolina voters have cast `r state_stats[41,6]` ballots.
 
 #### Mail Ballots Returned and Accepted by Race and Ethnicity
 
