@@ -323,7 +323,7 @@ NC_stats_rejects_nh_black <- mutate(NC_stats_rejects_nh_black, Mail.Rtn.nh_black
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
 
-### Returned
+### Returned and Accepted Mail Ballots
 
 Ballots Returned: **`r format(as.numeric(sum(NC_stats$Mail.Rtn.Tot, na.rm = T)), big.mark =",")`**  
 Return Rate: **`r paste(round(100*sum(NC_stats$Mail.Rtn.Tot, na.rm = T)/sum(NC_stats$Mail.Req.Tot, na.rm = T), digits = 1),"%", sep = "")`**
