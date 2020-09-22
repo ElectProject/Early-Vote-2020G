@@ -61,15 +61,42 @@ age_shell[7,1] <- "TOTAL"
 
 # Michigan
 
-MI_req_send_tot <- data.frame(Total=character(),
+age_shell <- data.frame(Race=character(),
                                   Count=integer(),
-                                  Percent=double(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
                                   stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
 
-MI_req_send_tot[1,1] <- "TOTAL"
-MI_req_send_tot[1,2] <- sum(state_stats[23,5]) 
+MI_accept_age <- age_shell
 
-MI_req_send_tot$Percent <- 100.0
+MI_accept_age[1,2] <- state_stats[23,42] 
+MI_accept_age[2,2] <- state_stats[23,43] 
+MI_accept_age[3,2] <- state_stats[23,44] 
+MI_accept_age[4,2] <- state_stats[23,45] 
+MI_accept_age[5,2] <- state_stats[23,46] 
+MI_accept_age[6,2] <- state_stats[23,47] 
+MI_accept_age[7,2] <- state_stats[23,6] 
+
+MI_accept_age[1,4] <- state_stats[23,23] 
+MI_accept_age[2,4] <- state_stats[23,24] 
+MI_accept_age[3,4] <- state_stats[23,25] 
+MI_accept_age[4,4] <- state_stats[23,26] 
+MI_accept_age[5,4] <- state_stats[23,27] 
+MI_accept_age[6,4] <- state_stats[23,28] 
+MI_accept_age[7,4] <- state_stats[23,5] 
+
+MI_accept_age$Frequency <- 100*MI_accept_age$Count/MI_accept_age[7,2]
+MI_accept_age$Rate <- 100*MI_accept_age$Count/MI_accept_age$Count2
+
+colnames(MI_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
 MI_stats_requested <- MI_stats %>%
   select(CountyName, Reg.Voters, Mail.Req.Tot, Pct.Request)
@@ -113,6 +140,14 @@ hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
 datatable(MI_stats_accepted, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Accepted", "Percent Accepted"), rownames = F) %>%
   formatPercentage('Pct.Accept', 1) %>%
   formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
+```
+
+#### Mail Ballots Returned and Accepted by Age
+
+``` {r echo = FALSE}
+kable(MI_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
 ### Requested Mail Ballots
