@@ -72,17 +72,21 @@ MI_req_send_tot[1,2] <- sum(state_stats[23,5])
 MI_req_send_tot$Percent <- 100.0
 
 MI_stats_requested <- MI_stats %>%
-  select(CountyName, Reg.Voters, Mail.Req, Pct.Request)
+  select(CountyName, Reg.Voters, Mail.Req.Tot, Pct.Request)
+
+MI_stats_accepted <- MI_stats %>%
+  select(CountyName, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
 
 ```
+## {.tabset}
 Last Report: `r state_stats[23,9]`  
 Source:  `r state_stats[23,2]`
 
 These Michigan data are compiled from a file of absentee ballot requests purchased from the Michigan Secretary of State's office.
 
-## Mail Ballot Requests
+### Returned and Accepted Mail Ballots
 
-Michigan voters have requested **`r format(as.numeric(state_stats[23,5]), big.mark =",")`** mail ballots.
+Michigan voters have cast **`r format(as.numeric(state_stats[23,6]), big.mark =",")`** mail ballots.
 
 ``` {r echo = FALSE}
 
@@ -90,7 +94,7 @@ MI_2020g_map_data <- MI_stats
 
 MI_2020g_map_data$fips <- as.character(MI_2020g_map_data$FIPS_NUM)
 
-MI_2020g_map_data <- mutate(MI_2020g_map_data, percent_requested = round(100*Pct.Request, digits = 1))
+MI_2020g_map_data <- mutate(MI_2020g_map_data, percent = round(100*Pct.Accept, digits = 1))
 
 mapfile <- download_map_data("countries/us/us-mi-all.js")
 mapdata <- get_data_from_map(mapfile)
@@ -102,11 +106,42 @@ MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
 MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
-  value = "percent_requested", name = "Percent Requested", joinby = "fips") 
+  value = "percent", name = "Percent Accepted", joinBy = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(MI_stats_accepted, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Accepted", "Percent Accepted"), rownames = F) %>%
+  formatPercentage('Pct.Accept', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
+```
+
+### Requested Mail Ballots
+
+Michigan voters have requested **`r format(as.numeric(state_stats[23,5]), big.mark =",")`** mail ballots.
+
+``` {r echo = FALSE}
+
+MI_2020g_map_data <- MI_stats
+
+MI_2020g_map_data$fips <- as.character(MI_2020g_map_data$FIPS_NUM)
+
+MI_2020g_map_data <- mutate(MI_2020g_map_data, percent = round(100*Pct.Request, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-mi-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
+
+MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
+  value = "percent", name = "Percent Requested", joinBy = "fips") 
 ```
 
 ``` {r echo = FALSE}
 datatable(MI_stats_requested, colnames = c("County", "Voter Registration", "Mail Ballots Requested", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
-  formatRound(c('Reg.Voters', 'Mail.Req'), 0, mark = ",")
+  formatRound(c('Reg.Voters', 'Mail.Req.Tot'), 0, mark = ",")
 ```
