@@ -181,9 +181,9 @@ NC_accept_race <- race_shell_returned
 
 NC_accept_race[1,2] <- sum(state_stats[34,33])
 NC_accept_race[2,2] <- sum(state_stats[34,34]) 
-NC_accept_race[3,2] <- sum(state_stats[34,35]) 
-NC_accept_race[4,2] <- sum(state_stats[34,36]) 
-NC_accept_race[5,2] <- sum(state_stats[34,37]) 
+NC_accept_race[3,2] <- sum(state_stats[34,37]) 
+NC_accept_race[4,2] <- sum(state_stats[34,35]) 
+NC_accept_race[5,2] <- sum(state_stats[34,36]) 
 NC_accept_race[6,2] <- sum(state_stats[34,38]) 
 NC_accept_race[7,2] <- sum(state_stats[34,6]) 
 
@@ -204,17 +204,17 @@ NC_reject_race <- race_shell_returned
 
 NC_reject_race[1,2] <- sum(state_stats[34,53])
 NC_reject_race[2,2] <- sum(state_stats[34,54]) 
-NC_reject_race[3,2] <- sum(state_stats[34,55]) 
-NC_reject_race[4,2] <- sum(state_stats[34,56]) 
-NC_reject_race[5,2] <- sum(state_stats[34,57]) 
+NC_reject_race[3,2] <- sum(state_stats[34,57]) 
+NC_reject_race[4,2] <- sum(state_stats[34,55]) 
+NC_reject_race[5,2] <- sum(state_stats[34,56]) 
 NC_reject_race[6,2] <- sum(state_stats[34,58]) 
 NC_reject_race[7,2] <- sum(state_stats[34,48]) 
 
 NC_reject_race[1,4] <- sum(state_stats[34,33]) + sum(state_stats[34,53])
 NC_reject_race[2,4] <- sum(state_stats[34,34]) + sum(state_stats[34,54])
-NC_reject_race[3,4] <- sum(state_stats[34,35]) + sum(state_stats[34,55])
-NC_reject_race[4,4] <- sum(state_stats[34,36]) + sum(state_stats[34,56])
-NC_reject_race[5,4] <- sum(state_stats[34,37]) + sum(state_stats[34,57])
+NC_reject_race[3,4] <- sum(state_stats[34,37]) + sum(state_stats[34,57])
+NC_reject_race[4,4] <- sum(state_stats[34,35]) + sum(state_stats[34,55])
+NC_reject_race[5,4] <- sum(state_stats[34,36]) + sum(state_stats[34,56])
 NC_reject_race[6,4] <- sum(state_stats[34,38]) + sum(state_stats[34,58])
 NC_reject_race[7,4] <- sum(state_stats[34,6]) + sum(state_stats[34,48])
 

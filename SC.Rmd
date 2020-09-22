@@ -69,17 +69,66 @@ SC_req_send_race[6,2] <- sum(state_stats[41,19])
 SC_req_send_race[7,2] <- sum(state_stats[41,5]) 
 
 SC_req_send_race$Percent <- 100 * SC_req_send_race$Count/SC_req_send_race[7,2]
+
+race_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+race_shell_returned[1,1] <- "Non-Hispanic White"
+race_shell_returned[2,1] <- "Non-Hispanic Black"
+race_shell_returned[3,1] <- "Hispanic"
+race_shell_returned[4,1] <- "Non-Hispanic Asian American"
+race_shell_returned[5,1] <- "Non-Hispanic Native American"
+race_shell_returned[6,1] <- "Other/Multiple/Unknown"
+race_shell_returned[7,1] <- "TOTAL"
+
+
+SC_accept_race <- race_shell_returned
+
+SC_accept_race[1,2] <- sum(state_stats[41,33])
+SC_accept_race[2,2] <- sum(state_stats[41,34]) 
+SC_accept_race[3,2] <- sum(state_stats[41,37]) 
+SC_accept_race[4,2] <- sum(state_stats[41,35]) 
+SC_accept_race[5,2] <- sum(state_stats[41,36]) 
+SC_accept_race[6,2] <- sum(state_stats[41,38]) 
+SC_accept_race[7,2] <- sum(state_stats[41,6]) 
+
+SC_accept_race[1,4] <- sum(state_stats[41,14])
+SC_accept_race[2,4] <- sum(state_stats[41,15]) 
+SC_accept_race[3,4] <- sum(state_stats[41,16]) 
+SC_accept_race[4,4] <- sum(state_stats[41,17]) 
+SC_accept_race[5,4] <- sum(state_stats[41,18]) 
+SC_accept_race[6,4] <- sum(state_stats[41,19]) 
+SC_accept_race[7,4] <- sum(state_stats[41,5]) 
+
+SC_accept_race$Frequency <- 100 * SC_accept_race$Count/SC_accept_race[7,2]
+SC_accept_race$Rate <- 100*SC_accept_race$Count/SC_accept_race$Count2
+
+colnames(SC_accept_race) <- c("Race/Ethnicity", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 ```
+## {.tabset}
 Last Report: `r state_stats[41,9]`  
 Source:  `r state_stats[41,2]`
-
-### Discussion
 
 South Carolina voters have cast `r state_stats[41,6]` ballots.
 
 South Carolina does not have party registration, but does provides ballot counts by race.
 
-### Mail Ballot Requests by Race and Ethnicity
+### Mail Ballots Returned
+
+#### Mail Ballots Returned and Accepted by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(SC_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requested
+
+#### Mail Ballots Requested by Race and Ethnicity
 
 ``` {r echo = FALSE}
 kable(SC_req_send_race, format.args = list(big.mark = ",", 
