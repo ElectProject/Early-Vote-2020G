@@ -37,6 +37,34 @@ race_shell[5,1] <- "Non-Hispanic Native American"
 race_shell[6,1] <- "Other/Multiple/Unknown"
 race_shell[7,1] <- "TOTAL"
 
+race_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+race_shell_returned[1,1] <- "Non-Hispanic White"
+race_shell_returned[2,1] <- "Non-Hispanic Black"
+race_shell_returned[3,1] <- "Hispanic"
+race_shell_returned[4,1] <- "Non-Hispanic Asian American"
+race_shell_returned[5,1] <- "Non-Hispanic Native American"
+race_shell_returned[6,1] <- "Other/Multiple/Unknown"
+race_shell_returned[7,1] <- "TOTAL"
+
+GA_age_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+GA_age_shell_returned[1,1] <- "18 to 24"
+GA_age_shell_returned[2,1] <- "25 to 34"
+GA_age_shell_returned[3,1] <- "35 to 44"
+GA_age_shell_returned[4,1] <- "45 and 55"
+GA_age_shell_returned[5,1] <- "56 and 65"
+GA_age_shell_returned[6,1] <- "66 and up"
+GA_age_shell_returned[7,1] <- "Age Unknown"
+GA_age_shell_returned[8,1] <- "TOTAL"
 
 gender_shell <- data.frame(Gender=character(),
                                   Count=integer(),
@@ -61,6 +89,54 @@ age_shell[7,1] <- "TOTAL"
 
 # Georiga
 
+GA_accept_race <- race_shell_returned
+
+GA_accept_race[1,2] <- sum(state_stats[11,33])
+GA_accept_race[2,2] <- sum(state_stats[11,34]) 
+GA_accept_race[3,2] <- sum(state_stats[11,37]) 
+GA_accept_race[4,2] <- sum(state_stats[11,35]) 
+GA_accept_race[5,2] <- sum(state_stats[11,36]) 
+GA_accept_race[6,2] <- sum(state_stats[11,38]) 
+GA_accept_race[7,2] <- sum(state_stats[11,6]) 
+
+GA_accept_race[1,4] <- sum(state_stats[11,14])
+GA_accept_race[2,4] <- sum(state_stats[11,15]) 
+GA_accept_race[3,4] <- sum(state_stats[11,16]) 
+GA_accept_race[4,4] <- sum(state_stats[11,17]) 
+GA_accept_race[5,4] <- sum(state_stats[11,18]) 
+GA_accept_race[6,4] <- sum(state_stats[11,19]) 
+GA_accept_race[7,4] <- sum(state_stats[11,5]) 
+
+GA_accept_race$Frequency <- 100 * GA_accept_race$Count/GA_accept_race[7,2]
+GA_accept_race$Rate <- 100*GA_accept_race$Count/GA_accept_race$Count2
+
+colnames(GA_accept_race) <- c("Race/Ethnicity", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+GA_accept_age <- GA_age_shell_returned
+
+GA_accept_age[1,2] <- sum(state_stats[11,42])
+GA_accept_age[2,2] <- sum(state_stats[11,43]) 
+GA_accept_age[3,2] <- sum(state_stats[11,44]) 
+GA_accept_age[4,2] <- sum(state_stats[11,45]) 
+GA_accept_age[5,2] <- sum(state_stats[11,46])
+GA_accept_age[6,2] <- sum(state_stats[11,47])
+GA_accept_age[7,2] <- sum(state_stats[11,75])
+GA_accept_age[8,2] <- sum(state_stats[11,6])
+
+GA_accept_age[1,4] <- sum(state_stats[11,23])
+GA_accept_age[2,4] <- sum(state_stats[11,24]) 
+GA_accept_age[3,4] <- sum(state_stats[11,25]) 
+GA_accept_age[4,4] <- sum(state_stats[11,26]) 
+GA_accept_age[5,4] <- sum(state_stats[11,27])
+GA_accept_age[6,4] <- sum(state_stats[11,28])
+GA_accept_age[7,4] <- sum(state_stats[11,74])
+GA_accept_age[8,4] <- sum(state_stats[11,5])
+
+GA_accept_age$Frequency <- 100 * GA_accept_age$Count/GA_accept_age[5,2]
+GA_accept_age$Rate <- 100*GA_accept_age$Count/GA_accept_age$Count2
+
+colnames(GA_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
 GA_req_send_tot <- data.frame(Total=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -80,8 +156,8 @@ Source:  `r state_stats[11,2]`
 
 ## {.tabset}
 
-### Returned
-Ballots Returned: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
+### Mail Ballots Returned and Accepted
+Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
 Return Rate: **`r paste(round(100*sum(GA_stats$Mail.Accept.Tot)/sum(GA_stats$Mail.Req.Tot), digits = 1),"%", sep = "")`**
 
 ``` {r echo = FALSE}
@@ -110,6 +186,23 @@ datatable(GA_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatPercentage('Pct.Accept', 1) %>%
   formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
 ```
+
+#### Mail Ballots Returned and Accepted by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Returned and Accepted by Age
+
+``` {r echo = FALSE}
+kable(GA_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 
 ### Requested
 
