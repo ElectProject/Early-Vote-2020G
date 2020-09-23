@@ -1,0 +1,162 @@
+---
+title: "Iowa Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+IA_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_IA.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+# Iowa
+
+IA_req_send_party <- party_shell
+
+IA_req_send_party[1,2] <- state_stats[16,10] 
+IA_req_send_party[2,2] <- state_stats[16,11] 
+IA_req_send_party[3,2] <- state_stats[16,12] 
+IA_req_send_party[4,2] <- state_stats[16,13] 
+IA_req_send_party[5,2] <- state_stats[16,5] 
+
+IA_req_send_party$Percent <- 100*IA_req_send_party$Count/IA_req_send_party[5,2]
+
+IA_accept_party <- party_shell_returned
+
+IA_accept_party[1,2] <- state_stats[16,29] 
+IA_accept_party[2,2] <- state_stats[16,30] 
+IA_accept_party[3,2] <- state_stats[16,31] 
+IA_accept_party[4,2] <- state_stats[16,32] 
+IA_accept_party[5,2] <- state_stats[16,6] 
+
+IA_accept_party[1,4] <- state_stats[16,10] 
+IA_accept_party[2,4] <- state_stats[16,11] 
+IA_accept_party[3,4] <- state_stats[16,12] 
+IA_accept_party[4,4] <- state_stats[16,13] 
+IA_accept_party[5,4] <- state_stats[16,5] 
+
+IA_accept_party$Frequency <- 100*IA_accept_party$Count/IA_accept_party[5,2]
+IA_accept_party$Rate <- 100*IA_accept_party$Count/IA_accept_party$Count2
+
+colnames(IA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+IA_stats_requested <- IA_stats %>%
+  select(County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+
+IA_stats_accepted <- IA_stats %>%
+  select(County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
+```
+## {.tabset}
+Last Report: `r state_stats[16,9]`  
+Source:  `r state_stats[16,2]`
+
+### Returned and Accepted Mail Ballots
+
+#### **Mail Ballots Returned and Accepted by Party Registration**
+
+Iowa voters have cast **`r format(as.numeric(state_stats[16,6]), big.mark =",")`** mail ballots.
+
+``` {r echo = FALSE}
+kable(IA_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+
+IA_2020g_map_data <- IA_stats
+
+IA_2020g_map_data$fips <- as.character(IA_2020g_map_data$fips)
+
+IA_2020g_map_data <- mutate(IA_2020g_map_data, percent = round(100*Pct.Accept, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-ia-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+IA_2020g_map_data <- left_join(IA_2020g_map_data, mapdata, by = "fips")
+
+IA_2020g_map_data <- arrange(IA_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-ia-all", data = IA_2020g_map_data,
+  value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(IA_stats_accepted, colnames = c("County", "Mail Ballots Requested", "Mail Ballots Accepted", "Percent Accepted"), rownames = F) %>%
+  formatPercentage('Pct.Accept', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
+```
+
+### Requested Mail Ballots
+
+Iowa voters have requested **`r format(as.numeric(state_stats[16,5]), big.mark =",")`** mail ballots.
+
+#### **Mail Ballots Requested by Party Registration**
+
+``` {r echo = FALSE}
+kable(IA_req_send_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+
+IA_2020g_map_data <- IA_stats
+
+IA_2020g_map_data$fips <- as.character(IA_2020g_map_data$fips)
+
+IA_2020g_map_data <- mutate(IA_2020g_map_data, percent = round(100*Pct.Request, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-ia-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+IA_2020g_map_data <- left_join(IA_2020g_map_data, mapdata, by = "fips")
+
+IA_2020g_map_data <- arrange(IA_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-ia-all", data = IA_2020g_map_data,
+  value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Request Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+
+```
+
+``` {r echo = FALSE}
+datatable(IA_stats_requested, colnames = c("County", "Voter Registration", "Mail Ballots Requested", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters', 'Mail.Req.Tot'), 0, mark = ",")
+```

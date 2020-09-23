@@ -113,7 +113,9 @@ WI_map_data <- left_join(WI_map_data, mapdata, by = "fips")
 WI_map_data <- arrange(WI_map_data, row)
 
 hcmap(map = "countries/us/us-wi-all", data = WI_map_data,
-      value = "percent", name = "Percent Returned", joinBy = "fips") 
+      value = "percent", name = "Percent Returned", joinBy = "fips")  %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 
@@ -145,7 +147,9 @@ WI_map_data <- left_join(WI_map_data, mapdata, by = "fips")
 WI_map_data <- arrange(WI_map_data, row)
 
 hcmap(map = "countries/us/us-wi-all", data = WI_map_data,
-      value = "percent", name = "Percent Requested", joinBy = "fips") 
+      value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Request Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
