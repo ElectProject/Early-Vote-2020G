@@ -1,7 +1,7 @@
 ---
 title: "Frequently Asked Questions"
 ---
-###Who May Use These Data?
+### Who May Use These Data?
 The content here is distributed under a [Creative Commons Attribution-ShareAlike License](https://creativecommons.org/licenses/). This license lets others remix, adapt, and build upon this work even for commercial purposes, as long as credit is provided and license their new creations under the identical terms.
 
 ### What Does the Early Vote Tell Us?
