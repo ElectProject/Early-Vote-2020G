@@ -51,6 +51,19 @@ race_shell_returned[5,1] <- "Non-Hispanic Native American"
 race_shell_returned[6,1] <- "Other/Multiple/Unknown"
 race_shell_returned[7,1] <- "TOTAL"
 
+GA_age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+GA_age_shell[1,1] <- "18 to 24"
+GA_age_shell[2,1] <- "25 to 34"
+GA_age_shell[3,1] <- "35 to 44"
+GA_age_shell[4,1] <- "45 and 55"
+GA_age_shell[5,1] <- "56 and 65"
+GA_age_shell[6,1] <- "66 and up"
+GA_age_shell[7,1] <- "Age Unknown"
+GA_age_shell[8,1] <- "TOTAL"
+
 GA_age_shell_returned <- data.frame(Race=character(),
                                   Count=integer(),
                                   Frequency=double(),
@@ -75,6 +88,18 @@ gender_shell[2,1] <- "Male"
 gender_shell[3,1] <- "Unknown"
 gender_shell[4,1] <- "TOTAL"
 
+
+gender_shell_full <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+gender_shell_full[1,1] <- "Female"
+gender_shell_full[2,1] <- "Male"
+gender_shell_full[3,1] <- "Unknown"
+gender_shell_full[4,1] <- "TOTAL"
+
 age_shell <- data.frame(Age=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -87,7 +112,76 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Georiga
+
+voted_shell <- data.frame(Voted=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+voted_shell[1,1] <- "Voted in 2016 General"
+voted_shell[2,1] <- "Did Not Vote in 2016 General"
+voted_shell[3,1] <- "TOTAL"
+
+voted_shell_full <- data.frame(Voted=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+voted_shell_full[1,1] <- "Voted in 2016 General"
+voted_shell_full[2,1] <- "Did Not Vote in 2016 General"
+voted_shell_full[3,1] <- "TOTAL"
+
+# Georgia
+
+GA_request_race <- race_shell
+
+GA_request_race[1,2] <- sum(state_stats[11,14])
+GA_request_race[2,2] <- sum(state_stats[11,15]) 
+GA_request_race[3,2] <- sum(state_stats[11,16]) 
+GA_request_race[4,2] <- sum(state_stats[11,17]) 
+GA_request_race[5,2] <- sum(state_stats[11,18]) 
+GA_request_race[6,2] <- sum(state_stats[11,19]) 
+GA_request_race[7,2] <- sum(state_stats[11,5]) 
+
+GA_request_race$Percent <- 100*GA_request_race$Count/GA_request_race[7,2]
+
+colnames(GA_request_race) <- c("Race/Ethnicity", "Returned Ballots", "Freq. Distribution")
+
+GA_request_voted <- voted_shell
+
+GA_request_voted[1,2] <- sum(state_stats[11,72])
+GA_request_voted[2,2] <- sum(state_stats[11,73]) 
+GA_request_voted[3,2] <- sum(state_stats[11,5]) 
+
+GA_request_voted$Percent <- 100*GA_request_voted$Count/GA_request_voted[3,2]
+
+colnames(GA_request_voted) <- c("Voted", "Returned Ballots", "Freq. Distribution")
+
+GA_request_age <- GA_age_shell
+
+GA_request_age[1,2] <- sum(state_stats[11,23])
+GA_request_age[2,2] <- sum(state_stats[11,24]) 
+GA_request_age[3,2] <- sum(state_stats[11,25]) 
+GA_request_age[4,2] <- sum(state_stats[11,26]) 
+GA_request_age[5,2] <- sum(state_stats[11,27])
+GA_request_age[6,2] <- sum(state_stats[11,28])
+GA_request_age[7,2] <- sum(state_stats[11,74])
+GA_request_age[8,2] <- sum(state_stats[11,5])
+
+GA_request_age$Percent <- 100*GA_request_age$Count/GA_request_age[8,2]
+
+colnames(GA_request_age) <- c("Age", "Returned Ballots", "Freq. Distribution")
+
+GA_request_gender <- gender_shell
+
+GA_request_gender[1,2] <- sum(state_stats[11,21])
+GA_request_gender[2,2] <- sum(state_stats[11,20]) 
+GA_request_gender[3,2] <- sum(state_stats[11,22]) 
+GA_request_gender[4,2] <- sum(state_stats[11,5]) 
+
+GA_request_gender$Percent <- 100*GA_request_gender$Count/GA_request_gender[4,2]
+
+colnames(GA_request_gender) <- c("Gender", "Returned Ballots", "Freq. Distribution")
 
 GA_accept_race <- race_shell_returned
 
@@ -137,19 +231,121 @@ GA_accept_age$Rate <- 100*GA_accept_age$Count/GA_accept_age$Count2
 
 colnames(GA_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
-GA_req_send_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
+GA_accept_voted <- voted_shell_full
 
-GA_req_send_tot[1,1] <- "TOTAL"
-GA_req_send_tot[1,2] <- sum(state_stats[11,5]) 
+GA_accept_voted[1,2] <- sum(state_stats[11,68])
+GA_accept_voted[2,2] <- sum(state_stats[11,69]) 
+GA_accept_voted[3,2] <- sum(state_stats[11,6]) 
 
-GA_req_send_tot$Percent <- 100.0
+GA_accept_voted[1,4] <- sum(state_stats[11,72])
+GA_accept_voted[2,4] <- sum(state_stats[11,73]) 
+GA_accept_voted[3,4] <- sum(state_stats[11,5]) 
 
+GA_accept_voted$Frequency <- 100 * GA_accept_voted$Count/GA_accept_voted[3,2]
+GA_accept_voted$Rate <- 100*GA_accept_voted$Count/GA_accept_voted$Count2
+
+colnames(GA_accept_voted) <- c("Voted", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+GA_accept_gender <- gender_shell_full
+
+GA_accept_gender[1,2] <- sum(state_stats[11,39])
+GA_accept_gender[2,2] <- sum(state_stats[11,40]) 
+GA_accept_gender[3,2] <- sum(state_stats[11,41]) 
+GA_accept_gender[4,2] <- sum(state_stats[11,6]) 
+
+GA_accept_gender[1,4] <- sum(state_stats[11,21])
+GA_accept_gender[2,4] <- sum(state_stats[11,20]) 
+GA_accept_gender[3,4] <- sum(state_stats[11,22]) 
+GA_accept_gender[4,4] <- sum(state_stats[11,5]) 
+
+GA_accept_gender$Frequency <- 100 * GA_accept_gender$Count/GA_accept_gender[4,2]
+GA_accept_gender$Rate <- 100*GA_accept_gender$Count/GA_accept_gender$Count2
+
+colnames(GA_accept_gender) <- c("Gender", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+GA_reject_race <- race_shell_returned
+
+GA_reject_race[1,2] <- sum(state_stats[11,53])
+GA_reject_race[2,2] <- sum(state_stats[11,54]) 
+GA_reject_race[3,2] <- sum(state_stats[11,57]) 
+GA_reject_race[4,2] <- sum(state_stats[11,55]) 
+GA_reject_race[5,2] <- sum(state_stats[11,56]) 
+GA_reject_race[6,2] <- sum(state_stats[11,58]) 
+GA_reject_race[7,2] <- sum(state_stats[11,48]) 
+
+GA_reject_race[1,4] <- sum(state_stats[11,33]) + sum(state_stats[11,53])
+GA_reject_race[2,4] <- sum(state_stats[11,34]) + sum(state_stats[11,54])
+GA_reject_race[3,4] <- sum(state_stats[11,37]) + sum(state_stats[11,57])
+GA_reject_race[4,4] <- sum(state_stats[11,35]) + sum(state_stats[11,55])
+GA_reject_race[5,4] <- sum(state_stats[11,36]) + sum(state_stats[11,56])
+GA_reject_race[6,4] <- sum(state_stats[11,38]) + sum(state_stats[11,58])
+GA_reject_race[7,4] <- sum(state_stats[11,6]) + sum(state_stats[11,48])
+
+GA_reject_race$Frequency <- 100 * GA_reject_race$Count/GA_reject_race[7,2]
+GA_reject_race$Rate <- 100*GA_reject_race$Count/GA_reject_race$Count2
+
+colnames(GA_reject_race) <- c("Race/Ethnicity", "Rejected Ballots", "Freq. Distribution", "Returned Ballots (All)", "Rejection Rate")
+
+GA_reject_voted <- voted_shell_full
+
+GA_reject_voted[1,2] <- sum(state_stats[11,70])
+GA_reject_voted[2,2] <- sum(state_stats[11,71]) 
+GA_reject_voted[3,2] <- sum(state_stats[11,48]) 
+
+GA_reject_voted[1,4] <- sum(state_stats[11,70]) + sum(state_stats[11,68])
+GA_reject_voted[2,4] <- sum(state_stats[11,71]) + sum(state_stats[11,69])
+GA_reject_voted[3,4] <- sum(state_stats[11,48]) + sum(state_stats[11,6])
+
+GA_reject_voted$Frequency <- 100 * GA_reject_voted$Count/GA_reject_voted[3,2]
+GA_reject_voted$Rate <- 100*GA_reject_voted$Count/GA_reject_voted$Count2
+
+colnames(GA_reject_voted) <- c("Voted", "Rejected Ballots", "Freq. Distribution", "Returned Ballots (All)", "Rejection Rate")
+
+GA_reject_age <- GA_age_shell_returned
+
+GA_reject_age[1,2] <- sum(state_stats[11,62])
+GA_reject_age[2,2] <- sum(state_stats[11,63]) 
+GA_reject_age[3,2] <- sum(state_stats[11,64]) 
+GA_reject_age[4,2] <- sum(state_stats[11,65]) 
+GA_reject_age[5,2] <- sum(state_stats[11,66])
+GA_reject_age[6,2] <- sum(state_stats[11,67])
+GA_reject_age[7,2] <- sum(state_stats[11,76])
+GA_reject_age[8,2] <- sum(state_stats[11,48])
+
+GA_reject_age[1,4] <- sum(state_stats[11,42]) + sum(state_stats[11,62])
+GA_reject_age[2,4] <- sum(state_stats[11,43]) + sum(state_stats[11,63])
+GA_reject_age[3,4] <- sum(state_stats[11,44]) + sum(state_stats[11,64])
+GA_reject_age[4,4] <- sum(state_stats[11,45]) + sum(state_stats[11,65])
+GA_reject_age[5,4] <- sum(state_stats[11,46]) + sum(state_stats[11,66])
+GA_reject_age[6,4] <- sum(state_stats[11,47]) + sum(state_stats[11,67])
+GA_reject_age[7,4] <- sum(state_stats[11,75]) + sum(state_stats[11,68])
+GA_reject_age[8,4] <- sum(state_stats[11,6]) + sum(state_stats[11,48])
+
+GA_reject_age$Frequency <- 100 * GA_reject_age$Count/GA_reject_age[8,2]
+GA_reject_age$Rate <- 100*GA_reject_age$Count/GA_reject_age$Count2
+
+colnames(GA_reject_age) <- c("Age", "Rejected Ballots", "Freq. Distribution", "Returned Ballots (All)", "Rejection Rate")
+
+GA_reject_gender <- gender_shell_full
+
+GA_reject_gender[1,2] <- sum(state_stats[11,59])
+GA_reject_gender[2,2] <- sum(state_stats[11,60]) 
+GA_reject_gender[3,2] <- sum(state_stats[11,61]) 
+GA_reject_gender[4,2] <- sum(state_stats[11,48]) 
+
+GA_reject_gender[1,4] <- sum(state_stats[11,59]) + sum(state_stats[11,39]) 
+GA_reject_gender[2,4] <- sum(state_stats[11,60]) + sum(state_stats[11,40])
+GA_reject_gender[3,4] <- sum(state_stats[11,61]) + sum(state_stats[11,41])
+GA_reject_gender[4,4] <- sum(state_stats[11,48]) + sum(state_stats[11,6])
+
+GA_reject_gender$Frequency <- 100 * GA_reject_gender$Count/GA_reject_gender[4,2]
+GA_reject_gender$Rate <- 100*GA_reject_gender$Count/GA_reject_gender$Count2
+
+colnames(GA_reject_gender) <- c("Age", "Rejected Ballots", "Freq. Distribution", "Returned Ballots (All)", "Rejection Rate")
 
 GA_stats_requests <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 GA_stats_returns <- select(GA_stats, County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
+GA_stats_rejects <- select(GA_stats, County, Mail.Reject.Tot, Mail.Return.Tot, Pct.Reject)
 ```
 Last Report: `r state_stats[11,9]`  
 Source:  `r state_stats[11,2]`
@@ -178,7 +374,9 @@ GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
 GA_map_data <- arrange(GA_map_data, row)
 
 hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
-      value = "percent", name = "Percent Accepted", joinBy = "fips") 
+      value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -195,6 +393,14 @@ kable(GA_accept_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### Mail Ballots Returned and Accepted by Vote in 2016 General Election
+
+``` {r echo = FALSE}
+kable(GA_accept_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 #### Mail Ballots Returned and Accepted by Age
 
 ``` {r echo = FALSE}
@@ -203,8 +409,84 @@ kable(GA_accept_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### Mail Ballots Returned and Accepted by Gender
 
-### Requested
+``` {r echo = FALSE}
+kable(GA_accept_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballots Rejected
+
+Mail Ballots Rejected: **`r format(as.numeric(sum(GA_stats$Mail.Reject.Tot)), big.mark =",")`**  
+Mail Ballot Rejection Rate: **`r paste(round(100*sum(GA_stats$Mail.Reject.Tot)/sum(GA_stats$Mail.Return.Tot), digits = 1),"%", sep = "")`**
+
+To calculate mail ballot rejection rates, I divide the number of rejected ballots by the number of accepted ballots *plus* the number of rejected ballots. 
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Mail.Reject.Tot/Mail.Return.Tot), digits = 1))
+GA_map_data <- mutate(GA_map_data, percent = replace_na(percent, 0))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_rejects, colnames = c("County", "Mail Ballots Rejected", "Mail Ballots Returned (All)", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject', 1) %>%
+  formatRound(c('Mail.Return.Tot','Mail.Reject.Tot'), 0, mark = ",")
+```
+
+#### Mail Ballots Rejected by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_reject_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Rejected by Vote in 2016 General Election
+
+``` {r echo = FALSE}
+kable(GA_reject_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Rejected by Age
+
+``` {r echo = FALSE}
+kable(GA_reject_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Rejected by Gender
+
+``` {r echo = FALSE}
+kable(GA_reject_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballots Requested
 
 Ballots Requested: **`r format(as.numeric(sum(GA_stats$Mail.Req.Tot)), big.mark =",")`**  
 Request Rate: **`r paste(round(100*sum(GA_stats$Mail.Req.Tot)/sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**
@@ -227,11 +509,45 @@ GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
 GA_map_data <- arrange(GA_map_data, row)
 
 hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
-      value = "percent", name = "Percent Requested", joinBy = "fips") 
+      value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Request Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
 datatable(GA_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballots Requested", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Request', 1) %>%
   formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
+
+#### Mail Ballots Requested by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_request_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Requested by Vote in 2016 General Election
+
+``` {r echo = FALSE}
+kable(GA_request_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Requested by Age
+
+``` {r echo = FALSE}
+kable(GA_request_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Requested by Gender
+
+``` {r echo = FALSE}
+kable(GA_request_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
