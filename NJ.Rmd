@@ -73,16 +73,16 @@ NJ_req_send_party$Percent <- 100*NJ_req_send_party$Count/NJ_req_send_party[5,2]
 Last Report: `r state_stats[31,9]`  
 Source:  `r state_stats[31,2]`
 
-### Discussion
+## {.tabset}
+Last Report: `r state_stats[31,9]`  
+Source:  `r state_stats[31,2]`
 
-New Jersey is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's registered voters.
+Total Early Votes: **`r format(as.numeric(state_stats[31,8]), big.mark =",")`**
 
-### Mail Ballot Requests
+### Mail Ballots Returned
 
-``` {r echo = FALSE}
-kable(NJ_req_send_party,format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
+Ballots Returned: **`r format(as.numeric(state_stats[31,6]), big.mark =",")`**
 
-New Jersey registered Democrats have a **`r format(as.numeric(NJ_req_send_party[1,2]-NJ_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+### Requested Mail Ballots
+
+Ballots Requested: **`r format(as.numeric(state_stats[31,5]), big.mark =",")`**
