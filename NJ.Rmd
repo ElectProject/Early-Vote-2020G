@@ -70,9 +70,6 @@ NJ_req_send_party[5,2] <- state_stats[31,5]
 
 NJ_req_send_party$Percent <- 100*NJ_req_send_party$Count/NJ_req_send_party[5,2]
 ```
-Last Report: `r state_stats[31,9]`  
-Source:  `r state_stats[31,2]`
-
 ## {.tabset}
 Last Report: `r state_stats[31,9]`  
 Source:  `r state_stats[31,2]`
