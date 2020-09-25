@@ -104,6 +104,9 @@ MI_stats_requested <- MI_stats %>%
 MI_stats_accepted <- MI_stats %>%
   select(CountyName, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
 
+MI_stats_rejected <- MI_stats %>%
+  select(CountyName, Mail.Reject.Tot, Mail.Returned.Tot, Pct.Reject)
+
 ```
 ## {.tabset}
 Last Report: `r state_stats[23,9]`  
@@ -148,6 +151,39 @@ datatable(MI_stats_accepted, colnames = c("County", "Mail Ballots Requested", "M
 kable(MI_accept_age, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Rejected Mail Ballots
+
+Michigan election officials have rejected **`r format(as.numeric(state_stats[23,48]), big.mark =",")`** mail ballots.
+
+To calculate mail ballot rejection rates, I divide the number of rejected ballots by the number of accepted ballots *plus* the number of rejected ballots. 
+
+``` {r echo = FALSE}
+
+MI_2020g_map_data <- MI_stats
+
+MI_2020g_map_data$fips <- as.character(MI_2020g_map_data$FIPS_NUM)
+
+MI_2020g_map_data <- mutate(MI_2020g_map_data, percent = round(100*Pct.Reject, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-mi-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
+
+MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
+  value = "percent", name = "Percent Accepted", joinBy = "fips") 
+```
+
+``` {r echo = FALSE}
+datatable(MI_stats_rejected, colnames = c("County", "Mail Ballots Rejected", "Mail Ballots Returned (All)", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject', 1) %>%
+  formatRound(c('Mail.Reject.Tot', 'Mail.Returned.Tot'), 0, mark = ",")
 ```
 
 ### Requested Mail Ballots

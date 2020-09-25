@@ -71,17 +71,16 @@ MT_req_send_tot[1,2] <- sum(state_stats[27,5])
 MT_req_send_tot$Percent <- 100.0
 
 ```
+## {.tabset}
 Last Report: `r state_stats[27,9]`  
 Source:  `r state_stats[27,2]`
 
-### Discussion
+### Returned Mail Ballots
 
-Montana gave its local election officials the option of conducting an all-mail ballot election. All but 10 smaller counties have chosen to run an all-mail ballot election. Ballot requests reported here are counts of the state's registered voters.
+Montana voters have cast **`r format(as.numeric(state_stats[27,6]), big.mark =",")`** mail ballots.
 
 ### Mail Ballot Requests
 
-``` {r echo = FALSE}
-kable(MT_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
+Montana voters have requested **`r format(as.numeric(state_stats[27,5]), big.mark =",")`** mail ballots.
+
+Montana gave its local election officials the option of conducting an all-mail ballot election. All but 10 smaller counties have chosen to run an all-mail ballot election. For now, ballot requests reported here are counts of the state's registered voters.
