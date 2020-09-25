@@ -93,6 +93,6 @@ In-Person Early Votes: **`r format(as.numeric(state_stats[47,7]), big.mark =",")
 
 Ballots Returned: **`r format(as.numeric(state_stats[47,6]), big.mark =",")`**
 
-### Requested Mail Ballots
+### Mail Ballots Requested
 
 Ballots Requested: **`r format(as.numeric(state_stats[47,5]), big.mark =",")`**

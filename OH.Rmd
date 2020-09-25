@@ -82,18 +82,25 @@ OH_req_send_age[7,2] <- state_stats[36,5]
 
 OH_req_send_age$Percent <- 100*OH_req_send_age$Count/OH_req_send_age[7,2]
 ```
+## {.tabset}
 Last Report: `r state_stats[36,9]`  
 Source:  `r state_stats[36,2]`
 
-### Discussion
-
-Data presented here are scraped from 62 of Ohio's 88 counties that post absentee ballot reports online. These 62 reporting counties include the largest counties of Cuyahoga, Franklin, and Hamilton.  
+Data presented here are scraped from 76 of Ohio's 88 counties that post absentee ballot reports online. These 76 reporting counties include the largest counties of Cuyahoga, Franklin, and Hamilton.  
 
 These data were last scraped on the Last Report date, but counties may have last posted their data on an earlier date.
 
 You may see reports of Ohio mail ballot activity by "Party". I will not post party statistics because they are misleading. Ohio's party affiliation is unlike party registration in other states. In Ohio, "Party" is a record of the last party primary a voter participated in, in the current and past last two calendar years (see: [Ohio Code 3513.19(3)](https://codes.ohio.gov/orc/3513.19)). In Ohio's April 28, 2020 presidential primary, 124,628 more voters participated in the Democratic primary than the Republican primary, primarily because President Trump had only token opposition. As a consequence, **Ohio's "Party" is currently artificially tilted towards the Democrats.** Leveraging this quirk, both political parties and their allies have abused these party statistics over the years to make disingenuous claims about party enthusiasm in Ohio.
 
-### Mail Ballot Requests by Age
+### Mail Ballots Returned
+
+Ballots Returned: **`r format(as.numeric(state_stats[36,6]), big.mark =",")`**
+
+### Mail Ballots Requested
+
+Ballots Requested: **`r format(as.numeric(state_stats[36,5]), big.mark =",")`**
+
+#### Mail Ballot Requests by Age
 
 ``` {r echo = FALSE}
 kable(OH_req_send_age, format.args = list(big.mark = ",", 
@@ -101,7 +108,7 @@ kable(OH_req_send_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by County
+#### Mail Ballot Requests by County
 Ohio releases a weekly update to the voter registration file. The voter registration numbers are from the most recent release and may be slightly dated.
 
 ``` {r echo = FALSE}
