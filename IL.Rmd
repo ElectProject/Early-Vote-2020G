@@ -78,9 +78,7 @@ IL_stats_requests <- select(IL_stats, County, Reg.Voters, By.Mail, Pct.Request)
 Last Report: `r state_stats[14,9]`  
 Source:  `r state_stats[14,2]`
 
-### Discussion
-
-Illinois voters have cast `r state_stats[14,6]` ballots.
+Total Ballots Cast: **`r format(as.numeric(state_stats[14,8]), big.mark =",")`**  
 
 ### Mail Ballot Requests
 

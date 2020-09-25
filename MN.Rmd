@@ -86,8 +86,9 @@ Source:  `r state_stats[24,2]`
 
 ## {.tabset}
 
-### Accepted
-Accepted report is from in-person voting in [Minneapolis](https://twitter.com/VoteMpls/status/1307097259734118400) only. Statewide numbers are expected Sept. 25.
+### Accepted Ballots
+
+Minnesota does not distinguish between mail and in-person ballots on their state reports.
 
 ``` {r echo = FALSE}
 kable(MN_accept_tot, format.args = list(big.mark = ",", 
