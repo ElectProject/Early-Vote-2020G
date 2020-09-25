@@ -116,7 +116,8 @@ These Michigan data are compiled from a file of absentee ballot requests purchas
 
 ### Returned and Accepted Mail Ballots
 
-Michigan voters have cast **`r format(as.numeric(state_stats[23,6]), big.mark =",")`** mail ballots.
+Ballots Returned: **`r format(as.numeric(state_stats[23,6]), big.mark =",")`**  
+Return Rate: **`r paste(round(100*sum(state_stats[23,6], na.rm = T)/sum(state_stats[23,5], na.rm = T), digits = 1),"%", sep = "")`**
 
 ``` {r echo = FALSE}
 
@@ -136,7 +137,9 @@ MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
 MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
-  value = "percent", name = "Percent Accepted", joinBy = "fips") 
+  value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
@@ -154,6 +157,9 @@ kable(MI_accept_age, format.args = list(big.mark = ",",
 ```
 
 ### Rejected Mail Ballots
+Ballots Rejected: **`r format(as.numeric(state_stats[23,48]), big.mark =",")`**  
+Rejection Rate: **`r paste(round(100*(state_stats[23,48])/(state_stats[23,48]+state_stats[23,46]), digits = 1),"%", sep = "")`**
+
 
 Michigan election officials have rejected **`r format(as.numeric(state_stats[23,48]), big.mark =",")`** mail ballots.
 
@@ -177,7 +183,10 @@ MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
 MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
-  value = "percent", name = "Percent Accepted", joinBy = "fips") 
+  value = "percent", name = "Percent Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+
 ```
 
 ``` {r echo = FALSE}
@@ -188,7 +197,8 @@ datatable(MI_stats_rejected, colnames = c("County", "Mail Ballots Rejected", "Ma
 
 ### Requested Mail Ballots
 
-Michigan voters have requested **`r format(as.numeric(state_stats[23,5]), big.mark =",")`** mail ballots.
+Ballots Requested: **`r format(as.numeric(state_stats[23,5]), big.mark =",")`**  
+Request Rate: **`r paste(round(100*state_stats[23,5]/(sum(MI_stats$Reg.Voters)), digits = 1),"%", sep = "")`**
 
 ``` {r echo = FALSE}
 
@@ -208,7 +218,9 @@ MI_2020g_map_data <- left_join(MI_2020g_map_data, mapdata, by = "fips")
 MI_2020g_map_data <- arrange(MI_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-mi-all", data = MI_2020g_map_data,
-  value = "percent", name = "Percent Requested", joinBy = "fips") 
+  value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Request Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ``` {r echo = FALSE}
