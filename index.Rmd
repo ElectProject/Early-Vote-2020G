@@ -150,7 +150,7 @@ These states are those where I have current data on mail ballot activity. More s
 
 ## Summary Statistics for Reporting States {.tabset} 
 
-### Mail Ballots Returned or In-Person Early Votes
+### Total Mail Ballots Returned or In-Person Early Votes
 
 Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
 
@@ -168,7 +168,9 @@ US_2020g_map_data <- US_2020g_map_data %>%
   mutate(display_data = na_if(display_data, 0))
 
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
-  value = "display_data", name = "Voted") 
+  value = "display_data", name = "Voted") %>%
+  hc_title(text ="Total Early Vote") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 #### Voted by Party Registration
@@ -181,6 +183,25 @@ options(knitr.kable.NA = '')
 
 kable(US_accepted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Turnout as Percent of 2016 Total Turnout
+
+Nationally, voters have cast **`r paste(round(100*sum(state_stats$total_early_2020)/sum(state_stats$total_ballots_2016), digits = 1),"%", sep = "")`** of the total votes counted in the 2016 general election.
+
+``` {r echo = FALSE}
+US_2020g_map_data <- state_stats
+
+US_2020g_map_data <- arrange(US_2020g_map_data, hc_order)
+
+US_2020g_map_data <- US_2020g_map_data %>%
+  mutate(display_data = round(100*total_early_2020/total_ballots_2016, digits = 1)) %>%
+  mutate(display_data = na_if(display_data, 0))
+
+hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
+  value = "display_data", name = "Percent") %>%
+  hc_title(text ="Total Votes Cast as Percent of 2016 Total Turnout") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 ### Mail Ballots Requested
@@ -201,7 +222,9 @@ US_2020g_map_data <- US_2020g_map_data %>%
   mutate(display_data = na_if(display_data, 0))
 
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
-  value = "display_data", name = "Requested Ballots") 
+  value = "display_data", name = "Requested Ballots") %>%
+    hc_title(text ="Mail Ballots Requested") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
 #### Mail Ballots Requested by Party Registration
