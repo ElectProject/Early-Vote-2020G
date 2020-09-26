@@ -347,10 +347,10 @@ GA_stats_requests <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Requ
 GA_stats_returns <- select(GA_stats, County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
 GA_stats_rejects <- select(GA_stats, County, Mail.Reject.Tot, Mail.Return.Tot, Pct.Reject)
 ```
+## {.tabset}
 Last Report: `r state_stats[11,9]`  
 Source:  `r state_stats[11,2]`
 
-## {.tabset}
 
 ### Mail Ballots Returned and Accepted
 Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  

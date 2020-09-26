@@ -11,6 +11,7 @@ library(DT)
 library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+MN_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_MN.csv")
 
 # Setup
 
@@ -60,46 +61,76 @@ age_shell[7,1] <- "TOTAL"
 
 # Minnesota
 
-MN_req_send_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
-
-MN_req_send_tot[1,1] <- "TOTAL"
-MN_req_send_tot[1,2] <- sum(state_stats[24,5]) 
-
-MN_req_send_tot$Percent <- 100.0
-
-MN_accept_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
-
-MN_accept_tot[1,1] <- "TOTAL"
-MN_accept_tot[1,2] <- sum(state_stats[24,7]) 
-
-MN_accept_tot$Percent <- 100.0
-
+MN_stats_returns <- select(MN_stats, County, Mail.Accept.Tot, Mail.Req.Tot, Pct.Accept)
+MN_stats_requests <- select(MN_stats, County, Mail.Req.Tot, Reg.Voters, Pct.Request)
 ```
+## {.tabset}
+
 Last Report: `r state_stats[24,9]`  
 Source:  `r state_stats[24,2]`  
 
-## {.tabset}
+### Total Early Vote  
 
-### Accepted Ballots
+Total Early Vote: **`r format(as.numeric(state_stats[24,8]), big.mark =",")`**  
 
-Minnesota does not distinguish between mail and in-person ballots on their state reports.
+Minnesota does not distinguish between mail and in-person ballots on their state reports. The statistics reported here thus combine all in-person early and mail ballot votes. 
 
 ``` {r echo = FALSE}
-kable(MN_accept_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+MN_map_data <- MN_stats
+
+MN_map_data <- mutate(MN_map_data, percent = round(100*(Mail.Accept.Tot/Mail.Req.Tot), digits = 1))
+
+MN_map_data <- mutate(MN_map_data, fips = as.character(fips))
+
+mapfile <- download_map_data("countries/us/us-mn-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MN_map_data <- left_join(MN_map_data, mapdata, by = "fips")
+
+MN_map_data <- arrange(MN_map_data, row)
+
+hcmap(map = "countries/us/us-mn-all", data = MN_map_data,
+      value = "percent", name = "Percent Voted", joinBy = "fips") %>%
+  hc_title(text ="Percent Accepted") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
 
-### Requested  
+``` {r echo = FALSE}
+datatable(MN_stats_returns, colnames = c("County", "Total Early Vote", "Mail Ballots Requested", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Accept', 1) %>%
+  formatRound(c('Mail.Accept.Tot','Mail.Req.Tot'), 0, mark = ",")
+```
+
+### Mail Ballots Requested  
+
+Mail Ballots Requested: **`r format(as.numeric(state_stats[24,5]), big.mark =",")`**  
 
 ``` {r echo = FALSE}
-kable(MN_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+MN_map_data <- MN_stats
+
+MN_map_data <- mutate(MN_map_data, percent = round(100*(Mail.Req.Tot/Reg.Voters), digits = 1))
+
+MN_map_data <- mutate(MN_map_data, fips = as.character(fips))
+
+mapfile <- download_map_data("countries/us/us-mn-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MN_map_data <- left_join(MN_map_data, mapdata, by = "fips")
+
+MN_map_data <- arrange(MN_map_data, row)
+
+hcmap(map = "countries/us/us-mn-all", data = MN_map_data,
+      value = "percent", name = "Request Rate", joinBy = "fips") %>%
+  hc_title(text ="Request Rate") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(MN_stats_requests, colnames = c("County", "Mail Ballots Requested", "Registered Voters", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
