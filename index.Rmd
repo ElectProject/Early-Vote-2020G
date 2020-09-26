@@ -170,7 +170,7 @@ US_2020g_map_data <- US_2020g_map_data %>%
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   value = "display_data", name = "Voted") %>%
   hc_title(text ="Total Early Vote") %>%
-  hc_subtitle(text = "County plots may not be shaded using the same scale")
+  hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
 #### Voted by Party Registration
@@ -201,7 +201,7 @@ US_2020g_map_data <- US_2020g_map_data %>%
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   value = "display_data", name = "Percent") %>%
   hc_title(text ="Total Votes Cast as Percent of 2016 Total Turnout") %>%
-  hc_subtitle(text = "County plots may not be shaded using the same scale")
+  hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
 ### Mail Ballots Requested
@@ -224,7 +224,7 @@ US_2020g_map_data <- US_2020g_map_data %>%
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   value = "display_data", name = "Requested Ballots") %>%
     hc_title(text ="Mail Ballots Requested") %>%
-  hc_subtitle(text = "County plots may not be shaded using the same scale")
+  hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
 #### Mail Ballots Requested by Party Registration
