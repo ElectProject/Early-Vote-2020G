@@ -7,6 +7,8 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
+library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 FL_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_FL.csv")
@@ -162,8 +164,6 @@ datatable(FL_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
 ```
 
 ### Mail Requested
-
-Only some Florida counties are reporting mail ballot requests for the general election. I use request data from the August state primary if a county is not yet reporting for the general election. Florida's ballot requests are good through two general elections. All August primary ballot requests are good for November, unless a voter notifies election officials they wish to cancel their request. 
 
 To calculate the number of requested ballots from the Florida Division of Elections website, add the rows *Vote-by-Mail Provided (Not Yet Returned)* and *Voted Vote-by-Mail*.
 
