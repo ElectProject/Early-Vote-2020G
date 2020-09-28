@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Early Vote Analysis for Sunday, Sept. 27</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">U.S. Elections Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FAQ.html">FAQ</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Early Vote Analysis for Sunday, Sept. 27</h1>
+
+</div>
+
+
+<div id="a-record-944114-have-already-voted" class="section level2">
+<h2>A Record 944,114 Have Already Voted</h2>
+<p>After a historic week of early voting in the United States, it is time to take stock of where we are. Sundays are typically a slow day for states to report early voting activity, which gives me a moment to reflect on the prior week.</p>
+<p>The headline is the jaw-dropping number of people who have already voted. At least 944,114 people have voted in the 2020 general election. I use the phrase “at least” because the true number is likely higher because I do not have complete reports for all states. Some states currently voting will eventually provide reports, but even among the reporting states some local election offices are clearly lagging on their reporting. An initial reporting delay is common, so there is no cause for concern that something nefarious is afoot. In states where early voting statistics are managed at the local level - like Alabama and Missouri - it will require calling local election offices to collect their numbers, something I have not contemplated, yet.</p>
+<p>Nearly a million voters this far in advance of an election has never occurred in any American election. Period.</p>
+<p>Around this time in 2016, <a href="https://www.huffpost.com/entry/2016-early-voting-underwa_b_12184290">I noted</a> only 9,525 people had voted. These 2016 data were drawn from North Carolina. To provide an exact update, the total number of 2016 North Carolina voters the same number days before the election is 12,370 (as of September 27, 2020).</p>
+</div>
+<div id="three-factors-accounting-for-the-dramatic-early-voting-increase" class="section level2">
+<h2>Three Factors Accounting for the Dramatic Early Voting Increase</h2>
+<p>I offer three reasons why early voting has dramatically increased.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Changing state laws.</strong> For example, Virginia adopted full-fledged in-person early voting for the first time this presidential election. In prior elections, Virginia had a limited form of in-person early voting available to voters with specific excuses. Already, 200,277 Virginians have cast in-person votes, and another 83,822 have voted by mail, thus making Virginia the current leader in raw early votes, a title captured from North Carolina, and will almost assuredly be surrendered to a state like Florida which just sent out a little over 5 million mail ballots to voters.</li>
+<li><strong>The pandemic.</strong> Changing state laws cannot be the only explanation. North Carolina did not change its laws, and already 246,615 people have returned their mail ballots and had them accepted for counting. Mail balloting is at unprecedented levels this election cycle due to the pandemic. Nationally, I am tracking over 64 million mail ballots that will been sent to voters. I do not have data yet for all states, so the true number is likely closer to 70 million mail ballot requests. There are two factors driving this unprecedented surge in mail balloting.</li>
+</ol>
+<ul>
+<li><em>Many states are promoting mail balloting.</em> Some states that formerly had excuse-required absentee voting are allowing social distancing as a valid excuse. Some states that already had high usage of mail balloting - due in part to having permanent absentee ballot lists voters sign up for - transitioned to all-mail ballot elections on a permanent or emergency basis. There are about 44 million voters who will receive a mail ballot in these states.</li>
+<li><em>Voters want to cast mail ballots.</em> Even in states that have no-excuse absentee voting, the number of mail mail ballot requests are through the roof. Some voters clearly see mail balloting as the safe way to participate in the November election.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Voter interest.</strong> The old adage that you can lead a horse to water but you can’t make him drink seems very appropriate. Just because a state provides an early voting option, or sends a voter a mail ballot, does not mean that the voters must vote at the first opportunity to do so. People are making a choice to vote at their first opportunity. The most likely explanation for this phenomenon is Donald Trump. Whether you love him or hate him, he inspires passion unlike any other political figure.</li>
+</ol>
+</div>
+<div id="comparisons-to-2016s-early-vote-are-mostly-meaningless" class="section level2">
+<h2>Comparisons to 2016’s Early Vote Are (Mostly) Meaningless</h2>
+<p>A number of folks have asked me to make comparisons to the same point in time as 2016. This is simply impossible in some states, since there literally is no comparison since at this comparable point in time in 2016, so few people had cast early votes that states did not bother to release any data.</p>
+<p>However, to satisfy some peoples’ needs, let’s take a look at North Carolina to understand why I do not find such a comparison informative at this time. Below, I plot the cumulative number of returned ballots in 2020 (dark line) and 2016 (red line). Hurrah! There are many more returned ballots in 2020 compared to 2016, something we already knew.</p>
+<p><img src="Early_Vote_Analysis_9_27_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Does the nearly twenty-fold increase in North Carolina’s early voting at the same time relative to 2016 mean that twenty times as many people will vote in 2020 than in 2016? Certainly not! That would yield more voters than people living in the state. Does the fact that registered Democrats hold a 92,761 returned ballot lead over registered Republicans mean Biden will cruise to victory in North Carolina. No! Just wait. Republicans will show up in force on Election Day. Registered Democrats usually lead the in-person early voting, but I would not be surprised if more registered Republicans vote in-person early, as happened during Florida’s August state primary.</p>
+<p>I still believe there is analytic value in 2016 comparison data, if interpreted correctly, and especially as we get deeper into October.</p>
+<ol style="list-style-type: decimal">
+<li><p>The total number of early votes may give us a read on overall turnout. So far, the numbers are consistent with a highly engaged electorate. I’ve been projecting for some time that perhaps as many as 150 million people will vote in the November election, which would be the largest number in raw terms, and the highest turnout rate for those eligible to vote since 1908. There is nothing so far in these earliest of early votes that leads me to change this prediction. If in late October states – particularly the all-mail states – surpass their 2016 turnout, this will be a good indicator that national turnout is up. When 2018 early turnout in Arizona and Texas passed their 2014 total turnout, this was the surefire indicator that turnout was going to be up.</p></li>
+<li><p>The all-mail states of Colorado and Oregon will give us a read on the relative partisan composition of the electorate. Both states are running elections the same way they did in 2016, both have party registration, both require voters to return mail ballots by Election Day, and both provide excellent data on returned ballots. The relative 2016 to 2020 change in the party registration in these states will give us a read on the relative engagement of Democrats and Republicans. Nevada – which will conduct an all-mail election on an emergency basis – may give a good read since the state has had a large percentage of early voters in past elections.</p></li>
+</ol>
+<p>The Biden campaign should be able to leverage these early votes to their advantage, given that there is clear evidence in the early vote data and polling that Democrats are more likely to vote early. The campaigns are analyzing the same data I am posting here. In many key battleground states, they know if a voter has already participated. When they become aware, they can scratch the name off their contact list. The campaign saves money because they no longer need to send mail or make phone calls to the voter. They can then shift those resources into encouraging other persons to cast a vote for their candidate.</p>
+</div>
+<div id="who-are-the-earliest-early-voters" class="section level2">
+<h2>Who Are the Earliest Early Voters?</h2>
+<p>It may strike some as wrong that over 1 million people will have voted even before the first presidential debate is held on Tuesday, September 29th. Shouldn’t these voters listen to the candidates before making their decision?</p>
+<p>People cast their ballot when they have made their choice. We are living in Queen’s <em>Bohemian Raposdy</em> in that “Nothing really matters…” Trump’s job approval ratings have be remarkably stable throughout his presidency. Americans routinely shrug off events that would normally lead the country to rally around the president, or withdraw their support.</p>
+<p>There is evidence in 2020 early voting data that supports those who are most intensely paying attention to politics, and who have already made up their minds, are those casting early votes. In Georgia, Michigan, and North Carolina, more older voters are casting ballots, and have a higher ballot return rate than younger voters. Academic studies consistently find a very strong correlation between age and attentiveness to politics. Typically, younger voters start casting their ballots in greater numbers as Election Day nears. I do not know if this pattern will happen this year, but I strongly suspect it will.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
