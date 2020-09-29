@@ -22,6 +22,18 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -62,15 +74,26 @@ US_req_send_party <- party_shell
 
 # Returned or Accepted (depends on how states report data)
 
-US_accepted_party <- party_shell
+US_accept_party <- party_shell_returned
 
-US_accepted_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
-US_accepted_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
-US_accepted_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
-US_accepted_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
-US_accepted_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+US_accept_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
+US_accept_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
+US_accept_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
+US_accept_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
+US_accept_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
 
-US_accepted_party$Percent <- 100*US_accepted_party$Count/US_accepted_party[5,2]
+US_accept_party[1,4] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_accept_party[2,4] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_accept_party[3,4] <- sum(state_stats$mail_sent_req_2020_minor)
+US_accept_party[4,4] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_accept_party[5,4] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_accept_party$Frequency <- 100*US_accept_party$Count/US_accept_party[5,2]
+US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
+
+colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 
 # Requested
 
@@ -177,13 +200,13 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
 
 #### Voted by Party Registration
 
-Reporting states with party registration data: FL, IA, NC  
+Reporting states with party registration data: FL, IA, NC, NJ  
 
 ``` {r echo = FALSE}
 
 options(knitr.kable.NA = '')
 
-kable(US_accepted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
