@@ -22,6 +22,20 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -56,6 +70,21 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
+
+age_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+age_shell_returned[1,1] <- "18 to 24"
+age_shell_returned[2,1] <- "25 to 34"
+age_shell_returned[3,1] <- "35 to 44"
+age_shell_returned[4,1] <- "45 and 55"
+age_shell_returned[5,1] <- "56 and 65"
+age_shell_returned[6,1] <- "66 and up"
+age_shell_returned[7,1] <- "TOTAL"
+
 # Pennsylvania
 
 PA_req_send_party <- party_shell
@@ -68,6 +97,26 @@ PA_req_send_party[5,2] <- state_stats[39,5]
 
 PA_req_send_party$Percent <- 100*PA_req_send_party$Count/PA_req_send_party[5,2]
 
+
+PA_accept_party <- party_shell_returned
+
+PA_accept_party[1,2] <- state_stats[39,29] 
+PA_accept_party[2,2] <- state_stats[39,30] 
+PA_accept_party[3,2] <- state_stats[39,31] 
+PA_accept_party[4,2] <- state_stats[39,32] 
+PA_accept_party[5,2] <- state_stats[39,6] 
+
+PA_accept_party[1,4] <- state_stats[39,10] 
+PA_accept_party[2,4] <- state_stats[39,11] 
+PA_accept_party[3,4] <- state_stats[39,12] 
+PA_accept_party[4,4] <- state_stats[39,13] 
+PA_accept_party[5,4] <- state_stats[39,5] 
+
+PA_accept_party$Frequency <- 100*PA_accept_party$Count/PA_accept_party[5,2]
+PA_accept_party$Rate <- 100*PA_accept_party$Count/PA_accept_party$Count2
+
+colnames(PA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
 PA_req_send_age <- age_shell
 
 PA_req_send_age[1,2] <- state_stats[39,23] 
@@ -79,15 +128,56 @@ PA_req_send_age[6,2] <- state_stats[39,28]
 PA_req_send_age[7,2] <- state_stats[39,5] 
 
 PA_req_send_age$Percent <- 100*PA_req_send_age$Count/PA_req_send_age[7,2]
+
+PA_accept_age <- age_shell_returned
+
+PA_accept_age[1,2] <- sum(state_stats[39,42])
+PA_accept_age[2,2] <- sum(state_stats[39,43]) 
+PA_accept_age[3,2] <- sum(state_stats[39,44]) 
+PA_accept_age[4,2] <- sum(state_stats[39,45]) 
+PA_accept_age[5,2] <- sum(state_stats[39,46])
+PA_accept_age[6,2] <- sum(state_stats[39,47])
+PA_accept_age[7,2] <- sum(state_stats[39,6])
+
+PA_accept_age[1,4] <- sum(state_stats[39,23])
+PA_accept_age[2,4] <- sum(state_stats[39,24]) 
+PA_accept_age[3,4] <- sum(state_stats[39,25]) 
+PA_accept_age[4,4] <- sum(state_stats[39,26]) 
+PA_accept_age[5,4] <- sum(state_stats[39,27])
+PA_accept_age[6,4] <- sum(state_stats[39,28])
+PA_accept_age[7,4] <- sum(state_stats[39,5])
+
+PA_accept_age$Frequency <- 100 * PA_accept_age$Count/PA_accept_age[7,2]
+PA_accept_age$Rate <- 100*PA_accept_age$Count/PA_accept_age$Count2
+
+colnames(PA_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
 ```
+## {.tabset}  
 Last Report: `r state_stats[39,9]`  
 Source:  `r state_stats[39,2]`
 
-### Discussion
+### Mail Ballots Returned
 
-Pennsylvania ballot requests are good through the end of a calendar year unless a voter otherwise cancels it. I analyze the ballot requests for the state's closed primary. The number of ballot requests from all voters, especially minor party and no party affiliated voters, is likely larger than reported here.
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
-### Mail Ballot Requests by Party Registration
+``` {r echo = FALSE}
+kable(PA_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **Mail Ballots Returned and Accepted by Age**
+
+``` {r echo = FALSE}
+kable(PA_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballot Requests
+
+#### Mail Ballot Requests by Party Registration
 
 ``` {r echo = FALSE}
 kable(PA_req_send_party, format.args = list(big.mark = ",", 
@@ -97,12 +187,10 @@ kable(PA_req_send_party, format.args = list(big.mark = ",",
 
 Pennsylvania registered Democrats have a **`r format(as.numeric(PA_req_send_party[1,2]-PA_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
-### Mail Ballot Requests by Age
+#### Mail Ballot Requests by Age
 
 ``` {r echo = FALSE}
 kable(PA_req_send_age, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
-

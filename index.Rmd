@@ -200,7 +200,7 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
 
 #### **Voted by Party Registration**
 
-Reporting states with party registration data: FL, IA, NC, NJ  
+Reporting states with party registration data: FL, IA, NC, NJ, PA  
 
 ``` {r echo = FALSE}
 
