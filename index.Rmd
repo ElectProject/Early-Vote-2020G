@@ -198,7 +198,7 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
-#### Voted by Party Registration
+#### **Voted by Party Registration**
 
 Reporting states with party registration data: FL, IA, NC, NJ  
 
