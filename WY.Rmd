@@ -67,7 +67,7 @@ Source:  `r state_stats[51,2]`
 
 ### Total Early Vote
 
-Ballots Returned: **`r format(as.numeric(state_stats[51,6]), big.mark =",")`**
+Ballots Returned: **`r format(as.numeric(state_stats[51,8]), big.mark =",")`**
 
 ### Requested Mail Ballots
 
