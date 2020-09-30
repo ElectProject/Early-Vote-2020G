@@ -167,9 +167,10 @@ Detailed state statistics and analyses for reporting states
 [VA](https://electproject.github.io/Early-Vote-2020G/VA.html) | 
 [VT](https://electproject.github.io/Early-Vote-2020G/VT.html) | 
 [WA](https://electproject.github.io/Early-Vote-2020G/WA.html) | 
-[WI](https://electproject.github.io/Early-Vote-2020G/WI.html)
+[WI](https://electproject.github.io/Early-Vote-2020G/WI.html) |
+[WY](https://electproject.github.io/Early-Vote-2020G/WI.html)  
 
-These states are those where I have current data on mail ballot activity. More states will be added as state reports become available.
+These states are those where I have recent data on mail ballot activity. More states will be added as state reports become available.
 
 Read my analysis for the week ending [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html).
 
