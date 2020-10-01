@@ -11,6 +11,7 @@ library(DT)
 library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+MD_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_MD.csv")
 
 # Setup
 
@@ -23,6 +24,20 @@ party_shell[2,1] <- "Republicans"
 party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
+
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
 
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
@@ -60,15 +75,131 @@ age_shell[7,1] <- "TOTAL"
 
 # Maryland
 
+MD_req_send_party <- party_shell
+
+MD_req_send_party[1,2] <- state_stats[21,10] 
+MD_req_send_party[2,2] <- state_stats[21,11] 
+MD_req_send_party[3,2] <- state_stats[21,12] 
+MD_req_send_party[4,2] <- state_stats[21,13] 
+MD_req_send_party[5,2] <- state_stats[21,5] 
+
+MD_req_send_party$Percent <- 100*MD_req_send_party$Count/MD_req_send_party[5,2]
+
+MD_accept_party <- party_shell_returned
+
+MD_accept_party[1,2] <- state_stats[21,29] 
+MD_accept_party[2,2] <- state_stats[21,30] 
+MD_accept_party[3,2] <- state_stats[21,31] 
+MD_accept_party[4,2] <- state_stats[21,32] 
+MD_accept_party[5,2] <- state_stats[21,6] 
+
+MD_accept_party[1,4] <- state_stats[21,10] 
+MD_accept_party[2,4] <- state_stats[21,11] 
+MD_accept_party[3,4] <- state_stats[21,12] 
+MD_accept_party[4,4] <- state_stats[21,13] 
+MD_accept_party[5,4] <- state_stats[21,5] 
+
+MD_accept_party$Frequency <- 100*MD_accept_party$Count/MD_accept_party[5,2]
+MD_accept_party$Rate <- 100*MD_accept_party$Count/MD_accept_party$Count2
+
+colnames(MD_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+MD_stats <- mutate(MD_stats, Pct.Request = Mail.Req.Tot/Reg.Voters)
+MD_stats <- mutate(MD_stats, Pct.Accept = Mail.Rtn.Tot/Mail.Req.Tot)
+
+MD_stats_requests <- select(MD_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
+MD_stats_returns <- select(MD_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Accept)
 ```
 ## {.tabset}
 Last Report: `r state_stats[21,9]`  
 Source:  `r state_stats[21,2]`
 
-### Total Early Vote
+Maryland reports all minor party and no-party affiliation voters in a single "Other category." I report these voters in the no-party affiliation category.
+
+Maryland provides party registration statistics for mail ballots sent to voters, not requested by voters.
+
+### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[21,8]), big.mark =",")`**
 
-### Requested Mail Ballots
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
-Ballots Requested: **`r format(as.numeric(state_stats[21,5]), big.mark =",")`**
+``` {r echo = FALSE}
+kable(MD_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+MD_map_data <- MD_stats
+
+MD_map_data <- mutate(MD_map_data, percent = round(100*(Mail.Rtn.Tot/Mail.Req.Tot), digits = 1))
+
+# MD_map_data <- rename(MD_map_data, fips = FIPS_CODE)
+MD_map_data <- mutate(MD_map_data, fips = as.character(fips))
+
+mapfile <- download_map_data("countries/us/us-md-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MD_map_data <- left_join(MD_map_data, mapdata, by = "fips")
+
+MD_map_data <- arrange(MD_map_data, row)
+
+hcmap(map = "countries/us/us-md-all", data = MD_map_data,
+      value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+
+``` {r echo = FALSE}
+datatable(MD_stats_returns, colnames = c("County", "Mail Ballots Sent", "Mail Ballots Returned", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Accept', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Mail.Rtn.Tot'), 0, mark = ",")
+```
+
+### Sent Mail Ballots
+
+Ballots Sent: **`r format(as.numeric(state_stats[21,5]), big.mark =",")`**
+
+#### **Mail Ballots Sent by Party Registration**
+
+``` {r echo = FALSE}
+kable(MD_req_send_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+MD_map_data <-MD_stats
+
+MD_map_data <- mutate(MD_map_data, percent = round(100*(Mail.Req.Tot/Reg.Voters), digits = 1))
+
+# MD_map_data <- rename(MD_map_data, fips = FIPS_CODE)
+MD_map_data <- mutate(MD_map_data, fips = as.character(fips))
+
+mapfile <- download_map_data("countries/us/us-md-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MD_map_data <- left_join(MD_map_data, mapdata, by = "fips")
+
+MD_map_data <- arrange(MD_map_data, row)
+
+hcmap(map = "countries/us/us-md-all", data = MD_map_data,
+      value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Sent Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+
+
+``` {r echo = FALSE}
+datatable(MD_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballots Sent", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Request', 1) %>%
+  formatRound(c('Reg.Voters','Mail.Req.Tot'), 0, mark = ",")
+```
+
