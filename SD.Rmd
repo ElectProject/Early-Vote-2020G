@@ -24,6 +24,18 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -60,15 +72,24 @@ age_shell[7,1] <- "TOTAL"
 
 # South Dakota
 
-MT_req_send_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
+SD_return_party <- party_shell_returned
 
-MT_req_send_tot[1,1] <- "TOTAL"
-MT_req_send_tot[1,2] <- sum(state_stats[27,5]) 
+SD_return_party[1,2] <- state_stats[42,29] 
+SD_return_party[2,2] <- state_stats[42,30] 
+SD_return_party[3,2] <- state_stats[42,31] 
+SD_return_party[4,2] <- state_stats[42,32] 
+SD_return_party[5,2] <- state_stats[42,6] 
 
-MT_req_send_tot$Percent <- 100.0
+SD_return_party[1,4] <- state_stats[42,10] 
+SD_return_party[2,4] <- state_stats[42,11] 
+SD_return_party[3,4] <- state_stats[42,12] 
+SD_return_party[4,4] <- state_stats[42,13] 
+SD_return_party[5,4] <- state_stats[42,5] 
+
+SD_return_party$Frequency <- 100*SD_return_party$Count/SD_return_party[5,2]
+SD_return_party$Rate <- 100*SD_return_party$Count/SD_return_party$Count2
+
+colnames(SD_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
 ```
 ## {.tabset}
@@ -86,6 +107,14 @@ South Dakota voters have cast **`r format(as.numeric(state_stats[42,7]), big.mar
 ### Returned Mail Ballots
 
 South Dakota voters have cast **`r format(as.numeric(state_stats[42,6]), big.mark =",")`** mail ballots.
+
+#### Mail Ballots Returned by Party Registration
+
+``` {r echo = FALSE}
+kable(SD_return_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Mail Ballot Requests
 
