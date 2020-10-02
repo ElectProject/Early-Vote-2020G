@@ -71,17 +71,14 @@ VT_req_send_tot[1,2] <- sum(state_stats[46,5])
 VT_req_send_tot$Percent <- 100.0
 
 ```
+## {.tabset}
 Last Report: `r state_stats[46,9]`  
 Source:  `r state_stats[46,2]`
 
-### Discussion
+### Returned Mail Ballots
 
-Vermont is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's active registered voters.
+Vermont voters have cast **`r format(as.numeric(state_stats[46,6]), big.mark =",")`** mail ballots.
 
 ### Mail Ballot Requests
 
-``` {r echo = FALSE}
-kable(VT_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
+Vermont voters have requested **`r format(as.numeric(state_stats[46,5]), big.mark =",")`** mail ballots.
