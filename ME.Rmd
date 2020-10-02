@@ -22,6 +22,19 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -67,20 +80,47 @@ ME_req_send_party[4,2] <- state_stats[20,13]
 ME_req_send_party[5,2] <- state_stats[20,5] 
 
 ME_req_send_party$Percent <- 100*ME_req_send_party$Count/ME_req_send_party[5,2]
+
+ME_return_party <- party_shell_returned
+
+ME_return_party[1,2] <- state_stats[20,29] 
+ME_return_party[2,2] <- state_stats[20,30] 
+ME_return_party[3,2] <- state_stats[20,31] 
+ME_return_party[4,2] <- state_stats[20,32] 
+ME_return_party[5,2] <- state_stats[20,6] 
+
+ME_return_party[1,4] <- state_stats[20,10] 
+ME_return_party[2,4] <- state_stats[20,11] 
+ME_return_party[3,4] <- state_stats[20,12] 
+ME_return_party[4,4] <- state_stats[20,13] 
+ME_return_party[5,4] <- state_stats[20,5] 
+
+ME_return_party$Frequency <- 100*ME_return_party$Count/ME_return_party[5,2]
+ME_return_party$Rate <- 100*ME_return_party$Count/ME_return_party$Count2
+
+colnames(ME_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 ```
+## {.tabset}
 Last Report: `r state_stats[20,9]`  
 Source:  `r state_stats[20,2]`
 
-### Discussion
+### Returned Mail Ballots
 
-Maine only provides party registration on its absentee ballot file.
+Maine voters have cast **`r format(as.numeric(state_stats[20,6]), big.mark =",")`** mail ballots.
 
-### Mail Ballot Requests by Party Registration
+#### Mail Ballots Returned and Accepted by Party Registration
 
 ``` {r echo = FALSE}
-kable(ME_req_send_party,format.args = list(big.mark = ",", 
+kable(ME_return_party, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Maine registered Democrats have a **`r format(as.numeric(ME_req_send_party[1,2]-ME_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+
+### Mail Ballot Requests
+
+Maine voters have requested **`r format(as.numeric(state_stats[20,5]), big.mark =",")`** mail ballots.
+
+
