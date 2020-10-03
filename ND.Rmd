@@ -75,6 +75,16 @@ ND_req_send_tot$Percent <- 100.0
 Last Report: `r state_stats[35,9]`  
 Source:  `r state_stats[35,2]`
 
+North Dakota's reporting system updates in real-time as election officials process ballots. I only periodically scrape data from the state's website.
+
+### Total Early Vote
+
+North Dakota voters have cast **`r format(as.numeric(state_stats[35,8]), big.mark =",")`** ballots.
+
+### In-Person Early Vote
+
+North Dakota voters have cast **`r format(as.numeric(state_stats[35,7]), big.mark =",")`** in-person early ballots.
+
 ### Returned Mail Ballots
 
 North Dakota voters have cast **`r format(as.numeric(state_stats[35,6]), big.mark =",")`** mail ballots.
