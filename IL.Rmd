@@ -74,22 +74,273 @@ IL_req_send_tot$Percent <- 100.0
 
 
 IL_stats_requests <- select(IL_stats, County, Reg.Voters, By.Mail, Pct.Request)
+
+IL_stats_returns <- IL_stats %>%
+  select(County, By.Mail.Returned, By.Mail) %>%
+  mutate(Pct.Return = By.Mail.Returned/By.Mail)
+
+IL_stats_voted <- IL_stats %>%
+  select(County, Early.Tot, Reg.Voters) %>%
+  mutate(Pct.Voted = Early.Tot/Reg.Voters)
 ```
+## {.tabset}
 Last Report: `r state_stats[14,9]`  
 Source:  `r state_stats[14,2]`
 
-Total Ballots Cast: **`r format(as.numeric(state_stats[14,8]), big.mark =",")`**  
+For the maps, data for the cities of Bloomington, Chicago, Danville, East St. Louis, Galesburg, and Rockford have been added to their respective counties.  
+### Total In-person Early and Returned Mail Ballots  
+Illinois voters have cast **`r format(as.numeric(state_stats[14,8]), big.mark =",")`** early votes.
+
+``` {r echo = FALSE}
+IL_stats_county <- IL_stats
+
+IL_City_Bloomington_data <- IL_stats_county %>%
+  filter(County == "City of Bloomington")
+
+IL_City_Chicago_data <- IL_stats_county %>%
+  filter(County == "City of Chicago")
+
+IL_City_Danville_data <- IL_stats_county %>%
+  filter(County == "City of Danville")
+
+IL_City_ESL_data <- IL_stats_county %>%
+  filter(County == "City of East St Louis")
+
+IL_City_Galesburg_data <- IL_stats_county %>%
+  filter(County == "City of Galesburg")
+
+IL_City_Rockford_data <- IL_stats_county %>%
+  filter(County == "City of Rockford")
+
+IL_stats_county <- IL_stats_county %>%
+  filter(County != "City of Bloomington" & County != "City of Chicago" & County != "City of Danville" & County != "City of East St Louis" & County != "City of Galesburg" & County != "City of Rockford")
+
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "McLean County" ~ Reg.Voters + IL_City_Bloomington_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "McLean County" ~ By.Mail + IL_City_Bloomington_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "McLean County" ~ By.Mail.Returned + IL_City_Bloomington_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "McLean County" ~ Early + IL_City_Bloomington_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "McLean County" ~ Grace + IL_City_Bloomington_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Cook County" ~ Reg.Voters + IL_City_Chicago_data$Reg.Voters,
+                                 TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Cook County" ~ By.Mail + IL_City_Chicago_data$By.Mail,
+                                TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Cook County" ~ By.Mail.Returned + IL_City_Chicago_data$By.Mail.Returned,
+                                TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Cook County" ~ Early + IL_City_Chicago_data$Early,
+                                TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Cook County" ~ Grace + IL_City_Chicago_data$Grace,
+                           TRUE ~ Grace))
+  
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Vermilion County" ~ Reg.Voters + IL_City_Danville_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Vermilion County" ~ By.Mail + IL_City_Danville_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Vermilion County" ~ By.Mail.Returned + IL_City_Danville_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Vermilion County" ~ Early + IL_City_Danville_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Vermilion County" ~ Grace + IL_City_Danville_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "St. Clair County" ~ Reg.Voters + IL_City_ESL_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "St. Clair County" ~ By.Mail + IL_City_ESL_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "St. Clair County" ~ By.Mail.Returned + IL_City_ESL_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "St. Clair County" ~ Early + IL_City_ESL_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "St. Clair County" ~ Grace + IL_City_ESL_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Knox County" ~ Reg.Voters + IL_City_Galesburg_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Knox County" ~ By.Mail + IL_City_Galesburg_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Knox County" ~ By.Mail.Returned + IL_City_Galesburg_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Knox County" ~ Early + IL_City_Galesburg_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Knox County" ~ Grace + IL_City_Galesburg_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Winnebago County" ~ Reg.Voters + IL_City_Rockford_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Winnebago County" ~ By.Mail + IL_City_Rockford_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Winnebago County" ~ By.Mail.Returned + IL_City_Rockford_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Winnebago County" ~ Early + IL_City_Rockford_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Winnebago County" ~ Grace + IL_City_Rockford_data$Grace,
+                           TRUE ~ Grace))
+
+IL_map_data <- left_join(IL_stats_county, IL_FIPS, by = "County")
+
+IL_map_data <- mutate(IL_map_data, percent = round(100*(Early.Tot/Reg.Voters), digits = 1))
+
+mapfile <- download_map_data("countries/us/us-il-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+IL_map_data <- left_join(IL_map_data, mapdata, by = "fips")
+
+IL_map_data <- arrange(IL_map_data, row)
+
+hcmap(map = "countries/us/us-il-all", data = IL_map_data,
+      value = "percent", name = "Percent Voted", joinby = c("fips", "FIPS")) 
+```
+
+``` {r echo = FALSE}
+datatable(IL_stats_voted, colnames = c("County", "Total Early Vote", "Voter Registration", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Early.Tot','Reg.Voters'), 0, mark = ",")
+```
+
+### In-person Early Votes
+Illinois voters have cast **`r format(as.numeric(state_stats[14,7]), big.mark =",")`** in-person early votes.
+
+### Returned Mail Ballots
+
+Illinois voters have cast **`r format(as.numeric(state_stats[14,6]), big.mark =",")`** mail ballots.
+
+``` {r echo = FALSE}
+IL_stats_county <- IL_stats
+
+IL_City_Bloomington_data <- IL_stats_county %>%
+  filter(County == "City of Bloomington")
+
+IL_City_Chicago_data <- IL_stats_county %>%
+  filter(County == "City of Chicago")
+
+IL_City_Danville_data <- IL_stats_county %>%
+  filter(County == "City of Danville")
+
+IL_City_ESL_data <- IL_stats_county %>%
+  filter(County == "City of East St Louis")
+
+IL_City_Galesburg_data <- IL_stats_county %>%
+  filter(County == "City of Galesburg")
+
+IL_City_Rockford_data <- IL_stats_county %>%
+  filter(County == "City of Rockford")
+
+IL_stats_county <- IL_stats_county %>%
+  filter(County != "City of Bloomington" & County != "City of Chicago" & County != "City of Danville" & County != "City of East St Louis" & County != "City of Galesburg" & County != "City of Rockford")
+
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "McLean County" ~ Reg.Voters + IL_City_Bloomington_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "McLean County" ~ By.Mail + IL_City_Bloomington_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "McLean County" ~ By.Mail.Returned + IL_City_Bloomington_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "McLean County" ~ Early + IL_City_Bloomington_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "McLean County" ~ Grace + IL_City_Bloomington_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Cook County" ~ Reg.Voters + IL_City_Chicago_data$Reg.Voters,
+                                 TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Cook County" ~ By.Mail + IL_City_Chicago_data$By.Mail,
+                                TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Cook County" ~ By.Mail.Returned + IL_City_Chicago_data$By.Mail.Returned,
+                                TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Cook County" ~ Early + IL_City_Chicago_data$Early,
+                                TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Cook County" ~ Grace + IL_City_Chicago_data$Grace,
+                           TRUE ~ Grace))
+  
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Vermilion County" ~ Reg.Voters + IL_City_Danville_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Vermilion County" ~ By.Mail + IL_City_Danville_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Vermilion County" ~ By.Mail.Returned + IL_City_Danville_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Vermilion County" ~ Early + IL_City_Danville_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Vermilion County" ~ Grace + IL_City_Danville_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "St. Clair County" ~ Reg.Voters + IL_City_ESL_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "St. Clair County" ~ By.Mail + IL_City_ESL_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "St. Clair County" ~ By.Mail.Returned + IL_City_ESL_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "St. Clair County" ~ Early + IL_City_ESL_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "St. Clair County" ~ Grace + IL_City_ESL_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Knox County" ~ Reg.Voters + IL_City_Galesburg_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Knox County" ~ By.Mail + IL_City_Galesburg_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Knox County" ~ By.Mail.Returned + IL_City_Galesburg_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Knox County" ~ Early + IL_City_Galesburg_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Knox County" ~ Grace + IL_City_Galesburg_data$Grace,
+                           TRUE ~ Grace))
+
+IL_stats_county <- IL_stats_county %>%
+  mutate(Reg.Voters = case_when(County == "Winnebago County" ~ Reg.Voters + IL_City_Rockford_data$Reg.Voters,
+                                TRUE ~ Reg.Voters)) %>%
+  mutate(By.Mail = case_when(County == "Winnebago County" ~ By.Mail + IL_City_Rockford_data$By.Mail,
+                             TRUE ~ By.Mail)) %>%
+  mutate(By.Mail.Returned = case_when(County == "Winnebago County" ~ By.Mail.Returned + IL_City_Rockford_data$By.Mail.Returned,
+                                      TRUE ~ By.Mail.Returned)) %>%
+  mutate(Early = case_when(County == "Winnebago County" ~ Early + IL_City_Rockford_data$Early,
+                           TRUE ~ Early)) %>%
+  mutate(Grace = case_when(County == "Winnebago County" ~ Grace + IL_City_Rockford_data$Grace,
+                           TRUE ~ Grace))
+
+IL_map_data <- left_join(IL_stats_county, IL_FIPS, by = "County")
+
+IL_map_data <- mutate(IL_map_data, percent = round(100*(By.Mail.Returned/By.Mail), digits = 1))
+
+mapfile <- download_map_data("countries/us/us-il-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+IL_map_data <- left_join(IL_map_data, mapdata, by = "fips")
+
+IL_map_data <- arrange(IL_map_data, row)
+
+hcmap(map = "countries/us/us-il-all", data = IL_map_data,
+      value = "percent", name = "Percent Returned", joinby = c("fips", "FIPS")) 
+```
+
+``` {r echo = FALSE}
+datatable(IL_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mail Ballot Requests", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return', 1) %>%
+  formatRound(c('By.Mail.Returned','By.Mail'), 0, mark = ",")
+```
 
 ### Mail Ballot Requests
 
-``` {r echo = FALSE}
-kable(IL_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-### County Map: Mail Ballot Request Rates ### 
-For this map, data for the cities of Bloomington, Chicago, Danville, East St. Louis, Galesburg, and Rockford have been added to their respective counties.
+Illinois voters have requested **`r format(as.numeric(state_stats[14,5]), big.mark =",")`** mail ballots.
 
 ``` {r echo = FALSE}
 IL_stats_county <- IL_stats
@@ -204,9 +455,6 @@ IL_map_data <- arrange(IL_map_data, row)
 hcmap(map = "countries/us/us-il-all", data = IL_map_data,
       value = "percent", name = "Percent Requested", joinby = c("fips", "FIPS")) 
 ```
-
-
-### County Data: Mail Ballot Requests ### 
 
 ``` {r echo = FALSE}
 datatable(IL_stats_requests, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%

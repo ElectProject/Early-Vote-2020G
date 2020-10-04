@@ -118,9 +118,14 @@ kable(ME_return_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-
 ### Mail Ballot Requests
 
 Maine voters have requested **`r format(as.numeric(state_stats[20,5]), big.mark =",")`** mail ballots.
 
+#### Mail Ballots Requested by Party Registration
 
+``` {r echo = FALSE}
+kable(ME_req_send_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
