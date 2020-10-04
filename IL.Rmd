@@ -88,6 +88,7 @@ Last Report: `r state_stats[14,9]`
 Source:  `r state_stats[14,2]`
 
 For the maps, data for the cities of Bloomington, Chicago, Danville, East St. Louis, Galesburg, and Rockford have been added to their respective counties.  
+
 ### Total In-person Early and Returned Mail Ballots  
 Illinois voters have cast **`r format(as.numeric(state_stats[14,8]), big.mark =",")`** early votes.
 
