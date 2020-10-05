@@ -177,8 +177,8 @@ These states are those where I have recent data on mail ballot activity. More st
 
 Read my analysis for the week ending:  
 
-* [Sunday, Oct. 4](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_4.html).  
-* [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html).  
+* [Sunday, Oct. 4](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_4.html)  
+* [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html)  
 
 ## Summary Statistics for Reporting States {.tabset} 
 
