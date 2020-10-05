@@ -86,7 +86,7 @@ OH_req_send_age$Percent <- 100*OH_req_send_age$Count/OH_req_send_age[7,2]
 Last Report: `r state_stats[36,9]`  
 Source:  `r state_stats[36,2]`
 
-Data presented here are scraped from 76 of Ohio's 88 counties that post absentee ballot reports online. These 76 reporting counties include the largest counties of Cuyahoga, Franklin, and Hamilton.  
+Data presented here are scraped from 77 of Ohio's 88 counties that post absentee ballot reports online. These 77 reporting counties include the largest counties of Cuyahoga, Franklin, and Hamilton.  
 
 These data were last scraped on the Last Report date, but counties may have last posted their data on an earlier date.
 
