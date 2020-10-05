@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Early Vote Analysis for Sunday, Oct. 4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">U.S. Elections Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FAQ.html">FAQ</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Early Vote Analysis for Sunday, Oct. 4</h1>
+
+</div>
+
+
+<div id="early-voting-continues-at-record-pace-with-3.3-million-voted" class="section level2">
+<h2>Early Voting Continues at Record Pace with 3.3 million voted</h2>
+<p>The headline continues to be the unprecedented 3.3 million people who have already voted. At a similar point in time before the 2016 election, <a href="https://www.huffpost.com/entry/early-in-the-early-voting_b_12303146">I was tracking</a> only 74,836 people who voted. As I <a href="https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html">explained last week</a>, this phenomenon is both a function of the increased supply of early voting options and the increased interest among voters to cast an early vote.</p>
+<p>Early voting typically starts with a small rush on the first days of early voting among people eager to vote, then decreases, and then increases sharply as Election Day nears. In this context, some state early voting paces are truly amazing when expressed as a percentage of their 2016 <em>total</em> turnout.</p>
+<ul>
+<li>South Dakota: 22.8%</li>
+<li>Virginia: 16.6%</li>
+<li>Wisconsin: 14.7%</li>
+<li>Minnesota: 11.3%</li>
+</ul>
+<p>There are two plausible explanations for what we are witnessing.</p>
+<ul>
+<li>In the first scenario, voters have heeded the call to have a plan and we have successfully flattened the curve on voting. In this case, we won’t see the same typical increase of voting near and on Election Day. This should help election officials manage what otherwise would have been an historic deluge of returned mail ballots coming at the very end of the election.</li>
+<li>In the second scenario, early voting follows the typical pattern where turnout increases as the election nears, and turnout will be exceptionally high.</li>
+</ul>
+<p>We can’t know for sure at this point which scenario is correct. I rather suspect there is some of both behaviors at play, and the truth will lie in-between.</p>
+<p>There is thus nothing in these data to change my preliminary estimate of 150 million voters in the 2020 general election. That would be a record raw number and the highest turnout rate for those eligible to vote since 1908. We should get clarity if and when states begin surpassing their 2016 total turnout, as similarly happened in Arizona and Texas when their 2018 early vote exceeded their 2014 turnout.</p>
+</div>
+<div id="more-democrats-requested-mail-ballots-and-more-democrats-are-returning-them" class="section level2">
+<h2>More Democrats Requested Mail Ballots, and More Democrats Are Returning Them</h2>
+<p>We’ve known for some time that – in the states with party registration – more registered Democrats either have requested ballots or live in a state that will send automatically all qualifying voters a mail ballot. So, it is no surprise that more Democrats have cast mail ballots. This dynamic is likely a product of President Trump’s supporters listening to his disparaging rhetoric about mail balloting.</p>
+<p>What is increasingly becoming clear is that Democrats are returning their mail ballots at a higher rate, too. That is unusual.</p>
+<p>Take Florida, for example. In 2016, the Florida Secretary of State <a href="https://dos.myflorida.com/media/697363/early-voting-and-vote-by-mail-report-2016-gen.pdf">reported</a> that 5,732 more registered Democrats requested a mail ballot than registered Republicans, but 58,244 more Republican returned their ballots. A higher Republican ballot return rate has been a consistent pattern in Florida’s elections.</p>
+<p>As of now, a greater percentage of Florida Democrats have returned their mail ballots than Republicans. Democrats currently have a net ballot return rate advantage of 2.8 points.</p>
+<div id="florida-mail-ballots-returned-by-party-registration" class="section level3">
+<h3>Florida Mail Ballots Returned by Party Registration</h3>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+282,169
+</td>
+<td style="text-align:right;">
+53.6
+</td>
+<td style="text-align:right;">
+2,446,640
+</td>
+<td style="text-align:right;">
+11.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+145,798
+</td>
+<td style="text-align:right;">
+27.7
+</td>
+<td style="text-align:right;">
+1,678,787
+</td>
+<td style="text-align:right;">
+8.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+6,128
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+66,906
+</td>
+<td style="text-align:right;">
+9.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+92,416
+</td>
+<td style="text-align:right;">
+17.6
+</td>
+<td style="text-align:right;">
+1,151,651
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+526,511
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+5,343,984
+</td>
+<td style="text-align:right;">
+9.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Florida has a semi-permanent absentee ballot status, where a voter’s ballot request is good through two general elections. Perhaps Republicans who requested ballots in past election have decided to vote in-person, either early or on Election Day. This is certainly a possibility, and cannot be ruled out until Florida’s early voting period has started.</p>
+<p>So, let’s look at North Carolina, where voters had to request ballots specifically for the November election, and voting has been taking place since September 4. We see the same pattern again. Here, registered Democrats have a net 5.5 mail ballot return rate lead over Republicans.</p>
+</div>
+<div id="north-carolina-mail-ballots-returned-and-accepted-by-party-registration" class="section level3">
+<h3>North Carolina Mail Ballots Returned and Accepted by Party Registration</h3>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+187,551
+</td>
+<td style="text-align:right;">
+52.6
+</td>
+<td style="text-align:right;">
+569,674
+</td>
+<td style="text-align:right;">
+32.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+60,501
+</td>
+<td style="text-align:right;">
+17.0
+</td>
+<td style="text-align:right;">
+220,775
+</td>
+<td style="text-align:right;">
+27.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+1,098
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+5,773
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+107,147
+</td>
+<td style="text-align:right;">
+30.1
+</td>
+<td style="text-align:right;">
+393,828
+</td>
+<td style="text-align:right;">
+27.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+356,297
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+1,190,050
+</td>
+<td style="text-align:right;">
+29.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Perhaps North Carolina Republicans who requested mail ballots for the November election got cold feet and decided to vote in-person early or on Election Day. This is certainly a possibility, too.</p>
+<p>Another possible explanation is that Democrats are more enthused and voting at the first opportunity to do so.</p>
+<p>What about South Dakota, with its impressive 22.8% of its 2016 turnout? Isn’t that an indication that Republicans are more fired up than Democrats? Well, not entirely. Even in South Dakota, the net ballot return rate lead for registered Democrats is 11.7 percentage points over Republicans, the most of any state.</p>
+</div>
+<div id="south-dakota-mail-ballots-returned-by-party-registration" class="section level3">
+<h3>South Dakota Mail Ballots Returned by Party Registration</h3>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+26,876
+</td>
+<td style="text-align:right;">
+38.9
+</td>
+<td style="text-align:right;">
+47,153
+</td>
+<td style="text-align:right;">
+57.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+29,563
+</td>
+<td style="text-align:right;">
+42.8
+</td>
+<td style="text-align:right;">
+65,264
+</td>
+<td style="text-align:right;">
+45.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+258
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+522
+</td>
+<td style="text-align:right;">
+49.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+12,452
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:right;">
+25,940
+</td>
+<td style="text-align:right;">
+48.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+69,149
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+138,897
+</td>
+<td style="text-align:right;">
+49.8
+</td>
+</tr>
+</tbody>
+</table>
+<p>Thus, the Democrats’ advantage is mail balloting is two-fold. Not only are more Democrats requesting mail ballots, but they are returning their ballots at a higher rate.</p>
+<p>As I noted last week, this helps Democratic campaigns, because they have access to the same data that I do, and can scratch off every supporter who casts a ballot. This allows them to target their mailing and voter contact operations to voters who haven’t cast ballots yet, whereas Republican campaigns won’t be able to do so to the same degree until later in the election.</p>
+<p>There is still plenty of time for Republicans to make up these mounting deficits. Election Day will undoubtedly be a red wave at the polls in many states, as it has been in the past. In-person early voting – a method of voting typically favored by Democrats – might be more Republican this year, as happened for the first time in Florida’s August state primary. Ironically, Republicans will have Democrats casting mail ballots to thank for making their in-person voting experience easier and safer because polling place lines will be shorter.</p>
+<p>Another irony is that with so many mail ballots being returned early, in many states the first election results that election officials will report on election night will be these heavily Democratic mail ballots. Yes, mail ballots received on or after Election Day (depending on state law) may be counted later, and some states will take time to process their ballots. But almost assuredly Biden will leap out into an early lead in key states like Florida and North Carolina, and it will be Trump who will have to wait to make up ground with the Election Day vote.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

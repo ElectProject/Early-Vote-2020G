@@ -175,7 +175,10 @@ Detailed state statistics and analyses for reporting states
 
 These states are those where I have recent data on mail ballot activity. More states will be added as state reports become available.
 
-Read my analysis for the week ending [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html).
+Read my analysis for the week ending:  
+
+* [Sunday, Oct. 4](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_4.html).  
+* [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html).  
 
 ## Summary Statistics for Reporting States {.tabset} 
 
