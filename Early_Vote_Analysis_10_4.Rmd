@@ -1,0 +1,187 @@
+---
+title: "Early Vote Analysis for Sunday, Oct. 4"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
+US_accept_party <- party_shell_returned
+
+US_accept_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
+US_accept_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
+US_accept_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
+US_accept_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
+US_accept_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_accept_party[1,4] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_accept_party[2,4] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_accept_party[3,4] <- sum(state_stats$mail_sent_req_2020_minor)
+US_accept_party[4,4] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_accept_party[5,4] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_accept_party$Frequency <- 100*US_accept_party$Count/US_accept_party[5,2]
+US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
+
+colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
+FL_return_party <- party_shell_returned
+
+FL_return_party[1,2] <- state_stats[10,29] 
+FL_return_party[2,2] <- state_stats[10,30] 
+FL_return_party[3,2] <- state_stats[10,31] 
+FL_return_party[4,2] <- state_stats[10,32] 
+FL_return_party[5,2] <- state_stats[10,6] 
+
+FL_return_party[1,4] <- state_stats[10,10] 
+FL_return_party[2,4] <- state_stats[10,11] 
+FL_return_party[3,4] <- state_stats[10,12] 
+FL_return_party[4,4] <- state_stats[10,13] 
+FL_return_party[5,4] <- state_stats[10,5] 
+
+FL_return_party$Frequency <- 100*FL_return_party$Count/FL_return_party[5,2]
+FL_return_party$Rate <- 100*FL_return_party$Count/FL_return_party$Count2
+
+colnames(FL_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+NC_accept_party <- party_shell_returned
+
+NC_accept_party[1,2] <- state_stats[34,29] 
+NC_accept_party[2,2] <- state_stats[34,30] 
+NC_accept_party[3,2] <- state_stats[34,31] 
+NC_accept_party[4,2] <- state_stats[34,32] 
+NC_accept_party[5,2] <- state_stats[34,6] 
+
+NC_accept_party[1,4] <- state_stats[34,10] 
+NC_accept_party[2,4] <- state_stats[34,11] 
+NC_accept_party[3,4] <- state_stats[34,12] 
+NC_accept_party[4,4] <- state_stats[34,13] 
+NC_accept_party[5,4] <- state_stats[34,5] 
+
+NC_accept_party$Frequency <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+NC_accept_party$Rate <- 100*NC_accept_party$Count/NC_accept_party$Count2
+
+colnames(NC_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
+SD_return_party <- party_shell_returned
+
+SD_return_party[1,2] <- state_stats[42,29] 
+SD_return_party[2,2] <- state_stats[42,30] 
+SD_return_party[3,2] <- state_stats[42,31] 
+SD_return_party[4,2] <- state_stats[42,32] 
+SD_return_party[5,2] <- state_stats[42,6] 
+
+SD_return_party[1,4] <- state_stats[42,10] 
+SD_return_party[2,4] <- state_stats[42,11] 
+SD_return_party[3,4] <- state_stats[42,12] 
+SD_return_party[4,4] <- state_stats[42,13] 
+SD_return_party[5,4] <- state_stats[42,5] 
+
+SD_return_party$Frequency <- 100*SD_return_party$Count/SD_return_party[5,2]
+SD_return_party$Rate <- 100*SD_return_party$Count/SD_return_party$Count2
+
+colnames(SD_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
+
+
+```
+
+## Early Voting Continues at Record Pace with 3.3 million voted
+
+The headline continues to be the unprecedented 3.3 million people who have already voted. At a similar point in time before the 2016 election, [I was tracking](https://www.huffpost.com/entry/early-in-the-early-voting_b_12303146) only 74,836 people who voted. As I [explained last week](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html), this phenomenon is both a function of the increased supply of early voting options and the increased interest among voters to cast an early vote.
+
+Early voting typically starts with a small rush on the first days of early voting among people eager to vote, then decreases, and then increases sharply as Election Day nears. In this context, some state early voting paces are truly amazing when expressed as a percentage of their 2016 *total* turnout.
+
+* South Dakota: 22.8%
+* Virginia: 16.6%
+* Wisconsin: 14.7%
+* Minnesota: 11.3%
+
+There are two plausible explanations for what we are witnessing. 
+
+* In the first scenario, voters have heeded the call to have a plan and we have successfully flattened the curve on voting. In this case, we won't see the same typical increase of voting near and on Election Day. This should help election officials manage what otherwise would have been an historic deluge of returned mail ballots coming at the very end of the election.
+* In the second scenario, early voting follows the typical pattern where turnout increases as the election nears, and turnout will be exceptionally high.
+
+We can't know for sure at this point which scenario is correct. I rather suspect there is some of both behaviors at play, and the truth will lie in-between. 
+
+There is thus nothing in these data to change my preliminary estimate of 150 million voters in the 2020 general election. That would be a record raw number and the highest turnout rate for those eligible to vote since 1908. We should get clarity if and when states begin surpassing their 2016 total turnout, as similarly happened in Arizona and Texas when their 2018 early vote exceeded their 2014 turnout. 
+
+## More Democrats Requested Mail Ballots, and More Democrats Are Returning Them
+
+We've known for some time that -- in the states with party registration -- more registered Democrats either have requested ballots or live in a state that will send automatically all qualifying voters a mail ballot. So, it is no surprise that more Democrats have cast mail ballots. This dynamic is likely a product of President Trump's supporters listening to his disparaging rhetoric about mail balloting.
+
+What is increasingly becoming clear is that Democrats are returning their mail ballots at a higher rate, too. That is unusual. 
+
+Take Florida, for example. In 2016, the Florida Secretary of State [reported](https://dos.myflorida.com/media/697363/early-voting-and-vote-by-mail-report-2016-gen.pdf) that 5,732 more registered Democrats requested a mail ballot than registered Republicans, but 58,244 more Republican returned their ballots. A higher Republican ballot return rate has been a consistent pattern in Florida's elections.
+
+As of now, a greater percentage of Florida Democrats have returned their mail ballots than Republicans. Democrats currently have a net ballot return rate advantage of 2.8 points.
+
+### Florida Mail Ballots Returned by Party Registration
+
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(FL_return_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Florida has a semi-permanent absentee ballot status, where a voter's ballot request is good through two general elections. Perhaps Republicans who requested ballots in past election have decided to vote in-person, either early or on Election Day. This is certainly a possibility, and cannot be ruled out until Florida's early voting period has started.
+
+So, let's look at North Carolina, where voters had to request ballots specifically for the November election, and voting has been taking place since September 4. We see the same pattern again. Here, registered Democrats have a net 5.5 mail ballot return rate lead over Republicans. 
+
+### North Carolina Mail Ballots Returned and Accepted by Party Registration
+
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(NC_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Perhaps North Carolina Republicans who requested mail ballots for the November election got cold feet and decided to vote in-person early or on Election Day. This is certainly a possibility, too.
+
+Another possible explanation is that Democrats are more enthused and voting at the first opportunity to do so.
+
+What about South Dakota, with its impressive 22.8% of its 2016 turnout? Isn't that an indication that Republicans are more fired up than Democrats? Well, not entirely. Even in South Dakota, the net ballot return rate lead for registered Democrats is 11.7 percentage points over Republicans, the most of any state.
+
+### South Dakota Mail Ballots Returned by Party Registration
+
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(SD_return_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Thus, the Democrats' advantage is mail balloting is two-fold. Not only are more Democrats requesting mail ballots, but they are returning their ballots at a higher rate.
+
+As I noted last week, this helps Democratic campaigns, because they have access to the same data that I do, and can scratch off every supporter who casts a ballot. This allows them to target their mailing and voter contact operations to voters who haven't cast ballots yet, whereas Republican campaigns won't be able to do so to the same degree until later in the election.
+
+There is still plenty of time for Republicans to make up these mounting deficits. Election Day will undoubtedly be a red wave at the polls in many states, as it has been in the past. In-person early voting -- a method of voting typically favored by Democrats -- might be more Republican this year, as happened for the first time in Florida's August state primary. Ironically, Republicans will have Democrats casting mail ballots to thank for making their in-person voting experience easier and safer because polling place lines will be shorter.
+
+Another irony is that with so many mail ballots being returned early, in many states the first election results that election officials will report on election night will be these heavily Democratic mail ballots. Yes, mail ballots received on or after Election Day (depending on state law) may be counted later, and some states will take time to process their ballots. But almost assuredly Biden will leap out into an early lead in key states like Florida and North Carolina, and it will be Trump who will have to wait to make up ground with the Election Day vote.
