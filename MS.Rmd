@@ -1,5 +1,5 @@
 ---
-title: "New Hampshire Early Voting Statistics"
+title: "Mississippi Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -62,14 +62,14 @@ age_shell[7,1] <- "TOTAL"
 
 ```
 ## {.tabset}
-Last Report: `r state_stats[30,9]`  
-Source:  `r state_stats[30,2]`
+Last Report: `r state_stats[25,9]`  
+Source:  `r state_stats[25,2]`
 
 ### Returned Mail Ballots
 
-New Hampshire voters have cast **`r format(as.numeric(state_stats[30,6]), big.mark =",")`** mail ballots.
-Return Rate: **`r paste(round(100*sum(state_stats[30,6], na.rm = T)/sum(state_stats[30,5], na.rm = T), digits = 1),"%", sep = "")`**
+Mississippi voters have cast **`r format(as.numeric(state_stats[25,6]), big.mark =",")`** mail ballots.  
+Return Rate: **`r paste(round(100*sum(state_stats[25,6], na.rm = T)/sum(state_stats[25,5], na.rm = T), digits = 1),"%", sep = "")`**
 
 ### Mail Ballot Requests
 
-New Hampshire voters have requested **`r format(as.numeric(state_stats[30,5]), big.mark =",")`** mail ballots.
+Mississippi voters have requested **`r format(as.numeric(state_stats[25,5]), big.mark =",")`** mail ballots.
