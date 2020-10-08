@@ -59,7 +59,7 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# New Jersey
+# Oklahoma
 
 OK_req_send_party <- party_shell
 

@@ -37,6 +37,19 @@ race_shell[6,1] <- "Other/Multiple/Unknown"
 race_shell[7,1] <- "TOTAL"
 
 
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
 gender_shell <- data.frame(Gender=character(),
                                   Count=integer(),
                                   Percent=double(),
@@ -69,20 +82,45 @@ CA_req_send_party[4,2] <- state_stats[5,13]
 CA_req_send_party[5,2] <- state_stats[5,5] 
 
 CA_req_send_party$Percent <- 100*CA_req_send_party$Count/CA_req_send_party[5,2]
+
+CA_accept_party <- party_shell_returned
+
+CA_accept_party[1,2] <- state_stats[5,29] 
+CA_accept_party[2,2] <- state_stats[5,30] 
+CA_accept_party[3,2] <- state_stats[5,31] 
+CA_accept_party[4,2] <- state_stats[5,32] 
+CA_accept_party[5,2] <- state_stats[5,6] 
+
+CA_accept_party[1,4] <- state_stats[5,10] 
+CA_accept_party[2,4] <- state_stats[5,11] 
+CA_accept_party[3,4] <- state_stats[5,12] 
+CA_accept_party[4,4] <- state_stats[5,13] 
+CA_accept_party[5,4] <- state_stats[5,5] 
+
+CA_accept_party$Frequency <- 100*CA_accept_party$Count/CA_accept_party[5,2]
+CA_accept_party$Rate <- 100*CA_accept_party$Count/CA_accept_party$Count2
+
+colnames(CA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 ```
+## {.tabset}
 Last Report: `r state_stats[5,9]`  
 Source:  `r state_stats[5,2]`
 
-### Discussion
+### Returned Mail Ballots
 
-California is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
+California voters have cast **`r format(as.numeric(state_stats[5,6]), big.mark =",")`** mail ballots.
 
-### Mail Ballot Requests
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
 ``` {r echo = FALSE}
-kable(CA_req_send_party,format.args = list(big.mark = ",", 
+kable(CA_accept_party, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-California registered Democrats have a **`r format(as.numeric(CA_req_send_party[1,2]-CA_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+
+### Mail Ballot Requests
+
+California voters have requested **`r format(as.numeric(state_stats[5,5]), big.mark =",")`** mail ballots.
