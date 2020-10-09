@@ -22,7 +22,7 @@ party_shell[1,1] <- "Democrats"
 party_shell[2,1] <- "Republicans"
 party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
-party_shell[5,1] <- "TOTAL"
+party_shell[3,1] <- "TOTAL"
 
 
 party_shell_returned <- data.frame(Party=character(),
@@ -35,7 +35,7 @@ party_shell_returned[1,1] <- "Democrats"
 party_shell_returned[2,1] <- "Republicans"
 party_shell_returned[3,1] <- "Minor"
 party_shell_returned[4,1] <- "No Party Affiliation"
-party_shell_returned[5,1] <- "TOTAL"
+party_shell_returned[3,1] <- "TOTAL"
 
 
 gender_shell <- data.frame(Gender=character(),
@@ -55,7 +55,7 @@ age_shell[1,1] <- "18 to 24"
 age_shell[2,1] <- "25 to 34"
 age_shell[3,1] <- "35 to 44"
 age_shell[4,1] <- "45 to 54"
-age_shell[5,1] <- "55 to 64"
+age_shell[3,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
@@ -63,29 +63,29 @@ age_shell[7,1] <- "TOTAL"
 
 AZ_req_send_party <- party_shell
 
-AZ_req_send_party[1,2] <- state_stats[5,10] 
-AZ_req_send_party[2,2] <- state_stats[5,11] 
-AZ_req_send_party[3,2] <- state_stats[5,12] 
-AZ_req_send_party[4,2] <- state_stats[5,13] 
-AZ_req_send_party[5,2] <- state_stats[5,5] 
+AZ_req_send_party[1,2] <- state_stats[3,10] 
+AZ_req_send_party[2,2] <- state_stats[3,11] 
+AZ_req_send_party[3,2] <- state_stats[3,12] 
+AZ_req_send_party[4,2] <- state_stats[3,13] 
+AZ_req_send_party[3,2] <- state_stats[3,5] 
 
-AZ_req_send_party$Percent <- 100*AZ_req_send_party$Count/AZ_req_send_party[5,2]
+AZ_req_send_party$Percent <- 100*AZ_req_send_party$Count/AZ_req_send_party[3,2]
 
 AZ_accept_party <- party_shell_returned
 
-AZ_accept_party[1,2] <- state_stats[5,29] 
-AZ_accept_party[2,2] <- state_stats[5,30] 
-AZ_accept_party[3,2] <- state_stats[5,31] 
-AZ_accept_party[4,2] <- state_stats[5,32] 
-AZ_accept_party[5,2] <- state_stats[5,6] 
+AZ_accept_party[1,2] <- state_stats[3,29] 
+AZ_accept_party[2,2] <- state_stats[3,30] 
+AZ_accept_party[3,2] <- state_stats[3,31] 
+AZ_accept_party[4,2] <- state_stats[3,32] 
+AZ_accept_party[3,2] <- state_stats[3,6] 
 
-AZ_accept_party[1,4] <- state_stats[5,10] 
-AZ_accept_party[2,4] <- state_stats[5,11] 
-AZ_accept_party[3,4] <- state_stats[5,12] 
-AZ_accept_party[4,4] <- state_stats[5,13] 
-AZ_accept_party[5,4] <- state_stats[5,5] 
+AZ_accept_party[1,4] <- state_stats[3,10] 
+AZ_accept_party[2,4] <- state_stats[3,11] 
+AZ_accept_party[3,4] <- state_stats[3,12] 
+AZ_accept_party[4,4] <- state_stats[3,13] 
+AZ_accept_party[3,4] <- state_stats[3,5] 
 
-AZ_accept_party$Frequency <- 100*AZ_accept_party$Count/AZ_accept_party[5,2]
+AZ_accept_party$Frequency <- 100*AZ_accept_party$Count/AZ_accept_party[3,2]
 AZ_accept_party$Rate <- 100*AZ_accept_party$Count/AZ_accept_party$Count2
 
 colnames(AZ_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
@@ -93,17 +93,17 @@ colnames(AZ_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 
 ```
 ## {.tabset}
-Last Report: `r state_stats[5,9]`  
-Source:  `r state_stats[5,2]`
+Last Report: `r state_stats[3,9]`  
+Source:  `r state_stats[3,2]`
 
 Arizona does not distinguish between mail ballots returned and in-person votes.
 
 ### Mail Ballots Returned
 
-Ballots Returned: **`r format(as.numeric(state_stats[5,6]), big.mark =",")`**
+Ballots Returned: **`r format(as.numeric(state_stats[3,6]), big.mark =",")`**
 
 ### Requested Mail Ballots
 
 (Requests are missing for Maricopa County at this time.)
 
-Ballots Requested: **`r format(as.numeric(state_stats[5,5]), big.mark =",")`**
+Ballots Requested: **`r format(as.numeric(state_stats[3,5]), big.mark =",")`**
