@@ -1,5 +1,5 @@
 ---
-title: "Arizona Early Voting Statistics"
+title: "Massachusetts Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
