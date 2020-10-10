@@ -1,5 +1,5 @@
 ---
-title: "Massachusetts Early Voting Statistics"
+title: "District of Columbia Early Voting Statistics"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
