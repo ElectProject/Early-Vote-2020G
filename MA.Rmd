@@ -102,6 +102,4 @@ Ballots Returned: **`r format(as.numeric(state_stats[22,6]), big.mark =",")`**
 
 ### Requested Mail Ballots
 
-(Requests are missing for Maricopa County at this time.)
-
 Ballots Requested: **`r format(as.numeric(state_stats[22,5]), big.mark =",")`**
