@@ -1,0 +1,105 @@
+---
+title: "Early Vote Analysis for Sunday, Oct. 11"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+NC_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_NC.csv")
+
+NC_age_shell_returned <- data.frame(Race=character(),
+                                    Count=integer(),
+                                    Frequency=double(),
+                                    Count2=integer(),
+                                    Rate=integer(),
+                                    stringsAsFactors=FALSE)
+NC_age_shell_returned[1,1] <- "18 to 25"
+NC_age_shell_returned[2,1] <- "26 to 40"
+NC_age_shell_returned[3,1] <- "41 to 65"
+NC_age_shell_returned[4,1] <- "66 and up"
+NC_age_shell_returned[5,1] <- "TOTAL"
+
+
+NC_accept_age <- NC_age_shell_returned
+
+NC_accept_age[1,2] <- sum(NC_stats$Mail.Rtn.Age.1825, na.rm = T)
+NC_accept_age[2,2] <- sum(NC_stats$Mail.Rtn.Age.2640, na.rm = T) 
+NC_accept_age[3,2] <- sum(NC_stats$Mail.Rtn.Age.4165, na.rm = T) 
+NC_accept_age[4,2] <- sum(NC_stats$Mail.Rtn.Age.66up, na.rm = T) 
+NC_accept_age[5,2] <- sum(NC_stats$Mail.Rtn.Tot, na.rm = T)
+
+NC_accept_age[1,4] <- sum(NC_stats$Mail.Req.Age.1825, na.rm = T)
+NC_accept_age[2,4] <- sum(NC_stats$Mail.Req.Age.2640, na.rm = T) 
+NC_accept_age[3,4] <- sum(NC_stats$Mail.Req.Age.4165, na.rm = T) 
+NC_accept_age[4,4] <- sum(NC_stats$Mail.Req.Age.66up, na.rm = T) 
+NC_accept_age[5,4] <- sum(NC_stats$Mail.Req.Tot, na.rm = T)
+
+NC_accept_age$Frequency <- 100 * NC_accept_age$Count/NC_accept_age[5,2]
+NC_accept_age$Rate <- 100*NC_accept_age$Count/NC_accept_age$Count2
+
+colnames(NC_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+```
+
+## The Headline Continues to Be a Record 9.3 Million Voted
+
+Early Voting Continues at Record Pace with 9.3 million voted. Four years ago at this same time before the November election, I was tracking [1.4 million people voted](https://twitter.com/ElectProject/status/787840826126716932).
+
+The voting pace is truly remarkable, with five states already reaching 20% or greater than their 2016 total vote:
+
+* Minnesota
+* South Dakota
+* Vermont
+* Virginia
+* Wisconsin 
+
+Previously, I explained [the contributing factors](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html) to the historic increase of early voting: the increased availability and increased voter demand. 
+
+I've warned that the heavily Democratic voting at this point should not be an indicator that Biden has the election sown up. Yes, the numbers are very good for Biden. The campaign has to be pleased since they can leverage the banked voters to more efficiently re-target their supporters who have not voted yet. However, it is very likely Republicans will show up in force to vote in-person.
+
+For this reason, the coming weeks may undergo a changing dynamic in the early vote. Some states that have been mail balloting begin in-person early voting this week. Some of these states have party registration. It will be interesting to watch how in-person early voting unfolds since this voting mode has traditionally been a point of strength for Democrats. With so many Democrats voting by mail, and with Trump supporters listening to him undermine mail ballots, I would not be surprised if the in-person early voting is unusually strong for Republicans. 
+
+Even if the in-person early vote is more Republican than usual, I still expect Democrats to dominate the sum of the mail and in-person early votes because of the lopsided numbers of Democrats voting by mail. Election Day should be bright ruby-red, and we'll see where the balance tilts when all is said and done.
+
+## North Carolina "One Stop" In-Person Early Voting
+
+North Carolina [begins in-person early voting](https://www.ncsbe.gov/voting/vote-early-person) on Thursday, October 15. The state has a form of in-person early voting called "One Stop" voting, where an eligible person may register and vote in one stop. This is only available during the in-person early voting period, and it is not offered on Election Day. In 2016, 100,368 eligible persons registered and voted in one stop, many of them younger first-time voters. With a wealth of data provided by the state, I plan to provide statistics for in-person voters, including one-stop voters.
+
+## Are Cannibals Eating Election Day Voters? (And What Does This Mean for the Youth Vote?)
+
+Naysayers are saying that we should ignore early voting because the unprecedented phenomenon is merely folks who would have voted on Election Day deciding to vote early. Nothing to see here, they say, Biden just is cannibalizing his Election Day vote. 
+
+Of course, there are people who would have voted on Election Day that have already voted -- they voted after all! 
+
+Similar claims of cannibalization made in advance of the 2018 election were laid to rest when Arizona and Texas exceeded their 2014 total turnout in their early vote alone. It is for this reason, particularly among the all-mail states, that I am tracking the 2020 early vote as a share of the 2016 total turnout. If we will see a high turnout election, we may similarly see states exceed their 2016 turnout, perhaps the weekend before November 3. 
+
+There is plenty of evidence that we are in for a high turnout election:
+
+* 2018 had the [highest turnout rate for a midterm election](http://www.electproject.org/national-1789-present) since 1914. Turnout has been high in other special elections and state elections since Trump took office. 
+* Pollsters are registering unusually high levels of interest and self-reported intention of voting.
+* We're seeing record small donor activity. For example, South Carolina Democrat Jamie Harrison [recently announced](https://apnews.com/article/election-2020-senate-elections-jaime-harrison-beto-orourke-ted-cruz-3303a77121ae9df9bb37df94dcc66bf8) a record fundraising quarter for a U.S. Senate election.
+
+But will early voting, and overall turnout, diminish as Election Day nears and we see a typical turnout election?
+
+I still expect to see early voting pick up as it normally does as we approach Election Day. Some of this will be due to the unknown number of people who will vote early. Some will be from voters who have yet to return their mail ballots, particularly younger voters.
+
+In North Carolina -- which has been voting since September 4, the longest in the nation -- only 36.6% of voters who requested a mail ballot have returned them. There are almost three-quarters of a million mail ballots still outstanding. 
+
+### North Carolina 2020 Mail Ballots Returned and Accepted by Age
+
+``` {r echo = FALSE}
+kable(NC_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Also note how 45.8% of older voters (age 66 and older) have returned their ballots, compared with 22.0% of younger voters age 18-25. This is a typical pattern. The earliest voters tend to be older, while younger voters show up in larger numbers as Election Day approaches.
+
+Many of you follow me because I am ahead of the curve on voting trends. I will make this prediction, which is easy to make since it is already evident in this year's data, just as it was in prior years' data:  
+
+**I predict in the coming weeks the Democratic narrative will change from euphoria over the apparent large leads in early voting to concern that a disproportionately large number of younger voters have yet to return their mail ballots.**

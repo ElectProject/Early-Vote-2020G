@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Early Vote Analysis for Sunday, Oct. 11</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">U.S. Elections Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FAQ.html">FAQ</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Early Vote Analysis for Sunday, Oct. 11</h1>
+
+</div>
+
+
+<div id="the-headline-continues-to-be-a-record-9.3-million-voted" class="section level2">
+<h2>The Headline Continues to Be a Record 9.3 Million Voted</h2>
+<p>Early Voting Continues at Record Pace with 9.3 million voted. Four years ago at this same time before the November election, I was tracking <a href="https://twitter.com/ElectProject/status/787840826126716932">1.4 million people voted</a>.</p>
+<p>The voting pace is truly remarkable, with five states already reaching 20% or greater than their 2016 total vote:</p>
+<ul>
+<li>Minnesota</li>
+<li>South Dakota</li>
+<li>Vermont</li>
+<li>Virginia</li>
+<li>Wisconsin</li>
+</ul>
+<p>Previously, I explained <a href="https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html">the contributing factors</a> to the historic increase of early voting: the increased availability and increased voter demand.</p>
+<p>I’ve warned that the heavily Democratic voting at this point should not be an indicator that Biden has the election sown up. Yes, the numbers are very good for Biden. The campaign has to be pleased since they can leverage the banked voters to more efficiently re-target their supporters who have not voted yet. However, it is very likely Republicans will show up in force to vote in-person.</p>
+<p>For this reason, the coming weeks may undergo a changing dynamic in the early vote. Some states that have been mail balloting begin in-person early voting this week. Some of these states have party registration. It will be interesting to watch how in-person early voting unfolds since this voting mode has traditionally been a point of strength for Democrats. With so many Democrats voting by mail, and with Trump supporters listening to him undermine mail ballots, I would not be surprised if the in-person early voting is unusually strong for Republicans.</p>
+<p>Even if the in-person early vote is more Republican than usual, I still expect Democrats to dominate the sum of the mail and in-person early votes because of the lopsided numbers of Democrats voting by mail. Election Day should be bright ruby-red, and we’ll see where the balance tilts when all is said and done.</p>
+</div>
+<div id="north-carolina-one-stop-in-person-early-voting" class="section level2">
+<h2>North Carolina “One Stop” In-Person Early Voting</h2>
+<p>North Carolina <a href="https://www.ncsbe.gov/voting/vote-early-person">begins in-person early voting</a> on Thursday, October 15. The state has a form of in-person early voting called “One Stop” voting, where an eligible person may register and vote in one stop. This is only available during the in-person early voting period, and it is not offered on Election Day. In 2016, 100,368 eligible persons registered and voted in one stop, many of them younger first-time voters. With a wealth of data provided by the state, I plan to provide statistics for in-person voters, including one-stop voters.</p>
+</div>
+<div id="are-cannibals-eating-election-day-voters-and-what-does-this-mean-for-the-youth-vote" class="section level2">
+<h2>Are Cannibals Eating Election Day Voters? (And What Does This Mean for the Youth Vote?)</h2>
+<p>Naysayers are saying that we should ignore early voting because the unprecedented phenomenon is merely folks who would have voted on Election Day deciding to vote early. Nothing to see here, they say, Biden just is cannibalizing his Election Day vote.</p>
+<p>Of course, there are people who would have voted on Election Day that have already voted – they voted after all!</p>
+<p>Similar claims of cannibalization made in advance of the 2018 election were laid to rest when Arizona and Texas exceeded their 2014 total turnout in their early vote alone. It is for this reason, particularly among the all-mail states, that I am tracking the 2020 early vote as a share of the 2016 total turnout. If we will see a high turnout election, we may similarly see states exceed their 2016 turnout, perhaps the weekend before November 3.</p>
+<p>There is plenty of evidence that we are in for a high turnout election:</p>
+<ul>
+<li>2018 had the <a href="http://www.electproject.org/national-1789-present">highest turnout rate for a midterm election</a> since 1914. Turnout has been high in other special elections and state elections since Trump took office.</li>
+<li>Pollsters are registering unusually high levels of interest and self-reported intention of voting.</li>
+<li>We’re seeing record small donor activity. For example, South Carolina Democrat Jamie Harrison <a href="https://apnews.com/article/election-2020-senate-elections-jaime-harrison-beto-orourke-ted-cruz-3303a77121ae9df9bb37df94dcc66bf8">recently announced</a> a record fundraising quarter for a U.S. Senate election.</li>
+</ul>
+<p>But will early voting, and overall turnout, diminish as Election Day nears and we see a typical turnout election?</p>
+<p>I still expect to see early voting pick up as it normally does as we approach Election Day. Some of this will be due to the unknown number of people who will vote early. Some will be from voters who have yet to return their mail ballots, particularly younger voters.</p>
+<p>In North Carolina – which has been voting since September 4, the longest in the nation – only 36.6% of voters who requested a mail ballot have returned them. There are almost three-quarters of a million mail ballots still outstanding.</p>
+<div id="north-carolina-2020-mail-ballots-returned-and-accepted-by-age" class="section level3">
+<h3>North Carolina 2020 Mail Ballots Returned and Accepted by Age</h3>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Age
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+18 to 25
+</td>
+<td style="text-align:right;">
+26,233
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+119,309
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26 to 40
+</td>
+<td style="text-align:right;">
+61,010
+</td>
+<td style="text-align:right;">
+12.9
+</td>
+<td style="text-align:right;">
+237,774
+</td>
+<td style="text-align:right;">
+25.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41 to 65
+</td>
+<td style="text-align:right;">
+162,076
+</td>
+<td style="text-align:right;">
+34.3
+</td>
+<td style="text-align:right;">
+474,656
+</td>
+<td style="text-align:right;">
+34.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+66 and up
+</td>
+<td style="text-align:right;">
+211,834
+</td>
+<td style="text-align:right;">
+44.8
+</td>
+<td style="text-align:right;">
+462,682
+</td>
+<td style="text-align:right;">
+45.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+473,174
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+1,294,421
+</td>
+<td style="text-align:right;">
+36.6
+</td>
+</tr>
+</tbody>
+</table>
+<p>Also note how 45.8% of older voters (age 66 and older) have returned their ballots, compared with 22.0% of younger voters age 18-25. This is a typical pattern. The earliest voters tend to be older, while younger voters show up in larger numbers as Election Day approaches.</p>
+<p>Many of you follow me because I am ahead of the curve on voting trends. I will make this prediction, which is easy to make since it is already evident in this year’s data, just as it was in prior years’ data:</p>
+<p><strong>I predict in the coming weeks the Democratic narrative will change from euphoria over the apparent large leads in early voting to concern that a disproportionately large number of younger voters have yet to return their mail ballots.</strong></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
