@@ -20,9 +20,8 @@ party_shell <- data.frame(Party=character(),
                                   stringsAsFactors=FALSE)
 party_shell[1,1] <- "Democrats"
 party_shell[2,1] <- "Republicans"
-party_shell[3,1] <- "Minor"
-party_shell[4,1] <- "No Party Affiliation"
-party_shell[5,1] <- "TOTAL"
+party_shell[3,1] <- "No Party Affiliation/Minr"
+party_shell[4,1] <- "TOTAL"
 
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
@@ -45,9 +44,8 @@ party_shell_returned <- data.frame(Party=character(),
                                   stringsAsFactors=FALSE)
 party_shell_returned[1,1] <- "Democrats"
 party_shell_returned[2,1] <- "Republicans"
-party_shell_returned[3,1] <- "Minor"
-party_shell_returned[4,1] <- "No Party Affiliation"
-party_shell_returned[5,1] <- "TOTAL"
+party_shell_returned[3,1] <- "No Party Affiliation/Minor"
+party_shell_returned[4,1] <- "TOTAL"
 
 
 gender_shell <- data.frame(Gender=character(),
@@ -77,27 +75,24 @@ CA_req_send_party <- party_shell
 
 CA_req_send_party[1,2] <- state_stats[5,10] 
 CA_req_send_party[2,2] <- state_stats[5,11] 
-CA_req_send_party[3,2] <- state_stats[5,12] 
-CA_req_send_party[4,2] <- state_stats[5,13] 
-CA_req_send_party[5,2] <- state_stats[5,5] 
+CA_req_send_party[3,2] <- state_stats[5,13] 
+CA_req_send_party[4,2] <- state_stats[5,5] 
 
-CA_req_send_party$Percent <- 100*CA_req_send_party$Count/CA_req_send_party[5,2]
+CA_req_send_party$Percent <- 100*CA_req_send_party$Count/CA_req_send_party[4,2]
 
 CA_accept_party <- party_shell_returned
 
 CA_accept_party[1,2] <- state_stats[5,29] 
 CA_accept_party[2,2] <- state_stats[5,30] 
-CA_accept_party[3,2] <- state_stats[5,31] 
-CA_accept_party[4,2] <- state_stats[5,32] 
-CA_accept_party[5,2] <- state_stats[5,6] 
+CA_accept_party[3,2] <- state_stats[5,32] 
+CA_accept_party[4,2] <- state_stats[5,6] 
 
 CA_accept_party[1,4] <- state_stats[5,10] 
 CA_accept_party[2,4] <- state_stats[5,11] 
-CA_accept_party[3,4] <- state_stats[5,12] 
-CA_accept_party[4,4] <- state_stats[5,13] 
-CA_accept_party[5,4] <- state_stats[5,5] 
+CA_accept_party[3,4] <- state_stats[5,13] 
+CA_accept_party[4,4] <- state_stats[5,5] 
 
-CA_accept_party$Frequency <- 100*CA_accept_party$Count/CA_accept_party[5,2]
+CA_accept_party$Frequency <- 100*CA_accept_party$Count/CA_accept_party[4,2]
 CA_accept_party$Rate <- 100*CA_accept_party$Count/CA_accept_party$Count2
 
 colnames(CA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
@@ -107,6 +102,8 @@ colnames(CA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 ## {.tabset}
 Last Report: `r state_stats[5,9]`  
 Source:  `r state_stats[5,2]`
+
+**NOTE: My California source combines statistics for voters with no party affiliation and all minor parties**  
 
 ### Returned Mail Ballots
 
@@ -119,7 +116,6 @@ kable(CA_accept_party, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
 
 ### Mail Ballot Requests
 
