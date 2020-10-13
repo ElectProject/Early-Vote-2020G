@@ -20,9 +20,8 @@ party_shell <- data.frame(Party=character(),
                                   stringsAsFactors=FALSE)
 party_shell[1,1] <- "Democrats"
 party_shell[2,1] <- "Republicans"
-party_shell[3,1] <- "Minor"
-party_shell[4,1] <- "No Party Affiliation"
-party_shell[5,1] <- "TOTAL"
+party_shell[3,1] <- "No Party Affiliation/Minr"
+party_shell[4,1] <- "TOTAL"
 
 race_shell <- data.frame(Race=character(),
                                   Count=integer(),
@@ -35,6 +34,18 @@ race_shell[4,1] <- "Non-Hispanic Asian American"
 race_shell[5,1] <- "Non-Hispanic Native American"
 race_shell[6,1] <- "Other/Multiple/Unknown"
 race_shell[7,1] <- "TOTAL"
+
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "No Party Affiliation/Minor"
+party_shell_returned[4,1] <- "TOTAL"
 
 
 gender_shell <- data.frame(Gender=character(),
@@ -64,25 +75,48 @@ NV_req_send_party <- party_shell
 
 NV_req_send_party[1,2] <- state_stats[29,10] 
 NV_req_send_party[2,2] <- state_stats[29,11] 
-NV_req_send_party[3,2] <- state_stats[29,12] 
-NV_req_send_party[4,2] <- state_stats[29,13] 
-NV_req_send_party[5,2] <- state_stats[29,5] 
+NV_req_send_party[3,2] <- state_stats[29,13] 
+NV_req_send_party[4,2] <- state_stats[29,5] 
 
-NV_req_send_party$Percent <- 100*NV_req_send_party$Count/NV_req_send_party[5,2]
+NV_req_send_party$Percent <- 100*NV_req_send_party$Count/NV_req_send_party[4,2]
+
+NV_accept_party <- party_shell_returned
+
+NV_accept_party[1,2] <- state_stats[29,29] 
+NV_accept_party[2,2] <- state_stats[29,30] 
+NV_accept_party[3,2] <- state_stats[29,32] 
+NV_accept_party[4,2] <- state_stats[29,6] 
+
+NV_accept_party[1,4] <- state_stats[29,10] 
+NV_accept_party[2,4] <- state_stats[29,11] 
+NV_accept_party[3,4] <- state_stats[29,13] 
+NV_accept_party[4,4] <- state_stats[29,5] 
+
+NV_accept_party$Frequency <- 100*NV_accept_party$Count/NV_accept_party[4,2]
+NV_accept_party$Rate <- 100*NV_accept_party$Count/NV_accept_party$Count2
+
+colnames(NV_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 ```
+## {.tabset}
 Last Report: `r state_stats[29,9]`  
 Source:  `r state_stats[29,2]`
 
-### Discussion
+**NOTE: The Nevada Secretary of State combines statistics for voters with no party affiliation and all minor parties**  
 
-Nevada is running an all-mail ballot election on an emergency basis. Ballot requests reported here are counts of the state's active registered voters.
+### Returned Mail Ballots
 
-### Mail Ballot Requests
+Nevada voters have cast **`r format(as.numeric(state_stats[29,6]), big.mark =",")`** mail ballots.
+
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
 ``` {r echo = FALSE}
-kable(NV_req_send_party,format.args = list(big.mark = ",", 
+kable(NV_accept_party, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Nevada registered Democrats have a **`r format(as.numeric(NV_req_send_party[1,2]-NV_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+### Mail Ballot Requests
+
+Nevada voters have requested **`r format(as.numeric(state_stats[29,5]), big.mark =",")`** mail ballots.
