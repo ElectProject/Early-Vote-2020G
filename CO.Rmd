@@ -207,7 +207,7 @@ hcmap(map = "countries/us/us-co-all", data = CO_2020g_map_data,
 ```
 
 ``` {r echo = FALSE}
-datatable(CO_stats_voted, colnames = c("County", "Total Voted", "Voter Registration", "Percent Voted"), rownames = F) %>%
+datatable(CO_stats_voted, colnames = c("County", "Voter Registration", "Total Voted", "Percent Voted"), rownames = F) %>%
   formatPercentage('Pct.Voted', 1) %>%
   formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
