@@ -78,8 +78,6 @@ IA_stats_accepted <- IA_stats %>%
 Last Report: `r state_stats[16,9]`  
 Source:  `r state_stats[16,2]`
 
-**Important Note: County maps and tables have not been updated since I have not received on the Columbus Day holiday the file that I generate them with.**
-
 ### Returned and Accepted Mail Ballots
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
