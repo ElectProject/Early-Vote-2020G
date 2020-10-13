@@ -351,8 +351,9 @@ GA_stats_rejects <- select(GA_stats, County, Mail.Reject.Tot, Mail.Return.Tot, P
 Last Report: `r state_stats[11,9]`  
 Source:  `r state_stats[11,2]`
 
+**Note: I need to do additional programming to separate out in-person votes. For now, in-person votes are reported along with mail ballots**
 
-### Mail Ballots Returned and Accepted
+### In-Person Voted and Mail Ballots Returned and Accepted
 Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
 Return Rate: **`r paste(round(100*sum(GA_stats$Mail.Accept.Tot)/sum(GA_stats$Mail.Req.Tot), digits = 1),"%", sep = "")`**
 
