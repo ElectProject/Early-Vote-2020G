@@ -9,6 +9,7 @@ library(kableExtra)
 library(scales)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+CO_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_CO.csv")
 
 # Setup
 
@@ -72,35 +73,24 @@ party_shell_returned[5,1] <- "TOTAL"
 
 # Colorado
 
-CO_req_send_party <- party_shell
+CO_voted_party <- party_shell_returned
 
-CO_req_send_party[1,2] <- state_stats[6,10] 
-CO_req_send_party[2,2] <- state_stats[6,11] 
-CO_req_send_party[3,2] <- state_stats[6,12] 
-CO_req_send_party[4,2] <- state_stats[6,13] 
-CO_req_send_party[5,2] <- state_stats[6,5] 
+CO_voted_party[1,2] <- state_stats[6,29] + state_stats[6,77] 
+CO_voted_party[2,2] <- state_stats[6,30] + state_stats[6,78] 
+CO_voted_party[3,2] <- state_stats[6,31] + state_stats[6,79] 
+CO_voted_party[4,2] <- state_stats[6,32] + state_stats[6,80] 
+CO_voted_party[5,2] <- state_stats[6,6] + state_stats[6,7]
 
-CO_req_send_party$Percent <- 100*CO_req_send_party$Count/CO_req_send_party[5,2]
+CO_voted_party[1,4] <- state_stats[6,10] 
+CO_voted_party[2,4] <- state_stats[6,11] 
+CO_voted_party[3,4] <- state_stats[6,12] 
+CO_voted_party[4,4] <- state_stats[6,13] 
+CO_voted_party[5,4] <- state_stats[6,5] 
 
-CO_accept_party <- party_shell_returned
+CO_voted_party$Frequency <- 100*CO_voted_party$Count/CO_voted_party[5,2]
+CO_voted_party$Rate <- 100*CO_voted_party$Count/CO_voted_party$Count2
 
-CO_accept_party[1,2] <- state_stats[6,29] 
-CO_accept_party[2,2] <- state_stats[6,30] 
-CO_accept_party[3,2] <- state_stats[6,31] 
-CO_accept_party[4,2] <- state_stats[6,32] 
-CO_accept_party[5,2] <- state_stats[6,6] 
-
-CO_accept_party[1,4] <- state_stats[6,10] 
-CO_accept_party[2,4] <- state_stats[6,11] 
-CO_accept_party[3,4] <- state_stats[6,12] 
-CO_accept_party[4,4] <- state_stats[6,13] 
-CO_accept_party[5,4] <- state_stats[6,5] 
-
-CO_accept_party$Frequency <- 100*CO_accept_party$Count/CO_accept_party[5,2]
-CO_accept_party$Rate <- 100*CO_accept_party$Count/CO_accept_party$Count2
-
-colnames(CO_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
-
+colnames(CO_voted_party) <- c("Party", "Total Voted", "Freq. Distribution", "Voter Registration", "Voted Rate")
 
 
 CO_req_send_party <- party_shell
@@ -112,6 +102,39 @@ CO_req_send_party[4,2] <- state_stats[6,13]
 CO_req_send_party[5,2] <- state_stats[6,5] 
 
 CO_req_send_party$Percent <- 100*CO_req_send_party$Count/CO_req_send_party[5,2]
+
+
+CO_req_send_party <- party_shell
+
+CO_req_send_party[1,2] <- state_stats[6,10] 
+CO_req_send_party[2,2] <- state_stats[6,11] 
+CO_req_send_party[3,2] <- state_stats[6,12] 
+CO_req_send_party[4,2] <- state_stats[6,13] 
+CO_req_send_party[5,2] <- state_stats[6,5] 
+
+CO_req_send_party$Percent <- 100*CO_req_send_party$Count/CO_req_send_party[5,2]
+
+
+CO_returned_party <- party_shell
+
+CO_returned_party[1,2] <- state_stats[6,29] 
+CO_returned_party[2,2] <- state_stats[6,30] 
+CO_returned_party[3,2] <- state_stats[6,31] 
+CO_returned_party[4,2] <- state_stats[6,32] 
+CO_returned_party[5,2] <- state_stats[6,6] 
+
+CO_returned_party$Percent <- 100*CO_returned_party$Count/CO_returned_party[5,2]
+
+CO_inperson_party <- party_shell
+
+CO_inperson_party[1,2] <- state_stats[6,77] 
+CO_inperson_party[2,2] <- state_stats[6,78] 
+CO_inperson_party[3,2] <- state_stats[6,79] 
+CO_inperson_party[4,2] <- state_stats[6,80] 
+CO_inperson_party[5,2] <- state_stats[6,7] 
+
+CO_inperson_party$Percent <- 100*CO_inperson_party$Count/CO_inperson_party[5,2]
+
 
 CO_req_send_gender <- gender_shell
 
@@ -133,22 +156,82 @@ CO_req_send_age[6,2] <- state_stats[6,28]
 CO_req_send_age[7,2] <- state_stats[6,5] 
 
 CO_req_send_age$Percent <- 100*CO_req_send_age$Count/CO_req_send_age[7,2]
+
+CO_stats <- mutate(CO_stats, Pct.Voted = Voted.Tot/Reg.Voters)
+
+CO_stats_voted <- CO_stats %>%
+  select(COUNTY, Reg.Voters, Voted.Tot, Pct.Voted)
 ```
 ## {.tabset}
 Last Report: `r state_stats[6,9]`  
 Source:  `r state_stats[6,2]`
 
-Total Early Vote: **`r format(as.numeric(state_stats[6,8]), big.mark =",")`**  
-Total Early Vote as Precentage of 2016 Total Turnout: **`r paste(round(100*as.integer(state_stats[6,8])/as.integer(state_stats[6,3]), digits = 1),"%", sep = "")`**
+Total Vote: **`r format(as.numeric(state_stats[6,8]), big.mark =",")`**  
+Total Vote as Percentage of 2016 Total Turnout: **`r paste(round(100*as.integer(state_stats[6,8])/as.integer(state_stats[6,3]), digits = 1),"%", sep = "")`**
 
-### Mail Ballots Returned
+Colorado is an all-mail state, with an in-person voting option. To measure participation, I combine voters who have cast mail ballots and in-person votes into a single "Total Voted" category.
 
-Ballots Returned: **`r format(as.numeric(state_stats[6,6]), big.mark =",")`**
+### Total Voted
 
-#### **Mail Ballots Returned and Accepted by Party Registration**
+Total Voted: **`r format(as.numeric(state_stats[6,8]), big.mark =",")`**
+
+#### Total Voted by Party Registation
 
 ``` {r echo = FALSE}
-kable(CO_accept_party, format.args = list(big.mark = ",", 
+kable(CO_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+
+CO_2020g_map_data <- CO_stats
+
+CO_2020g_map_data$fips <- paste("0",as.character(CO_2020g_map_data$fips), sep="")
+
+CO_2020g_map_data <- mutate(CO_2020g_map_data, percent = round(100*Pct.Voted, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-co-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+CO_2020g_map_data <- left_join(CO_2020g_map_data, mapdata, by = "fips")
+
+CO_2020g_map_data <- arrange(CO_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-co-all", data = CO_2020g_map_data,
+  value = "percent", name = "Percent Voted", joinBy = "fips") %>%
+  hc_title(text ="Turnout Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(CO_stats_voted, colnames = c("County", "Total Voted", "Voter Registration", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
+```
+
+### In-Person Early Vote
+
+Ballots Returned: **`r format(as.numeric(state_stats[6,7]), big.mark =",")`**
+
+#### In-Person Vote by Party Registration
+
+``` {r echo = FALSE}
+kable(CO_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballots Returned and Accepted
+
+Ballots Returned and Accepted: **`r format(as.numeric(state_stats[6,6]), big.mark =",")`**
+
+#### Mail Ballots Returned and Accepted by Party Registration
+
+``` {r echo = FALSE}
+kable(CO_returned_party, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
