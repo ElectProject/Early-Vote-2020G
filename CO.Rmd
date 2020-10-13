@@ -56,7 +56,52 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
+
 # Colorado
+
+CO_req_send_party <- party_shell
+
+CO_req_send_party[1,2] <- state_stats[6,10] 
+CO_req_send_party[2,2] <- state_stats[6,11] 
+CO_req_send_party[3,2] <- state_stats[6,12] 
+CO_req_send_party[4,2] <- state_stats[6,13] 
+CO_req_send_party[5,2] <- state_stats[6,5] 
+
+CO_req_send_party$Percent <- 100*CO_req_send_party$Count/CO_req_send_party[5,2]
+
+CO_accept_party <- party_shell_returned
+
+CO_accept_party[1,2] <- state_stats[6,29] 
+CO_accept_party[2,2] <- state_stats[6,30] 
+CO_accept_party[3,2] <- state_stats[6,31] 
+CO_accept_party[4,2] <- state_stats[6,32] 
+CO_accept_party[5,2] <- state_stats[6,6] 
+
+CO_accept_party[1,4] <- state_stats[6,10] 
+CO_accept_party[2,4] <- state_stats[6,11] 
+CO_accept_party[3,4] <- state_stats[6,12] 
+CO_accept_party[4,4] <- state_stats[6,13] 
+CO_accept_party[5,4] <- state_stats[6,5] 
+
+CO_accept_party$Frequency <- 100*CO_accept_party$Count/CO_accept_party[5,2]
+CO_accept_party$Rate <- 100*CO_accept_party$Count/CO_accept_party$Count2
+
+colnames(CO_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 
 CO_req_send_party <- party_shell
 
@@ -89,14 +134,32 @@ CO_req_send_age[7,2] <- state_stats[6,5]
 
 CO_req_send_age$Percent <- 100*CO_req_send_age$Count/CO_req_send_age[7,2]
 ```
+## {.tabset}
 Last Report: `r state_stats[6,9]`  
 Source:  `r state_stats[6,2]`
 
-### Discussion
+Total Early Vote: **`r format(as.numeric(state_stats[6,8]), big.mark =",")`**  
+Total Early Vote as Precentage of 2016 Total Turnout: **`r paste(round(100*as.integer(state_stats[6,8])/as.integer(state_stats[6,3]), digits = 1),"%", sep = "")`**
+
+### Mail Ballots Returned
+
+Ballots Returned: **`r format(as.numeric(state_stats[6,6]), big.mark =",")`**
+
+#### **Mail Ballots Returned and Accepted by Party Registration**
+
+``` {r echo = FALSE}
+kable(CO_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Requested Mail Ballots
+
+Ballots Requested: **`r format(as.numeric(state_stats[6,5]), big.mark =",")`**
 
 Colorado is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
 
-### Mail Ballot Requests by Party Registration
+#### Mail Ballot Requests by Party Registration
 
 ``` {r echo = FALSE}
 kable(CO_req_send_party,format.args = list(big.mark = ",", 
@@ -106,7 +169,7 @@ kable(CO_req_send_party,format.args = list(big.mark = ",",
 
 Colorado registered Democrats have a **`r format(as.numeric(CO_req_send_party[1,2]-CO_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
 
-### Mail Ballot Requests by Age
+#### Mail Ballot Requests by Age
 
 ``` {r echo = FALSE}
 kable(CO_req_send_age, format.args = list(big.mark = ",", 
@@ -114,10 +177,3 @@ kable(CO_req_send_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Ballot Requests by Gender
-
-``` {r echo = FALSE}
-kable(CO_req_send_gender, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
