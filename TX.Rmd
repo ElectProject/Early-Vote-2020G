@@ -65,9 +65,15 @@ age_shell[7,1] <- "TOTAL"
 Last Report: `r state_stats[44,9]`  
 Source:  `r state_stats[44,2]`
 
+### Total Voted
+
+### In-Person Votes
+
+Texas voters have cast **`r format(as.numeric(state_stats[44,8]), big.mark =",")`** mail ballots.  
+
 ### Returned Mail Ballots
 
-Texas voters have cast **`r format(as.numeric(state_stats[44,6]), big.mark =",")`** mail ballots.  
+Texas voters have cast **`r format(as.numeric(state_stats[44,7]), big.mark =",")`** mail ballots.  
 
 ### Mail Ballot Requests
 
