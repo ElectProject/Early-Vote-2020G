@@ -185,6 +185,27 @@ GA_voted_age[8,2] <- sum(state_stats[11,7]) + sum(state_stats[11,6])
 
 GA_voted_age$Percent <- 100*GA_voted_age$Count/GA_voted_age[8,2]
 
+
+GA_inperson_gender <- gender_shell
+
+GA_inperson_gender[1,2] <- sum(state_stats[11,87])
+GA_inperson_gender[2,2] <- sum(state_stats[11,88]) 
+GA_inperson_gender[3,2] <- sum(state_stats[11,89]) 
+GA_inperson_gender[4,2] <- sum(state_stats[11,7]) 
+
+GA_inperson_gender$Percent <- 100*GA_inperson_gender$Count/GA_inperson_gender[4,2]
+
+
+GA_voted_gender <- gender_shell
+
+GA_voted_gender[1,2] <- sum(state_stats[11,87]) + sum(state_stats[11,39])
+GA_voted_gender[2,2] <- sum(state_stats[11,88]) + sum(state_stats[11,40]) 
+GA_voted_gender[3,2] <- sum(state_stats[11,89]) + sum(state_stats[11,41])
+GA_voted_gender[4,2] <- sum(state_stats[11,7]) + sum(state_stats[11,6])
+
+GA_voted_gender$Percent <- 100*GA_voted_gender$Count/GA_voted_gender[4,2]
+
+
 GA_request_race <- race_shell
 
 GA_request_race[1,2] <- sum(state_stats[11,14])
@@ -454,6 +475,14 @@ kable(GA_voted_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### Total Voted by by Gender
+
+``` {r echo = FALSE}
+kable(GA_voted_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 ### In-Person Early Votes  
 
 In-Person Early Votes: **`r format(as.numeric(state_stats[11,7]), big.mark =",")`**  
@@ -474,6 +503,13 @@ kable(GA_inperson_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### In-Person Early Votes by Gender
+
+``` {r echo = FALSE}
+kable(GA_inperson_gender, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Mail Ballots Returned and Accepted
 Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
