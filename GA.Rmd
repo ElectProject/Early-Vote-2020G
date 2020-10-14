@@ -133,6 +133,58 @@ voted_shell_full[3,1] <- "TOTAL"
 
 # Georgia
 
+GA_inperson_race <- race_shell
+
+GA_inperson_race[1,2] <- sum(state_stats[11,81])
+GA_inperson_race[2,2] <- sum(state_stats[11,82]) 
+GA_inperson_race[3,2] <- sum(state_stats[11,85]) 
+GA_inperson_race[4,2] <- sum(state_stats[11,83]) 
+GA_inperson_race[5,2] <- sum(state_stats[11,84]) 
+GA_inperson_race[6,2] <- sum(state_stats[11,85]) 
+GA_inperson_race[7,2] <- sum(state_stats[11,7]) 
+
+GA_inperson_race$Percent <- 100*GA_inperson_race$Count/GA_inperson_race[7,2]
+
+
+GA_voted_race <- race_shell
+
+GA_voted_race[1,2] <- sum(state_stats[11,81]) + sum(state_stats[11,33])
+GA_voted_race[2,2] <- sum(state_stats[11,82]) + sum(state_stats[11,34])
+GA_voted_race[3,2] <- sum(state_stats[11,85]) + sum(state_stats[11,37]) 
+GA_voted_race[4,2] <- sum(state_stats[11,83]) + sum(state_stats[11,35]) 
+GA_voted_race[5,2] <- sum(state_stats[11,84]) + sum(state_stats[11,36]) 
+GA_voted_race[6,2] <- sum(state_stats[11,85]) + sum(state_stats[11,38]) 
+GA_voted_race[7,2] <- sum(state_stats[11,7]) + sum(state_stats[11,6])
+
+GA_voted_race$Percent <- 100*GA_voted_race$Count/GA_voted_race[7,2]
+
+
+GA_inperson_age <- GA_age_shell
+
+GA_inperson_age[1,2] <- sum(state_stats[11,90])
+GA_inperson_age[2,2] <- sum(state_stats[11,91]) 
+GA_inperson_age[3,2] <- sum(state_stats[11,92]) 
+GA_inperson_age[4,2] <- sum(state_stats[11,93]) 
+GA_inperson_age[5,2] <- sum(state_stats[11,94])
+GA_inperson_age[6,2] <- sum(state_stats[11,95])
+GA_inperson_age[7,2] <- sum(state_stats[11,96])
+GA_inperson_age[8,2] <- sum(state_stats[11,7])
+
+GA_inperson_age$Percent <- 100*GA_inperson_age$Count/GA_inperson_age[8,2]
+
+GA_voted_age <- GA_age_shell
+
+GA_voted_age[1,2] <- sum(state_stats[11,90]) + sum(state_stats[11,42])
+GA_voted_age[2,2] <- sum(state_stats[11,91]) + sum(state_stats[11,43]) 
+GA_voted_age[3,2] <- sum(state_stats[11,92]) + sum(state_stats[11,44]) 
+GA_voted_age[4,2] <- sum(state_stats[11,93]) + sum(state_stats[11,45]) 
+GA_voted_age[5,2] <- sum(state_stats[11,94]) + sum(state_stats[11,46])
+GA_voted_age[6,2] <- sum(state_stats[11,95]) + sum(state_stats[11,47])
+GA_voted_age[7,2] <- sum(state_stats[11,96]) + sum(state_stats[11,75])
+GA_voted_age[8,2] <- sum(state_stats[11,7]) + sum(state_stats[11,6])
+
+GA_voted_age$Percent <- 100*GA_voted_age$Count/GA_voted_age[8,2]
+
 GA_request_race <- race_shell
 
 GA_request_race[1,2] <- sum(state_stats[11,14])
@@ -385,9 +437,42 @@ datatable(GA_stats_voted, colnames = c("County", "Registered Voters", "Total Vot
   formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
 
+#### Total Voted by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_voted_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Total Voted by by Age
+
+``` {r echo = FALSE}
+kable(GA_voted_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 ### In-Person Early Votes  
 
 In-Person Early Votes: **`r format(as.numeric(state_stats[11,7]), big.mark =",")`**  
+
+#### In-Person Early Votes by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_inperson_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### In-Person Early Votes by Age
+
+``` {r echo = FALSE}
+kable(GA_inperson_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 
 ### Mail Ballots Returned and Accepted
 Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
