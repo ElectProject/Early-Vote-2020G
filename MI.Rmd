@@ -158,7 +158,7 @@ kable(MI_accept_age, format.args = list(big.mark = ",",
 
 ### Rejected Mail Ballots
 Ballots Rejected: **`r format(as.numeric(state_stats[23,48]), big.mark =",")`**  
-Rejection Rate: **`r paste(round(100*(state_stats[23,48])/(state_stats[23,48]+state_stats[23,46]), digits = 1),"%", sep = "")`**
+Rejection Rate: **`r paste(round(100*(state_stats[23,48])/(state_stats[23,48]+state_stats[23,6]), digits = 1),"%", sep = "")`**
 
 
 Michigan election officials have rejected **`r format(as.numeric(state_stats[23,48]), big.mark =",")`** mail ballots.
