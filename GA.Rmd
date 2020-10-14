@@ -140,7 +140,7 @@ GA_inperson_race[2,2] <- sum(state_stats[11,82])
 GA_inperson_race[3,2] <- sum(state_stats[11,85]) 
 GA_inperson_race[4,2] <- sum(state_stats[11,83]) 
 GA_inperson_race[5,2] <- sum(state_stats[11,84]) 
-GA_inperson_race[6,2] <- sum(state_stats[11,85]) 
+GA_inperson_race[6,2] <- sum(state_stats[11,86]) 
 GA_inperson_race[7,2] <- sum(state_stats[11,7]) 
 
 GA_inperson_race$Percent <- 100*GA_inperson_race$Count/GA_inperson_race[7,2]
@@ -153,7 +153,7 @@ GA_voted_race[2,2] <- sum(state_stats[11,82]) + sum(state_stats[11,34])
 GA_voted_race[3,2] <- sum(state_stats[11,85]) + sum(state_stats[11,37]) 
 GA_voted_race[4,2] <- sum(state_stats[11,83]) + sum(state_stats[11,35]) 
 GA_voted_race[5,2] <- sum(state_stats[11,84]) + sum(state_stats[11,36]) 
-GA_voted_race[6,2] <- sum(state_stats[11,85]) + sum(state_stats[11,38]) 
+GA_voted_race[6,2] <- sum(state_stats[11,86]) + sum(state_stats[11,38]) 
 GA_voted_race[7,2] <- sum(state_stats[11,7]) + sum(state_stats[11,6])
 
 GA_voted_race$Percent <- 100*GA_voted_race$Count/GA_voted_race[7,2]
