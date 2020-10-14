@@ -407,6 +407,7 @@ Source:  `r state_stats[11,2]`
 ### Total Voted  
 
 Total Voted: **`r format(as.numeric(state_stats[11,8]), big.mark =",")`**  
+Turnout Rate (of Registered Voters): **`r paste(round(100*sum(GA_stats$Voted.Tot)/sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**  
 
 ``` {r echo = FALSE}
 GA_map_data <- GA_stats
