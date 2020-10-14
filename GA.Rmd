@@ -343,6 +343,7 @@ GA_reject_gender$Rate <- 100*GA_reject_gender$Count/GA_reject_gender$Count2
 
 colnames(GA_reject_gender) <- c("Age", "Rejected Ballots", "Freq. Distribution", "Returned Ballots (All)", "Rejection Rate")
 
+GA_stats_voted <- select(GA_stats, County, Reg.Voters, Voted.Tot, Pct.Voted)
 GA_stats_requests <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 GA_stats_returns <- select(GA_stats, County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
 GA_stats_rejects <- select(GA_stats, County, Mail.Reject.Tot, Mail.Return.Tot, Pct.Reject)
@@ -351,9 +352,44 @@ GA_stats_rejects <- select(GA_stats, County, Mail.Reject.Tot, Mail.Return.Tot, P
 Last Report: `r state_stats[11,9]`  
 Source:  `r state_stats[11,2]`
 
-**Note: I need to do additional programming to separate out in-person votes. For now, in-person votes are reported along with mail ballots**
+### Total Voted  
 
-### In-Person Voted and Mail Ballots Returned and Accepted
+Total Voted: **`r format(as.numeric(state_stats[11,8]), big.mark =",")`**  
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Voted.Tot/Reg.Voters), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Voted", joinBy = "fips") %>%
+  hc_title(text ="Total Turnout Rate of Registered Voters") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_voted, colnames = c("County", "Registered Voters", "Total Voted", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
+```
+
+### In-Person Early Votes  
+
+In-Person Early Votes: **`r format(as.numeric(state_stats[11,7]), big.mark =",")`**  
+
+### Mail Ballots Returned and Accepted
 Mail Ballots Returned and Accepted: **`r format(as.numeric(sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
 Return Rate: **`r paste(round(100*sum(GA_stats$Mail.Accept.Tot)/sum(GA_stats$Mail.Req.Tot), digits = 1),"%", sep = "")`**
 
