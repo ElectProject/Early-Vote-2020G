@@ -67,13 +67,15 @@ Source:  `r state_stats[44,2]`
 
 ### Total Voted
 
+Total Voted: **`r format(as.numeric(state_stats[44,8]), big.mark =",")`**   
+
 ### In-Person Votes
 
-Texas voters have cast **`r format(as.numeric(state_stats[44,8]), big.mark =",")`** mail ballots.  
+In-Person Votes: **`r format(as.numeric(state_stats[44,7]), big.mark =",")`**    
 
 ### Returned Mail Ballots
 
-Texas voters have cast **`r format(as.numeric(state_stats[44,7]), big.mark =",")`** mail ballots.  
+Mail Ballots **`r format(as.numeric(state_stats[44,6]), big.mark =",")`**  
 
 ### Mail Ballot Requests
 
