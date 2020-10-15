@@ -58,31 +58,17 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Utah
+# Texas
 
-UT_req_send_party <- party_shell
-
-UT_req_send_party[1,2] <- state_stats[45,10] 
-UT_req_send_party[2,2] <- state_stats[45,11] 
-UT_req_send_party[3,2] <- state_stats[45,12] 
-UT_req_send_party[4,2] <- state_stats[45,13] 
-UT_req_send_party[5,2] <- state_stats[45,5] 
-
-UT_req_send_party$Percent <- 100*UT_req_send_party$Count/UT_req_send_party[5,2]
 ```
+## {.tabset}
 Last Report: `r state_stats[45,9]`  
 Source:  `r state_stats[45,2]`
 
-### Discussion
+### Returned Mail Ballots
 
-Utah is an all-mail ballot state. Ballot requests reported here are counts of the state's active registered voters.
+Mail Ballots **`r format(as.numeric(state_stats[45,6]), big.mark =",")`**  
 
 ### Mail Ballot Requests
 
-``` {r echo = FALSE}
-kable(UT_req_send_party,format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-Utah registered Republicans have a **`r format(as.numeric(UT_req_send_party[2,2]-UT_req_send_party[1,2]), big.mark =",")`** ballot request lead over registered Democrats.
+Mail Ballot Requests **`r format(as.numeric(state_stats[45,5]), big.mark =",")`**  
