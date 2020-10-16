@@ -65,16 +65,15 @@ age_shell[7,1] <- "TOTAL"
 Last Report: `r state_stats[43,9]`  
 Source:  `r state_stats[43,2]`
 
-
 ### Total Voted
 
-Mail Ballot Requests **`r format(as.numeric(state_stats[43,8]), big.mark =",")`**  
+Total Voted: **`r format(as.numeric(state_stats[43,8]), big.mark =",")`**  
 
 ### In-Person Votes
 
-Mail Ballot Requests **`r format(as.numeric(state_stats[43,7]), big.mark =",")`**  
+In-Person Votes: **`r format(as.numeric(state_stats[43,7]), big.mark =",")`**  
 
 ### Returned Mail Ballots
 
-Mail Ballots **`r format(as.numeric(state_stats[43,6]), big.mark =",")`**  
+Mail Ballots Returned: **`r format(as.numeric(state_stats[43,6]), big.mark =",")`**  
 
