@@ -188,6 +188,31 @@ NC_reject_party$Frequency <- 100*NC_reject_party$Count/NC_reject_party[5,2]
 NC_reject_party$Rate <- 100*NC_reject_party$Count/NC_reject_party$Count2
 colnames(NC_reject_party) <- c("Party", "Rejected Ballots", "Freq. Distribution", "All Returned Ballots", "Rejection Rate")
 
+NC_voted_race <- race_shell
+
+NC_voted_race[1,2] <- sum(state_stats[34,33]) + sum(state_stats[34,81])
+NC_voted_race[2,2] <- sum(state_stats[34,34]) + sum(state_stats[34,82]) 
+NC_voted_race[3,2] <- sum(state_stats[34,37]) + sum(state_stats[34,85]) 
+NC_voted_race[4,2] <- sum(state_stats[34,35]) + sum(state_stats[34,83]) 
+NC_voted_race[5,2] <- sum(state_stats[34,36]) + sum(state_stats[34,84]) 
+NC_voted_race[6,2] <- sum(state_stats[34,38]) + sum(state_stats[34,86]) 
+NC_voted_race[7,2] <- sum(state_stats[34,6]) + sum(state_stats[34,7]) 
+
+NC_voted_race$Percent <- 100 * NC_voted_race$Count/NC_voted_race[7,2]
+
+NC_inperson_race <- race_shell
+
+NC_inperson_race[1,2] <- sum(state_stats[34,81])
+NC_inperson_race[2,2] <- sum(state_stats[34,82]) 
+NC_inperson_race[3,2] <- sum(state_stats[34,85]) 
+NC_inperson_race[4,2] <- sum(state_stats[34,83]) 
+NC_inperson_race[5,2] <- sum(state_stats[34,84]) 
+NC_inperson_race[6,2] <- sum(state_stats[34,86]) 
+NC_inperson_race[7,2] <- sum(state_stats[34,7]) 
+
+NC_inperson_race$Percent <- 100 * NC_inperson_race$Count/NC_inperson_race[7,2]
+
+
 NC_req_send_race <- race_shell
 
 NC_req_send_race[1,2] <- sum(state_stats[34,14])
@@ -378,6 +403,14 @@ kable(NC_voted_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### **Total Voted by Race and Ethnicity**
+
+``` {r echo = FALSE}
+kable(NC_voted_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 #### **Total Voted by 2016 Vote History**
 ``` {r echo = FALSE}
 kable(NC_voted_voted, format.args = list(big.mark = ",", 
@@ -393,6 +426,14 @@ In-Person Votes: **`r format(as.numeric(state_stats[34,7]), big.mark =",")`**
 
 ``` {r echo = FALSE}
 kable(NC_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **In-Person Votes by Race and Ethnicity**
+
+``` {r echo = FALSE}
+kable(NC_inperson_race, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
