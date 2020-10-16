@@ -351,6 +351,8 @@ NC_accept_age$Rate <- 100*NC_accept_age$Count/NC_accept_age$Count2
 
 colnames(NC_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+NC_stats_voted <- select(NC_stats, County, Reg.Voters, Voted.Tot, Pct.Voted)
+
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 NC_stats_requests_Dem <- select(NC_stats, County, Reg.Voters.Dem, Mail.Req.Dem, Pct.Request.Dem)
 NC_stats_requests_Rep <- select(NC_stats, County, Reg.Voters.Rep, Mail.Req.Rep, Pct.Request.Rep)
@@ -394,6 +396,35 @@ Source:  `r state_stats[34,2]`
 ### Total Voted
 
 Total Voted: **`r format(as.numeric(state_stats[34,8]), big.mark =",")`**   
+
+``` {r echo = FALSE}
+
+NC_2020g_map_data <- left_join(NC_stats, NC_FIPS, by = "County")
+
+NC_2020g_map_data$fips <- as.character(NC_2020g_map_data$FIPS_NUM)
+
+NC_2020g_map_data <- mutate(NC_2020g_map_data, percent_returned = round(100*Pct.Voted, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-nc-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+NC_2020g_map_data <- left_join(NC_2020g_map_data, mapdata, by = "fips")
+
+NC_2020g_map_data <- arrange(NC_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-nc-all", data = NC_2020g_map_data,
+  value = "percent_returned", name = "Percent voted", joinby = "fips") %>%
+  hc_title(text ="Turnout Rate (as Percentage of Registered Voters)") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(NC_stats_voted, colnames = c("County", "Registered Voters", "Total Voted", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Reg.Voters','Voted.Tot'), 0, mark = ",")
+```
 
 #### **Total Voted by Party Registration**
 
