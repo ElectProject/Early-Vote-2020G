@@ -71,6 +71,26 @@ KS_req_send_party[5,2] <- state_stats[17,5]
 
 KS_req_send_party$Percent <- 100*KS_req_send_party$Count/KS_req_send_party[5,2]
 
+KS_inperson_party <- party_shell
+
+KS_inperson_party[1,2] <- state_stats[17,77] 
+KS_inperson_party[2,2] <- state_stats[17,78] 
+KS_inperson_party[3,2] <- state_stats[17,79] 
+KS_inperson_party[4,2] <- state_stats[17,80] 
+KS_inperson_party[5,2] <- state_stats[17,7] 
+
+KS_inperson_party$Percent <- 100*KS_inperson_party$Count/KS_inperson_party[5,2]
+
+KS_voted_party <- party_shell
+
+KS_voted_party[1,2] <- state_stats[17,77] + state_stats[17,29]
+KS_voted_party[2,2] <- state_stats[17,78] + state_stats[17,30] 
+KS_voted_party[3,2] <- state_stats[17,79] + state_stats[17,31] 
+KS_voted_party[4,2] <- state_stats[17,80] + state_stats[17,32] 
+KS_voted_party[5,2] <- state_stats[17,7] + state_stats[17,6]
+
+KS_voted_party$Percent <- 100*KS_voted_party$Count/KS_voted_party[5,2]
+
 KS_accept_party <- party_shell_returned
 
 KS_accept_party[1,2] <- state_stats[17,29] 
@@ -96,7 +116,29 @@ colnames(KS_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 Last Report: `r state_stats[17,9]`  
 Source:  `r state_stats[17,2]`
 
+### Total Voted
+
 Total Early Votes: **`r format(as.numeric(state_stats[17,8]), big.mark =",")`**
+
+#### **Total Voted by Party Registration**
+
+``` {r echo = FALSE}
+kable(KS_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[17,7]), big.mark =",")`**
+
+#### **In-Person Votes by Party Registration**
+
+``` {r echo = FALSE}
+kable(KS_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Mail Ballots Returned
 
