@@ -245,6 +245,24 @@ NC_reject_race$Frequency <- 100 * NC_reject_race$Count/NC_reject_race[7,2]
 NC_reject_race$Rate <- 100*NC_reject_race$Count/NC_reject_race$Count2
 colnames(NC_reject_race) <- c("Race/Ethnicity", "Rejected Ballots", "Freq. Distribution", "All Returned Ballots", "Rejection Rate")
 
+
+NC_voted_voted <- Voted_shell
+
+NC_voted_voted[1,2] <- sum(state_stats[34,68]) + sum(state_stats[34,97])
+NC_voted_voted[2,2] <- sum(state_stats[34,69]) + sum(state_stats[34,98])
+NC_voted_voted[3,2] <- sum(state_stats[34,6]) + sum(state_stats[34,7])
+
+NC_voted_voted$Percent <- 100*NC_voted_voted$Count/NC_voted_voted[3,2]
+
+NC_inperson_voted <- Voted_shell
+
+NC_inperson_voted[1,2] <- sum(state_stats[34,97])
+NC_inperson_voted[2,2] <- sum(state_stats[34,98])
+NC_inperson_voted[3,2] <- sum(state_stats[34,7])
+
+NC_inperson_voted$Percent <- 100*NC_inperson_voted$Count/NC_inperson_voted[3,2]
+
+
 NC_accept_voted <- Voted_shell
 
 NC_accept_voted[1,2] <- sum(state_stats[34,68])
@@ -360,6 +378,13 @@ kable(NC_voted_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+#### **Total Voted by 2016 Vote History**
+``` {r echo = FALSE}
+kable(NC_voted_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 ### In-Person Votes
 
 In-Person Votes: **`r format(as.numeric(state_stats[34,7]), big.mark =",")`**    
@@ -368,6 +393,13 @@ In-Person Votes: **`r format(as.numeric(state_stats[34,7]), big.mark =",")`**
 
 ``` {r echo = FALSE}
 kable(NC_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **In-Person Votes by 2016 Vote History**
+``` {r echo = FALSE}
+kable(NC_inperson_voted, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
