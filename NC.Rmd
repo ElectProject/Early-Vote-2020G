@@ -118,6 +118,29 @@ Voted_shell[3,1] <- "TOTAL"
 
 # North Carolina
 
+
+NC_inperson_party <- party_shell
+
+NC_inperson_party[1,2] <- state_stats[34,77] 
+NC_inperson_party[2,2] <- state_stats[34,78] 
+NC_inperson_party[3,2] <- state_stats[34,79] 
+NC_inperson_party[4,2] <- state_stats[34,80] 
+NC_inperson_party[5,2] <- state_stats[34,7] 
+
+NC_inperson_party$Percent <- 100*NC_inperson_party$Count/NC_inperson_party[5,2]
+
+
+NC_voted_party <- party_shell
+
+NC_voted_party[1,2] <- state_stats[34,77] + state_stats[34,29] 
+NC_voted_party[2,2] <- state_stats[34,78] + state_stats[34,30] 
+NC_voted_party[3,2] <- state_stats[34,79] + state_stats[34,31]
+NC_voted_party[4,2] <- state_stats[34,80] + state_stats[34,32] 
+NC_voted_party[5,2] <- state_stats[34,7] + state_stats[34,6]
+
+NC_voted_party$Percent <- 100*NC_voted_party$Count/NC_voted_party[5,2]
+
+
 NC_req_send_party <- party_shell
 
 NC_req_send_party[1,2] <- state_stats[34,10] 
@@ -329,9 +352,25 @@ Source:  `r state_stats[34,2]`
 
 Total Voted: **`r format(as.numeric(state_stats[34,8]), big.mark =",")`**   
 
+#### **Total Voted by Party Registration**
+
+``` {r echo = FALSE}
+kable(NC_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 ### In-Person Votes
 
 In-Person Votes: **`r format(as.numeric(state_stats[34,7]), big.mark =",")`**    
+
+#### **In-Person Votes by Party Registration**
+
+``` {r echo = FALSE}
+kable(NC_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Returned and Accepted Mail Ballots
 
