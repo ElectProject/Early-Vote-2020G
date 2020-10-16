@@ -71,6 +71,27 @@ OK_req_send_party[5,2] <- state_stats[37,5]
 
 OK_req_send_party$Percent <- 100*OK_req_send_party$Count/OK_req_send_party[5,2]
 
+
+OK_inperson_party <- party_shell
+
+OK_inperson_party[1,2] <- state_stats[37,77] 
+OK_inperson_party[2,2] <- state_stats[37,78] 
+OK_inperson_party[3,2] <- state_stats[37,79] 
+OK_inperson_party[4,2] <- state_stats[37,80] 
+OK_inperson_party[5,2] <- state_stats[37,7] 
+
+OK_inperson_party$Percent <- 100*OK_inperson_party$Count/OK_inperson_party[5,2]
+
+OK_voted_party <- party_shell
+
+OK_voted_party[1,2] <- state_stats[37,77] + state_stats[37,29]
+OK_voted_party[2,2] <- state_stats[37,78] + state_stats[37,30] 
+OK_voted_party[3,2] <- state_stats[37,79] + state_stats[37,31] 
+OK_voted_party[4,2] <- state_stats[37,80] + state_stats[37,32] 
+OK_voted_party[5,2] <- state_stats[37,7] + state_stats[37,6]
+
+OK_voted_party$Percent <- 100*OK_voted_party$Count/OK_voted_party[5,2]
+
 OK_accept_party <- party_shell_returned
 
 OK_accept_party[1,2] <- state_stats[37,29] 
@@ -95,8 +116,6 @@ colnames(OK_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 ## {.tabset}
 Last Report: `r state_stats[37,9]`  
 Source:  `r state_stats[37,2]`
-
-Total Early Votes: **`r format(as.numeric(state_stats[37,8]), big.mark =",")`**
 
 ### Mail Ballots Returned
 
