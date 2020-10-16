@@ -323,7 +323,15 @@ NC_stats_rejects_nh_black <- mutate(NC_stats_rejects_nh_black, Mail.Rtn.nh_black
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
 
-**I am working on separating out the in-person votes for reporting. Please be patient**
+**More statistics for in-person and total voters coming soon**
+
+### Total Voted
+
+Total Voted: **`r format(as.numeric(state_stats[34,8]), big.mark =",")`**   
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[34,7]), big.mark =",")`**    
 
 ### Returned and Accepted Mail Ballots
 
