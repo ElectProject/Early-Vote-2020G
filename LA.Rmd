@@ -1,0 +1,169 @@
+---
+title: "Louisiana Early Voting Statistics"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "No Party Affiliation"
+party_shell[4,1] <- "TOTAL"
+
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "All Other"
+race_shell[4,1] <- "TOTAL"
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+# Louisiana
+
+
+LA_inperson_party <- party_shell
+
+LA_inperson_party[1,2] <- state_stats[19,77] 
+LA_inperson_party[2,2] <- state_stats[19,78] 
+LA_inperson_party[3,2] <- state_stats[19,79] 
+LA_inperson_party[4,2] <- state_stats[19,80] 
+LA_inperson_party[5,2] <- state_stats[19,7] 
+
+LA_inperson_party$Percent <- 100*LA_inperson_party$Count/LA_inperson_party[5,2]
+
+
+LA_voted_party <- party_shell
+
+LA_voted_party[1,2] <- state_stats[19,77] + state_stats[19,29] 
+LA_voted_party[2,2] <- state_stats[19,78] + state_stats[19,30] 
+LA_voted_party[3,2] <- state_stats[19,80] + state_stats[19,32] 
+LA_voted_party[4,2] <- state_stats[19,7] + state_stats[19,6]
+
+LA_voted_party$Percent <- 100*LA_voted_party$Count/LA_voted_party[4,2]
+
+
+LA_req_send_party <- party_shell
+
+LA_req_send_party[1,2] <- state_stats[19,10] 
+LA_req_send_party[2,2] <- state_stats[19,11] 
+LA_req_send_party[3,2] <- state_stats[19,12] 
+LA_req_send_party[4,2] <- state_stats[19,13] 
+LA_req_send_party[5,2] <- state_stats[19,5] 
+
+LA_req_send_party$Percent <- 100*LA_req_send_party$Count/LA_req_send_party[5,2]
+
+LA_accept_party <- party_shell_returned
+
+LA_accept_party[1,2] <- state_stats[19,29] 
+LA_accept_party[2,2] <- state_stats[19,30] 
+LA_accept_party[3,2] <- state_stats[19,31] 
+LA_accept_party[4,2] <- state_stats[19,32] 
+LA_accept_party[5,2] <- state_stats[19,6] 
+
+LA_accept_party[1,4] <- state_stats[19,10] 
+LA_accept_party[2,4] <- state_stats[19,11] 
+LA_accept_party[3,4] <- state_stats[19,12] 
+LA_accept_party[4,4] <- state_stats[19,13] 
+LA_accept_party[5,4] <- state_stats[19,5] 
+
+LA_accept_party$Frequency <- 100*LA_accept_party$Count/LA_accept_party[5,2]
+LA_accept_party$Rate <- 100*LA_accept_party$Count/LA_accept_party$Count2
+
+colnames(LA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+LA_voted_race <- race_shell
+
+LA_voted_race[1,2] <- sum(state_stats[19,33]) + sum(state_stats[19,81])
+LA_voted_race[2,2] <- sum(state_stats[19,34]) + sum(state_stats[19,82]) 
+LA_voted_race[3,2] <- sum(state_stats[19,38]) + sum(state_stats[19,86]) 
+LA_voted_race[4,2] <- sum(state_stats[19,6]) + sum(state_stats[19,7]) 
+
+LA_voted_race$Percent <- 100 * LA_voted_race$Count/LA_voted_race[4,2]
+
+```
+## {.tabset}
+Last Report: `r state_stats[19,9]`  
+Source:  `r state_stats[19,2]`
+
+Note: Louisiana does not provide breakdowns of early voting activity among minor parties; and provides only statistics for "White", "Black", and "Other".  
+
+
+### Total Voted
+
+Total Voted: **`r format(as.numeric(state_stats[19,8]), big.mark =",")`**
+
+#### **Total Voted by Party Registration**
+
+``` {r echo = FALSE}
+kable(LA_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **Total Voted by Race**
+
+``` {r echo = FALSE}
+kable(LA_voted_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[19,7]), big.mark =",")`**
+
+### Mail Ballots Returned
+
+Ballots Returned: **`r format(as.numeric(state_stats[19,6]), big.mark =",")`**
+
+### Requested Mail Ballots
+
+Louisiana does not report Requested Mail Ballots
