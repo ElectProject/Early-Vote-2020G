@@ -72,6 +72,27 @@ age_shell[7,1] <- "TOTAL"
 
 # South Dakota
 
+SD_inperson_party <- party_shell
+
+SD_inperson_party[1,2] <- state_stats[42,77] 
+SD_inperson_party[2,2] <- state_stats[42,78] 
+SD_inperson_party[3,2] <- state_stats[42,79] 
+SD_inperson_party[4,2] <- state_stats[42,80] 
+SD_inperson_party[5,2] <- state_stats[42,7] 
+
+SD_inperson_party$Percent <- 100*SD_inperson_party$Count/SD_inperson_party[5,2]
+
+
+SD_voted_party <- party_shell
+
+SD_voted_party[1,2] <- state_stats[42,77] + state_stats[42,29] 
+SD_voted_party[2,2] <- state_stats[42,78] + state_stats[42,30] 
+SD_voted_party[3,2] <- state_stats[42,79] + state_stats[42,31]
+SD_voted_party[4,2] <- state_stats[42,80] + state_stats[42,32] 
+SD_voted_party[5,2] <- state_stats[42,7] + state_stats[42,6]
+
+SD_voted_party$Percent <- 100*SD_voted_party$Count/SD_voted_party[5,2]
+
 SD_return_party <- party_shell_returned
 
 SD_return_party[1,2] <- state_stats[42,29] 
@@ -98,15 +119,31 @@ Source:  `r state_stats[42,2]`
 
 ### Total Early
 
-South Dakota voters have cast **`r format(as.numeric(state_stats[42,8]), big.mark =",")`** early votes.
+Total Voted: **`r format(as.numeric(state_stats[42,8]), big.mark =",")`**
+
+#### Total Voted by Party Registration
+
+``` {r echo = FALSE}
+kable(SD_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Total In-Person Early
 
-South Dakota voters have cast **`r format(as.numeric(state_stats[42,7]), big.mark =",")`** early votes.
+In-Person: **`r format(as.numeric(state_stats[42,7]), big.mark =",")`**
+
+#### In-Person by Party Registration
+
+``` {r echo = FALSE}
+kable(SD_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Returned Mail Ballots
 
-South Dakota voters have cast **`r format(as.numeric(state_stats[42,6]), big.mark =",")`** mail ballots.
+Returned Mail Ballots: **`r format(as.numeric(state_stats[42,6]), big.mark =",")`**
 
 #### Mail Ballots Returned by Party Registration
 
@@ -118,4 +155,4 @@ kable(SD_return_party, format.args = list(big.mark = ",",
 
 ### Mail Ballot Requests
 
-South Dakota voters have requested **`r format(as.numeric(state_stats[42,5]), big.mark =",")`** mail ballots.
+Requested Mail Ballots: **`r format(as.numeric(state_stats[42,5]), big.mark =",")`**
