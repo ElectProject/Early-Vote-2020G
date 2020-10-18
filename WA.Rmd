@@ -58,29 +58,21 @@ age_shell[5,1] <- "55 to 64"
 age_shell[6,1] <- "65 and up"
 age_shell[7,1] <- "TOTAL"
 
-# Washington
+# Texas
 
-WA_req_send_tot <- data.frame(Total=character(),
-                                  Count=integer(),
-                                  Percent=double(),
-                                  stringsAsFactors=FALSE)
-
-WA_req_send_tot[1,1] <- "TOTAL"
-WA_req_send_tot[1,2] <- sum(state_stats[48,5]) 
-
-WA_req_send_tot$Percent <- 100.0
 ```
+## {.tabset}
 Last Report: `r state_stats[48,9]`  
 Source:  `r state_stats[48,2]`
 
-### Discussion
+Washington will begin reporting statewide statistics in the coming days. Unitl then, I am reporting data from Benton, Kitsap, King, Spokane, Thurston, Whatcom, and Yakima counties.
 
-Washington is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
+### Returned Mail Ballots
+
+Mail Ballots Returned: **`r format(as.numeric(state_stats[48,6]), big.mark =",")`**  
+Return Rate: **`r paste(round(100*sum(state_stats[48,6]/state_stats[48,5]), digits = 1),"%", sep = "")`**
 
 ### Mail Ballot Requests
 
-``` {r echo = FALSE}
-kable(WA_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
+Mail Ballots Requested: **`r format(as.numeric(state_stats[48,5]), big.mark =",")`**  
+
