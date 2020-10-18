@@ -95,6 +95,8 @@ These data were last scraped on the Last Report date, but counties may have last
 
 You may see reports of Ohio mail ballot activity by "Party". I will not post party statistics because they are misleading. Ohio's party affiliation is unlike party registration in other states. In Ohio, "Party" is a record of the last party primary a voter participated in, in the current and past last two calendar years (see: [Ohio Code 3513.19(3)](https://codes.ohio.gov/orc/3513.19)). In Ohio's April 28, 2020 presidential primary, 124,628 more voters participated in the Democratic primary than the Republican primary, primarily because President Trump had only token opposition. As a consequence, **Ohio's "Party" is currently artificially tilted towards the Democrats.** Leveraging this quirk, both political parties and their allies have abused these party statistics over the years to make disingenuous claims about party enthusiasm in Ohio.
 
+**I do not distinguish between mail and in-person votes in Ohio because some counties do not provide data by method of voting**  
+
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[36,6]), big.mark =",")`**
