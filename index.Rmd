@@ -185,7 +185,7 @@ Read my analysis for the week ending:
 
 ## Summary Statistics for Reporting States {.tabset} 
 
-### Total Mail Ballots Returned or In-Person Early Votes
+### Total Mail Ballots Returned and In-Person Early Votes
 
 Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
 
