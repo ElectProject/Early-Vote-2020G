@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Early Vote Analysis for Sunday, Oct. 18</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">U.S. Elections Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FAQ.html">FAQ</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Early Vote Analysis for Sunday, Oct. 18</h1>
+
+</div>
+
+
+<div id="early-voting-at-a-record-pace" class="section level2">
+<h2><strong>Early Voting at a Record Pace</strong></h2>
+<p>Again, the headline is that early voting continues at a record pace, with at least 27.9 million people who have voted in the 2020 general election. Four year ago, at a comparable point in time, I was tracking <a href="https://www.huffpost.com/entry/early-voting-the-election_b_12614284">5.9 million votes</a>.</p>
+<p>Ah ah! The pace has dropped, you might surmise, because last week the early vote ran about six-and-a-half times at the same point in 2016, whereas this week it is only a little less than five times the comparable 2016 point. The ratio is coming down for two reasons.</p>
+<p>First, it’s not like no one voted early in 2016. That was a record year for early voting, with about 40% of all votes cast early. We’re at 20% of the 2016 total vote as I write this. The ratio of 2020 early vote to 2016 early vote is going to come down simple because it is impossible that early voting is going to be six times what it was in 2016.</p>
+<p>Second, we are now entering the in-person early voting period in many states. There is a simple capacity issue. In-person early voting is designed to spread out voting over several days, so in most states there are fewer in-person polling locations than what election officials provide on Election Day. It is difficult, if not impossible, to process in one day six times the number of voters as in 2016. Still, we are seeing impressive in-person early voting with tow-fold increases over 2016 in <a href="https://www.timesfreepress.com/news/local/story/2020/oct/17/tennessee-georgia-early-voting/534278/#/questions">Georgia and Tennessee</a>, <a href="https://www.foxnews.com/politics/texas-early-voting-record-on-first-day">Texas</a>, and <a href="https://abc11.com/politics/nearly-230k-vote-on-first-day-of-early-voting-in-nc/7042576/">North Carolina</a>.</p>
+<p>I expect the national pace of early voting to pick up during the coming week. More states are coming online with in-person early voting this week and a greater number of ballots will start rolling in from the all-mail ballot states. But, it is possible that some states that have been offering early voting for a while will level off or decline slightly this week. That is a typical pattern. The pace typically picks up again the last week prior to the election, particularly as younger voters get into the mix, as I <a href="https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_11.html">explained last week</a>. Hard to believe, but there is only a little more than two weeks left before November 3rd.</p>
+</div>
+<div id="where-are-the-republicans" class="section level2">
+<h2><strong>Where Are the Republicans?</strong></h2>
+<p>In the states with party registration, registered Democrats have a huge advantage among early voters.</p>
+<div id="total-voted-by-party-registration" class="section level4">
+<h4><strong>Total Voted by Party Registration</strong></h4>
+Reporting states with party registration data: CA, CO, FL, IA, KS, KY, LA, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD<br />
+
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+6,638,626
+</td>
+<td style="text-align:right;">
+53.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+3,102,695
+</td>
+<td style="text-align:right;">
+25.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+63,632
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+2,501,521
+</td>
+<td style="text-align:right;">
+20.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+12,306,474
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+</tr>
+</tbody>
+</table>
+<p>Until this point, registered Democrats have dominated the early voting period on the strength of their higher mail ballots request rate <strong>and</strong> return rate advantages. Both of these patterns are different from prior elections where registered Republicans tended to request more mail ballots and return them at a higher rate. And the differences here are not small. Registered Democrats have returned more than 3 million more ballots than Republicans, a pattern that is replicated across states. Democrats are voting by mail, and returning their ballots at a higher clip.</p>
+</div>
+<div id="returned-mail-ballots-by-party-registration" class="section level4">
+<h4><strong>Returned Mail Ballots by Party Registration</strong></h4>
+<p>Reporting states with party registration data: CA, CO, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD</p>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+6,044,562
+</td>
+<td style="text-align:right;">
+55.0
+</td>
+<td style="text-align:right;">
+23,532,232
+</td>
+<td style="text-align:right;">
+25.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+2,657,537
+</td>
+<td style="text-align:right;">
+24.2
+</td>
+<td style="text-align:right;">
+13,176,160
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+60,176
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+473,021
+</td>
+<td style="text-align:right;">
+12.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+2,222,147
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+14,666,408
+</td>
+<td style="text-align:right;">
+15.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+10,984,422
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+51,847,821
+</td>
+<td style="text-align:right;">
+21.2
+</td>
+</tr>
+</tbody>
+</table>
+<p>In past elections, Democrats have tended to dominate in-person early voting, in far greater numbers than mail ballots (in the states that offer both voting methods). We might expect that with so many registered Democrats voting by mail early, there would be a shift from Democrats away from voting in-person early. If Republicans are listening to President Trump’s rhetoric disparaging mail balloting, we might expect to see more Republicans voting in-person early. Republicans have less of a disadvantage among in-person early voters than mail voters, but over-all a deficient continues to exist.</p>
+</div>
+<div id="in-person-votes-by-party-registration" class="section level4">
+<h4><strong>In-Person Votes by Party Registration</strong></h4>
+Reporting states with party registration data: CO, KS, KY, LA, MD, NC, NM, SD<br />
+
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+594,064
+</td>
+<td style="text-align:right;">
+44.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+445,158
+</td>
+<td style="text-align:right;">
+33.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+3,456
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+279,374
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+1,322,052
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+</tr>
+</tbody>
+</table>
+<p>The fewer states where in-person early voting by party registration is available tend to be more Republican than where mail ballot data by party registration is available, so some of the closing of the gap may be an artifact of the available states.</p>
+<p>A state where a fairly large number of in-person votes have been cast and Republicans are outperforming Democrats among in-person voters is New Mexico. More New Mexico voters have cast mail ballots, and Democrats have a larger edge among mail voters, so registered Democrats in New Mexico still have a sizable 20 percentage point lead among all early voters.</p>
+</div>
+<div id="new-mexico-in-person-votes-by-party-registration" class="section level4">
+<h4><strong>New Mexico In-Person Votes by Party Registration</strong></h4>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+32,487
+</td>
+<td style="text-align:right;">
+39.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+40,855
+</td>
+<td style="text-align:right;">
+49.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+429
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+8,354
+</td>
+<td style="text-align:right;">
+10.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+82,503
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="new-mexico-mail-ballots-returned-by-party-registration" class="section level4">
+<h4><strong>New Mexico Mail Ballots Returned by Party Registration</strong></h4>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+66,989
+</td>
+<td style="text-align:right;">
+65.7
+</td>
+<td style="text-align:right;">
+226,632
+</td>
+<td style="text-align:right;">
+29.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+20,494
+</td>
+<td style="text-align:right;">
+20.1
+</td>
+<td style="text-align:right;">
+78,527
+</td>
+<td style="text-align:right;">
+26.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+1,057
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+2,533
+</td>
+<td style="text-align:right;">
+41.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+13,464
+</td>
+<td style="text-align:right;">
+13.2
+</td>
+<td style="text-align:right;">
+58,256
+</td>
+<td style="text-align:right;">
+23.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+102,004
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+365,948
+</td>
+<td style="text-align:right;">
+27.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Another state where there is a large number of in-person early voters is North Carolina. Here, again, there are more registered Republicans voting-inperson early than by mail. But unlike New Mexico, Democrats dominate among both voting methods.</p>
+</div>
+<div id="north-carolina-in-person-votes-by-party-registration" class="section level4">
+<h4><strong>North Carolina In-Person Votes by Party Registration</strong></h4>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+363,665
+</td>
+<td style="text-align:right;">
+43.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+244,289
+</td>
+<td style="text-align:right;">
+29.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+2,803
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+217,699
+</td>
+<td style="text-align:right;">
+26.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+828,456
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="north-carolina-mail-ballots-returned-by-party-registration" class="section level4">
+<h4><strong>North Carolina Mail Ballots Returned by Party Registration</strong></h4>
+<table class="table table-striped" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Party
+</th>
+<th style="text-align:right;">
+Returned Ballots
+</th>
+<th style="text-align:right;">
+Freq. Distribution
+</th>
+<th style="text-align:right;">
+Requested Ballots
+</th>
+<th style="text-align:right;">
+Return Rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Democrats
+</td>
+<td style="text-align:right;">
+301,348
+</td>
+<td style="text-align:right;">
+49.8
+</td>
+<td style="text-align:right;">
+637,221
+</td>
+<td style="text-align:right;">
+47.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republicans
+</td>
+<td style="text-align:right;">
+111,343
+</td>
+<td style="text-align:right;">
+18.4
+</td>
+<td style="text-align:right;">
+264,611
+</td>
+<td style="text-align:right;">
+42.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minor
+</td>
+<td style="text-align:right;">
+2,318
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+7,387
+</td>
+<td style="text-align:right;">
+31.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Party Affiliation
+</td>
+<td style="text-align:right;">
+190,313
+</td>
+<td style="text-align:right;">
+31.4
+</td>
+<td style="text-align:right;">
+458,782
+</td>
+<td style="text-align:right;">
+41.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOTAL
+</td>
+<td style="text-align:right;">
+605,322
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+1,368,001
+</td>
+<td style="text-align:right;">
+44.2
+</td>
+</tr>
+</tbody>
+</table>
+<p>There are impressive in-person early voting increases compared to 2016 in Georgia and Texas, as noted above. But these states do not have party registration. Georgia does <a href="https://electproject.github.io/Early-Vote-2020G/GA.html">report early voting statistics</a> by race, and non-Hispanic Whites constitute nearly the same percentage of mail voters (55.1%) as they do in-person voters (56.0%).</p>
+<p>African-Americans tend to prefer voting in-person, particularly through so-called “Souls-to-Polls” voter mobilization that takes place through churches. This may explain why a state like New Mexico, with fewer African-Americans would see a registered Republican advantage among in-person early voters, while states like Georgia or North Carolina may not.</p>
+<p>There are two weeks left in the election, so there is plenty of time for Republicans to vote. I certainly want to see what happens in the coming weeks as more states offer in-person early voting. Of course, there is always Election Day, which will likely be flooded by Republican voters.</p>
+</div>
+</div>
+<div id="trumps-eggs-are-mostly-in-one-basket" class="section level2">
+<h2><strong>Trump’s Eggs Are Mostly in One Basket</strong></h2>
+<p>While Democrats can feel good about the record number of early voters, I believe the most important story now is tactical.</p>
+<p>The Trump campaign spent millions of dollars sending mailers encouraging his supporters to request mail ballots and vote in-person. The Trump campaign sent three mailers to my household, addressed to the prior occupant, encouraging him to request a mail ballot and vote in-person early. (Who hasn’t lived here in several years and is no longer on the voter file. That is some poor targeting.) His money has largely been wasted because Trump’s supporters are listening to his rhetoric about mail ballot fraud. Even if occasionally he grudgingly tells his supports to vote by mail or vote early, Republicans aren’t doing it yet. Maybe Trump feels he can waste his money this way, but throwing away money only means the Biden campaign has even more of a cash advantage over Trump.</p>
+<p>Meanwhile, the Biden campaign is analyzing the same early voting data of individual voters available to me. They are merrily scratching names off their target universe and re-concentrating their efforts onto voters they want to vote who haven’t participated yet. This means that Biden is able to more effectively use the money he has.</p>
+<p>Trump is putting his eggs into the Election Day basket, and that is risky. It is not unheard of for bad weather to happen on Election Day – a snowstorm, rain, or even a tropical disturbance. Bad weather is known to depress turnout. There will be fewer polling locations because of COVID, so Election Day lines could be unusually long and miserable to stand in with bad weather. A COVID issue could unexpectedly shutter an election office or polling location, creating last minute chaos.</p>
+<p>Again, maybe Republican start voting in-person over the next two weeks. If I were running a campaign, I’d much prefer to be the one where I’ve already banked millions of votes more than my opponent.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

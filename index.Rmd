@@ -95,7 +95,29 @@ US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
 
 colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+# Voted
 
+US_voted_party <- party_shell
+
+US_voted_party[1,2] <- sum(state_stats$mail_accept_2020_dem) + sum(state_stats$inperson_2020_dem)
+US_voted_party[2,2] <- sum(state_stats$mail_accept_2020_rep) + sum(state_stats$inperson_2020_rep)
+US_voted_party[3,2] <- sum(state_stats$mail_accept_2020_minor) + sum(state_stats$inperson_2020_minor)
+US_voted_party[4,2] <- sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_npa)
+US_voted_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_voted_party$Percent <- 100*US_voted_party$Count/US_voted_party[5,2]
+
+# Inperson
+
+US_inperson_party <- party_shell
+
+US_inperson_party[1,2] <- sum(state_stats$inperson_2020_dem) 
+US_inperson_party[2,2] <- sum(state_stats$inperson_2020_rep) 
+US_inperson_party[3,2] <- sum(state_stats$inperson_2020_minor)
+US_inperson_party[4,2] <- sum(state_stats$inperson_2020_npa) 
+US_inperson_party[5,2] <- sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_inperson_party$Percent <- 100*US_inperson_party$Count/US_inperson_party[5,2]
 
 # Requested
 
@@ -179,13 +201,14 @@ These states are those where I have recent data on mail ballot activity. More st
 
 Read my analysis for the week ending:  
 
+* [Sunday, Oct.18](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_18.html)  
 * [Sunday, Oct.11](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_11.html)  
 * [Sunday, Oct. 4](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_4.html)  
 * [Sunday, Sept. 27](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_9_27.html)  
 
 ## Summary Statistics for Reporting States {.tabset} 
 
-### Total Mail Ballots Returned and In-Person Early Votes
+### Total Voted
 
 Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
 
@@ -208,7 +231,37 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
-#### **Voted Mail Ballots by Party Registration**
+##### {.tabset .tabset-pills}
+
+###### Total Voted  
+
+**Total Voted by Party Registration**  
+
+Reporting states with party registration data: CA, CO, FL, IA, KS, KY, LA, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD    
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_voted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+###### In-Person Votes  
+
+**In-Person Votes by Party Registration**  
+
+Reporting states with party registration data: CO, KS, KY, LA, MD, NC, NM, SD  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+###### Returned Mail Ballots  
+
+**Returned Mail Ballots by Party Registration**
 
 Reporting states with party registration data: CA, CO, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD  
 
@@ -219,7 +272,6 @@ options(knitr.kable.NA = '')
 kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
 
 ### Turnout as Percent of 2016 Total Turnout
 
