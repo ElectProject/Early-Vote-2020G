@@ -75,8 +75,8 @@ NV_inperson_party <- party_shell
 
 NV_inperson_party[1,2] <- state_stats[29,77] 
 NV_inperson_party[2,2] <- state_stats[29,78] 
-NV_inperson_party[3,2] <- state_stats[29,79] 
-NV_inperson_party[5,2] <- state_stats[29,7] 
+NV_inperson_party[3,2] <- state_stats[29,80] 
+NV_inperson_party[4,2] <- state_stats[29,7] 
 
 NV_inperson_party$Percent <- 100*NV_inperson_party$Count/NV_inperson_party[4,2]
 
@@ -85,7 +85,7 @@ NV_voted_party <- party_shell
 
 NV_voted_party[1,2] <- state_stats[29,77] + state_stats[29,29] 
 NV_voted_party[2,2] <- state_stats[29,78] + state_stats[29,30] 
-NV_voted_party[3,2] <- state_stats[29,79] + state_stats[29,31]
+NV_voted_party[3,2] <- state_stats[29,80] + state_stats[29,32]
 NV_voted_party[4,2] <- state_stats[29,7] + state_stats[29,6]
 
 NV_voted_party$Percent <- 100*NV_voted_party$Count/NV_voted_party[4,2]
