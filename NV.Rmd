@@ -124,11 +124,11 @@ colnames(NV_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 Last Report: `r state_stats[29,9]`  
 Source:  `r state_stats[29,2]`
 
-**NOTE: The Nevada Secretary of State combines statistics for voters with no party affiliation and all minor parties**  
+**NOTE: The Nevada Secretary of State combines statistics for voters with no party affiliation and all minor parties. Nevada is including "curable" rejected mail ballots in its total mail ballot return statistics. I exclude these ballots.**  
 
 ### Total Voted
 
-Total Voted: **`r format(as.numeric(state_stats[32,8]), big.mark =",")`**
+Total Voted: **`r format(as.numeric(state_stats[29,8]), big.mark =",")`**
 
 #### **Total Voted by Party Registration**
 
@@ -140,7 +140,7 @@ kable(NV_voted_party, format.args = list(big.mark = ",",
 
 ### In-Person Votes
 
-In-Person Votes: **`r format(as.numeric(state_stats[32,7]), big.mark =",")`**
+In-Person Votes: **`r format(as.numeric(state_stats[29,7]), big.mark =",")`**
 
 #### **In-Person Votes by Party Registration**
 
