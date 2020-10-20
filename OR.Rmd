@@ -7,6 +7,8 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
+library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
@@ -22,17 +24,18 @@ party_shell[3,1] <- "Minor"
 party_shell[4,1] <- "No Party Affiliation"
 party_shell[5,1] <- "TOTAL"
 
-race_shell <- data.frame(Race=character(),
+
+party_shell_returned <- data.frame(Party=character(),
                                   Count=integer(),
-                                  Percent=double(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
                                   stringsAsFactors=FALSE)
-race_shell[1,1] <- "Non-Hispanic White"
-race_shell[2,1] <- "Non-Hispanic Black"
-race_shell[3,1] <- "Hispanic"
-race_shell[4,1] <- "Non-Hispanic Asian American"
-race_shell[5,1] <- "Non-Hispanic Native American"
-race_shell[6,1] <- "Other/Multiple/Unknown"
-race_shell[7,1] <- "TOTAL"
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
 
 
 gender_shell <- data.frame(Gender=character(),
@@ -68,20 +71,64 @@ OR_req_send_party[5,2] <- state_stats[38,5]
 
 OR_req_send_party$Percent <- 100*OR_req_send_party$Count/OR_req_send_party[5,2]
 
+
+OR_inperson_party <- party_shell
+
+OR_inperson_party[1,2] <- state_stats[38,77] 
+OR_inperson_party[2,2] <- state_stats[38,78] 
+OR_inperson_party[3,2] <- state_stats[38,79] 
+OR_inperson_party[4,2] <- state_stats[38,80] 
+OR_inperson_party[5,2] <- state_stats[38,7] 
+
+OR_inperson_party$Percent <- 100*OR_inperson_party$Count/OR_inperson_party[5,2]
+
+OR_voted_party <- party_shell
+
+OR_voted_party[1,2] <- state_stats[38,77] + state_stats[38,29]
+OR_voted_party[2,2] <- state_stats[38,78] + state_stats[38,30] 
+OR_voted_party[3,2] <- state_stats[38,79] + state_stats[38,31] 
+OR_voted_party[4,2] <- state_stats[38,80] + state_stats[38,32] 
+OR_voted_party[5,2] <- state_stats[38,7] + state_stats[38,6]
+
+OR_voted_party$Percent <- 100*OR_voted_party$Count/OR_voted_party[5,2]
+
+OR_accept_party <- party_shell_returned
+
+OR_accept_party[1,2] <- state_stats[38,29] 
+OR_accept_party[2,2] <- state_stats[38,30] 
+OR_accept_party[3,2] <- state_stats[38,31] 
+OR_accept_party[4,2] <- state_stats[38,32] 
+OR_accept_party[5,2] <- state_stats[38,6] 
+
+OR_accept_party[1,4] <- state_stats[38,10] 
+OR_accept_party[2,4] <- state_stats[38,11] 
+OR_accept_party[3,4] <- state_stats[38,12] 
+OR_accept_party[4,4] <- state_stats[38,13] 
+OR_accept_party[5,4] <- state_stats[38,5] 
+
+OR_accept_party$Frequency <- 100*OR_accept_party$Count/OR_accept_party[5,2]
+OR_accept_party$Rate <- 100*OR_accept_party$Count/OR_accept_party$Count2
+
+colnames(OR_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
 ```
+## {.tabset}
 Last Report: `r state_stats[38,9]`  
 Source:  `r state_stats[38,2]`
 
-### Discussion
+### Mail Ballots Returned
 
-Oregon is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
+Ballots Returned: **`r format(as.numeric(state_stats[38,6]), big.mark =",")`**
 
-### Mail Ballot Requests by Party Registration
+#### **Mail Ballots Returned and Accepted by Party Registration**
 
 ``` {r echo = FALSE}
-kable(OR_req_send_party,format.args = list(big.mark = ",", 
+kable(OR_accept_party, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-Oregon registered Democrats have a **`r format(as.numeric(OR_req_send_party[1,2]-OR_req_send_party[2,2]), big.mark =",")`** ballot request lead over registered Republicans.
+### Requested Mail Ballots
+
+Ballots Requested: **`r format(as.numeric(state_stats[38,5]), big.mark =",")`**
