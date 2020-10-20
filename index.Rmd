@@ -289,7 +289,7 @@ US_2020g_map_data <- US_2020g_map_data %>%
 
 hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
   value = "display_data", name = "Percent") %>%
-  hc_title(text ="Total Votes Cast as Percent of 2016 Total Turnout") %>%
+  hc_title(text ="2020 Total Early Votes Cast as Percent of 2016 Total Turnout") %>%
   hc_subtitle(text = "State plots may not be shaded using the same scale")
 ```
 
