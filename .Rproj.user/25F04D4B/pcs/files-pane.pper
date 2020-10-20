@@ -3,7 +3,11 @@
         {
             "columnIndex": 2,
             "ascending": true
+        },
+        {
+            "columnIndex": 4,
+            "ascending": false
         }
     ],
-    "path": "D:/Early/Early-Vote-2020G"
+    "path": "D:/Early/Early-Vote-2020G/docs"
 }

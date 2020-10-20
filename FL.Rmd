@@ -75,6 +75,30 @@ age_shell[7,1] <- "TOTAL"
 
 # Florida
 
+FL_inperson_party <- party_shell
+
+FL_inperson_party[1,2] <- state_stats[10,77] 
+FL_inperson_party[2,2] <- state_stats[10,78] 
+FL_inperson_party[3,2] <- state_stats[10,79] 
+FL_inperson_party[4,2] <- state_stats[10,80] 
+FL_inperson_party[5,2] <- state_stats[10,7] 
+
+FL_inperson_party$Percent <- 100*FL_inperson_party$Count/FL_inperson_party[5,2]
+
+
+FL_voted_party <- party_shell
+
+FL_voted_party[1,2] <- state_stats[10,77] + state_stats[10,29] 
+FL_voted_party[2,2] <- state_stats[10,78] + state_stats[10,30] 
+FL_voted_party[3,2] <- state_stats[10,79] + state_stats[10,31]
+FL_voted_party[4,2] <- state_stats[10,80] + state_stats[10,32] 
+FL_voted_party[5,2] <- state_stats[10,7] + state_stats[10,6]
+
+FL_voted_party$Percent <- 100*FL_voted_party$Count/FL_voted_party[5,2]
+
+
+
+
 FL_req_send_party <- party_shell
 
 FL_req_send_party[1,2] <- state_stats[10,10] 
@@ -123,6 +147,32 @@ Last Report: `r state_stats[10,9]`
 Source:  `r state_stats[10,2]`
 
 ## {.tabset}
+
+### Total Voted
+
+Total Voted: **`r format(as.numeric(state_stats[10,8]), big.mark =",")`**
+
+#### **Total Voted by Party Registration**
+
+``` {r echo = FALSE}
+kable(FL_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[10,7]), big.mark =",")`**
+
+#### **In-Person Votes by Party Registration**
+
+``` {r echo = FALSE}
+kable(FL_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+
 
 ### Mail Returned
 
