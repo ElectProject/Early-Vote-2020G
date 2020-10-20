@@ -169,7 +169,7 @@ kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientif
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-In past elections, Democrats have tended to dominate in-person early voting, in far greater numbers than mail ballots (in the states that offer both voting methods). We might expect that with so many registered Democrats voting by mail early, there would be a shift from Democrats away from voting in-person early. If Republicans are listening to President Trump's rhetoric disparaging mail balloting, we might expect to see more Republicans voting in-person early. Republicans have less of a disadvantage among in-person early voters than mail voters, but over-all a deficient continues to exist. 
+In past elections, Democrats have tended to dominate in-person early voting, in far greater numbers than mail ballots (in the states that offer both voting methods). We might expect that with so many registered Democrats voting by mail early, there would be a shift from Democrats away from voting in-person early. If Republicans are listening to President Trump's rhetoric disparaging mail balloting, we might expect to see more Republicans voting in-person early. Republicans have less of a disadvantage among in-person early voters than mail voters, but over-all a deficit continues to exist. 
 
 #### **In-Person Votes by Party Registration**    
 
