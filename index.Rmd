@@ -318,7 +318,7 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
 
 #### Mail Ballots Requested by Party Registration
 
-Reporting states with party registration data: CA, CO, DC, FL, IA, MD, ME, NC, NJ, NM, NV, OR, PA, UT  
+Reporting states with party registration data: CA, CO, FL, IA, MD, ME, NC, NJ, NM, NV, OR, PA, UT  
 
 ``` {r echo = FALSE}
 
