@@ -210,7 +210,9 @@ Read my analysis for the week ending:
 
 ### Total Voted
 
-Voters have cast a total of **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** ballots in the reporting states.
+Total Early Votes: **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** • Mail Ballots: **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** • In-Person Votes: **`r format(as.numeric(sum(state_stats$inperson_2020)), big.mark =",")`**  
+
+Note: Some states do not differentiate between mail ballots and in-person votes.
 
 ``` {r echo = FALSE}
 US_2020g_map_data <- state_stats
