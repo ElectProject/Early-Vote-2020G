@@ -91,6 +91,14 @@ WI_stats_returns <- mutate(WI_stats_returns, Pct.Return = Mail.Rtn.Tot/Mail.Req.
 Last Report: `r state_stats[50,9]`  
 Source:  `r state_stats[50,2]`
 
+### Total Voted
+
+In-Person Votes: **`r format(as.numeric(state_stats[50,8]), big.mark =",")`**  
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(sum(WI_stats$Inperson.Tot)), big.mark =",")`**  
+
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(sum(WI_stats$Mail.Rtn.Tot)), big.mark =",")`**  
