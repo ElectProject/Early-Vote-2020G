@@ -151,7 +151,9 @@ Source:  `r state_stats[10,2]`
 
 ### Total Voted
 
-Total Voted: **`r format(as.numeric(state_stats[10,8]), big.mark =",")`**
+Total Voted: **`r format(as.numeric(state_stats[10,8]), big.mark =",")`**  
+Total Voted as Percentage of Registered Voters: **`r paste(round(100*as.integer(state_stats[10,8])/as.integer(sum(FL_stats$Reg.Voters)), digits = 1),"%", sep = "")`**
+
 
 #### **Total Voted by Party Registration**
 
@@ -180,10 +182,9 @@ FL_2020g_map_data <- arrange(FL_2020g_map_data, row)
 
 hcmap(map = "countries/us/us-fl-all", data = FL_2020g_map_data,
   value = "percent_returned", name = "Percent Voted", joinby = "fips") %>%
-  hc_title(text ="Total Turnout as Percent of Registered Voters") %>%
+  hc_title(text ="Total Voted as Percent of Registered Voters") %>%
   hc_subtitle(text = "County plots may not be shaded using the same scale")
 ```
-
 
 
 ``` {r echo = FALSE}
