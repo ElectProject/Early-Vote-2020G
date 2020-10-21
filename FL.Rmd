@@ -142,6 +142,7 @@ colnames(FL_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 
 FL_stats_requests <- select(FL_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 FL_stats_returns <- select(FL_stats, County, Mail.Req.Tot, Mail.Return.Tot, Pct.Return)
+FL_stats_voted <- select(FL_stats, County, Voted.Tot, Reg.Voters, Pct.Voted)
 ```
 Last Report: `r state_stats[10,9]`  
 Source:  `r state_stats[10,2]`
@@ -160,6 +161,38 @@ kable(FL_voted_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
+``` {r echo = FALSE}
+
+FL_2020g_map_data <- left_join(FL_stats, FL_FIPS, by = "County")
+
+FL_2020g_map_data$fips <- as.character(FL_2020g_map_data$FIPS_NUM)
+
+FL_2020g_map_data <- mutate(FL_2020g_map_data, percent_returned = round(100*Pct.Voted, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-fl-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+FL_2020g_map_data <- left_join(FL_2020g_map_data, mapdata, by = "fips")
+
+FL_2020g_map_data <- arrange(FL_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-fl-all", data = FL_2020g_map_data,
+  value = "percent_returned", name = "Percent Voted", joinby = "fips") %>%
+  hc_title(text ="Total Turnout as Percent of Registered Voters") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+
+
+``` {r echo = FALSE}
+datatable(FL_stats_voted, colnames = c("County", "Total Early Votes", "Registered Voters", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Voted.Tot','Reg.Voters'), 0, mark = ",")
+```
+
+
 ### In-Person Votes
 
 In-Person Votes: **`r format(as.numeric(state_stats[10,7]), big.mark =",")`**
@@ -171,8 +204,6 @@ kable(FL_inperson_party, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
-
-
 
 ### Mail Returned
 
