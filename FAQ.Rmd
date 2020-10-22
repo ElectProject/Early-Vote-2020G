@@ -8,7 +8,7 @@ The content here is distributed under a [Creative Commons Attribution-ShareAlike
 
 In a typical election, the early vote -- by mail or in-person at a polling location -- provides clues as to the state of the election. In 2016, from the early vote alone, I [correctly predicted](https://www.huffpost.com/entry/early-vote-election-eve-p_b_12853864) that Donald Trump would need to win Michigan, Pennsylvania, and Wisconsin to win the Electoral College.
 
-I made my 2016 prediction using a technique known as difference-in-difference analysis. It is important to understand how this approach works to know what the the 2020 early vote can and cannot tells us.
+I made my 2016 prediction using a technique known as difference-in-difference analysis. It is important to understand how this approach works to know what the 2020 early vote can and cannot tells us.
 
 The **difference-in-difference** approach starts with the early vote statistics for the current election. In a state with party registration, we can see the relative turnout among registrants of the political parties by looking at this **first difference** in the number of registered Democrats and Republicans who have voted so far. 
 
