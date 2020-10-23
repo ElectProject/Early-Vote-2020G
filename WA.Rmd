@@ -63,9 +63,7 @@ age_shell[7,1] <- "TOTAL"
 ```
 ## {.tabset}
 Last Report: `r state_stats[48,9]`  
-Source:  `r state_stats[48,2]`
-
-Washington will begin reporting statewide statistics in the coming days. Unitl then, I am reporting data from Benton, Kitsap, King, Spokane, Thurston, Whatcom, and Yakima counties.
+Source:  `r state_stats[48,2]`  
 
 ### Returned Mail Ballots
 
