@@ -96,6 +96,14 @@ colnames(MA_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 Last Report: `r state_stats[22,9]`  
 Source:  `r state_stats[22,2]`
 
+### Total Voted
+
+Total Voted: **`r format(as.numeric(state_stats[22,8]), big.mark =",")`**
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[22,7]), big.mark =",")`**
+
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[22,6]), big.mark =",")`**
