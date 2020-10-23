@@ -254,7 +254,7 @@ kable(US_voted_party, valign = 't', format.args = list(big.mark = ",", scientifi
 
 **In-Person Votes by Party Registration**  
 
-Reporting states with party registration data: CO, KS, KY, LA, MD, NC, NM, NV, SD  
+Reporting states with party registration data: CO, FL, KS, KY, LA, MD, NC, NM, NV, SD  
 ``` {r echo = FALSE}
 
 options(knitr.kable.NA = '')
