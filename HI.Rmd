@@ -71,18 +71,22 @@ HI_req_send_tot[1,2] <- sum(state_stats[12,5])
 HI_req_send_tot$Percent <- 100.0
 
 ```
+## {.tabset}
 Last Report: `r state_stats[12,9]`  
 Source:  `r state_stats[12,2]`
 
-### Discussion
+### Total Voted
 
-Hawaii is an all-mail ballot state. Ballot requests reported here are counts of the state's registered voters.
+Total Early Votes: **`r format(as.numeric(state_stats[12,8]), big.mark =",")`**
 
-### Mail Ballot Requests
+### In-Person Early Votes
 
-``` {r echo = FALSE}
-kable(HI_req_send_tot, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
+In-Person Early Votes: **`r format(as.numeric(state_stats[12,7]), big.mark =",")`**
 
+### Mail Ballots Returned
+
+Ballots Returned: **`r format(as.numeric(state_stats[12,6]), big.mark =",")`**
+
+### Mail Ballots Requested
+
+Ballots Requested: **`r format(as.numeric(state_stats[12,5]), big.mark =",")`**
