@@ -155,12 +155,15 @@ colnames(PA_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "R
 
 PA_stats_requests <- select(PA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 PA_stats_returns <- select(PA_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Accept)
+PA_stats_rejected <- select(PA_stats, County, Mail.All.Tot, Mail.Rej.Tot, Pct.Reject)
 ```
 ## {.tabset}  
 Last Report: `r state_stats[39,9]`  
 Source:  `r state_stats[39,2]`
 
 ### Mail Ballots Returned
+
+Mail Ballots Returned: **`r format(as.numeric(state_stats[39,6]), big.mark =",")`**
 
 #### **Mail Ballots Returned by Party Registration**
 
@@ -198,7 +201,6 @@ datatable(PA_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot', 'Mail.Rtn.Tot'), 0, mark = ",")
 ```
 
-
 #### **Mail Ballots Returned by Age**
 
 ``` {r echo = FALSE}
@@ -206,6 +208,45 @@ kable(PA_accept_age, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
+
+### Mail Ballots Rejected
+
+Mail Ballots Rejected: **`r format(as.numeric(state_stats[39,48]), big.mark =",")`**
+
+In the "All" mail ballot returned statistics, I add the mail ballots that are returned and accepted with the rejected ballots. Dividing the number of rejected by this quantity yields a rejection rate.  
+
+At this time I do not have party registration statistics for rejected ballots.
+
+Pennsylvania election officials cannot begin to fully process mail ballots until Election Day. The few rejected ballots reported here are for first time voters who did not provide required id with their mail ballot or a missing signature.
+
+``` {r echo = FALSE}
+PA_map_data <- PA_stats
+
+PA_map_data <- mutate(PA_map_data, percent = round(Pct.Reject, digits = 1))
+
+PA_map_data <- mutate(PA_map_data, fips = as.character(fips))
+
+mapfile <- download_map_data("countries/us/us-pa-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+PA_map_data <- left_join(PA_map_data, mapdata, by = "fips")
+
+PA_map_data <- arrange(PA_map_data, row)
+
+hcmap(map = "countries/us/us-pa-all", data = PA_map_data,
+      value = "percent", name = "Percent Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(PA_stats_rejected, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Reject', 1) %>%
+  formatRound(c('Mail.All.Tot', 'Mail.Rej.Tot'), 0, mark = ",")
+```
+
 
 ### Mail Ballot Requests
 
