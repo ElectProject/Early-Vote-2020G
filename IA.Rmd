@@ -49,6 +49,18 @@ IA_req_send_party[5,2] <- state_stats[16,5]
 
 IA_req_send_party$Percent <- 100*IA_req_send_party$Count/IA_req_send_party[5,2]
 
+IA_rej_party <- party_shell
+
+IA_rej_party[1,2] <- state_stats[16,49] 
+IA_rej_party[2,2] <- state_stats[16,50] 
+IA_rej_party[3,2] <- state_stats[16,51] 
+IA_rej_party[4,2] <- state_stats[16,52] 
+IA_rej_party[5,2] <- state_stats[16,48] 
+
+IA_rej_party$Percent <- 100*IA_rej_party$Count/IA_rej_party[5,2]
+
+
+
 IA_accept_party <- party_shell_returned
 
 IA_accept_party[1,2] <- state_stats[16,29] 
@@ -73,6 +85,10 @@ IA_stats_requested <- IA_stats %>%
 
 IA_stats_accepted <- IA_stats %>%
   select(County, Mail.Req.Tot, Mail.Accept.Tot, Pct.Accept)
+
+IA_stats_rejected <- IA_stats %>%
+  select(County, Mail.Return.Tot, Mail.Reject.Tot, Pct.Reject)
+
 ```
 ## {.tabset}
 Last Report: `r state_stats[16,9]`  
@@ -82,7 +98,7 @@ Source:  `r state_stats[16,2]`
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
-Iowa voters have cast **`r format(as.numeric(state_stats[16,6]), big.mark =",")`** mail ballots.
+Mail Ballots Returned and Accepted: **`r format(as.numeric(state_stats[16,6]), big.mark =",")`**
 
 ``` {r echo = FALSE}
 kable(IA_accept_party, format.args = list(big.mark = ",", 
@@ -119,9 +135,52 @@ datatable(IA_stats_accepted, colnames = c("County", "Mail Ballots Requested", "M
   formatRound(c('Mail.Req.Tot', 'Mail.Accept.Tot'), 0, mark = ",")
 ```
 
+### Rejected Mail Ballots
+
+#### **Mail Ballots Rejected by Party Registration**
+
+Mail Ballots Rejected: **`r format(as.numeric(state_stats[16,48]), big.mark =",")`**
+
+In the "All" mail ballot returned statistics, I add the mail ballots that are returned and accepted with the rejected ballots. Dividing the number of rejected by this quantity yields a rejection rate.  
+
+``` {r echo = FALSE}
+kable(IA_rej_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+``` {r echo = FALSE}
+
+IA_2020g_map_data <- IA_stats
+
+IA_2020g_map_data$fips <- as.character(IA_2020g_map_data$fips)
+
+IA_2020g_map_data <- mutate(IA_2020g_map_data, percent = round(100*Pct.Reject, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-ia-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+IA_2020g_map_data <- left_join(IA_2020g_map_data, mapdata, by = "fips")
+
+IA_2020g_map_data <- arrange(IA_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-ia-all", data = IA_2020g_map_data,
+  value = "percent", name = "Percent Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rates - All") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(IA_stats_rejected, colnames = c("County", "All Mail Ballots Returned", "Mail Ballots Rejected", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Reject', 1) %>%
+  formatRound(c('Mail.Return.Tot', 'Mail.Reject.Tot'), 0, mark = ",")
+```
+
 ### Requested Mail Ballots
 
-Iowa voters have requested **`r format(as.numeric(state_stats[16,5]), big.mark =",")`** mail ballots.
+Mail Ballots Requested: **`r format(as.numeric(state_stats[16,5]), big.mark =",")`**
 
 #### **Mail Ballots Requested by Party Registration**
 
