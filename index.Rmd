@@ -95,6 +95,32 @@ US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
 
 colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+# outstanding ballots
+
+US_out_party <- party_shell_returned
+
+US_out_party[1,2] <- sum(state_stats$mail_sent_req_2020_dem) - sum(state_stats$mail_accept_2020_dem) 
+US_out_party[2,2] <- sum(state_stats$mail_sent_req_2020_rep) - sum(state_stats$mail_accept_2020_rep) 
+US_out_party[3,2] <- sum(state_stats$mail_sent_req_2020_minor) - sum(state_stats$mail_accept_2020_minor)
+US_out_party[4,2] <- sum(state_stats$mail_sent_req_2020_npa) - sum(state_stats$mail_accept_2020_npa) 
+US_out_party[5,2] <- (sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa)) - (sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa))
+
+US_out_party[1,5] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_out_party[2,5] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_out_party[3,5] <- sum(state_stats$mail_sent_req_2020_minor)
+US_out_party[4,5] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_out_party[5,5] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_out_party[1,4] <- sum(state_stats$mail_accept_2020_dem) 
+US_out_party[2,4] <- sum(state_stats$mail_accept_2020_rep) 
+US_out_party[3,4] <- sum(state_stats$mail_accept_2020_minor)
+US_out_party[4,4] <- sum(state_stats$mail_accept_2020_npa) 
+US_out_party[5,4] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_out_party$Frequency <- 100*US_out_party$Count/US_out_party[5,2]
+
+colnames(US_out_party) <- c("Party", "Outstanding Ballots", "Freq. Distribution", "Returned Ballots", "Requested Ballots")
+
 # Voted
 
 US_voted_party <- party_shell
@@ -274,6 +300,19 @@ Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, MD, M
 options(knitr.kable.NA = '')
 
 kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+###### Outstanding Mail Ballots  
+
+**Outstanding Mail Ballots (Yet to be Returned) by Party Registration**
+
+Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_out_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
