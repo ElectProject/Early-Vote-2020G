@@ -64,7 +64,7 @@ age_shell[7,1] <- "TOTAL"
 Last Report: `r state_stats[33,9]`  
 Source:  `r state_stats[33,2]`  
 
-I'm reporting only New York City in-person early votes.
+New York is reporting only in-person votes. 
 
 ### In-Person Voted
 
