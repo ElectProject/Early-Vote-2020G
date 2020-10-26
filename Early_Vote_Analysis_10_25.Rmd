@@ -1,0 +1,239 @@
+---
+title: "Early Vote Analysis for Sunday, Oct. 25"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
+US_accept_party <- party_shell_returned
+
+US_accept_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
+US_accept_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
+US_accept_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
+US_accept_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
+US_accept_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_accept_party[1,4] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_accept_party[2,4] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_accept_party[3,4] <- sum(state_stats$mail_sent_req_2020_minor)
+US_accept_party[4,4] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_accept_party[5,4] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_accept_party$Frequency <- 100*US_accept_party$Count/US_accept_party[5,2]
+US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
+
+colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+# Voted
+
+US_voted_party <- party_shell
+
+US_voted_party[1,2] <- sum(state_stats$mail_accept_2020_dem) + sum(state_stats$inperson_2020_dem)
+US_voted_party[2,2] <- sum(state_stats$mail_accept_2020_rep) + sum(state_stats$inperson_2020_rep)
+US_voted_party[3,2] <- sum(state_stats$mail_accept_2020_minor) + sum(state_stats$inperson_2020_minor)
+US_voted_party[4,2] <- sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_npa)
+US_voted_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_voted_party$Percent <- 100*US_voted_party$Count/US_voted_party[5,2]
+
+# Inperson
+
+US_inperson_party <- party_shell
+
+US_inperson_party[1,2] <- sum(state_stats$inperson_2020_dem) 
+US_inperson_party[2,2] <- sum(state_stats$inperson_2020_rep) 
+US_inperson_party[3,2] <- sum(state_stats$inperson_2020_minor)
+US_inperson_party[4,2] <- sum(state_stats$inperson_2020_npa) 
+US_inperson_party[5,2] <- sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_inperson_party$Percent <- 100*US_inperson_party$Count/US_inperson_party[5,2]
+
+NM_inperson_party <- party_shell
+
+NM_inperson_party[1,2] <- state_stats[32,77] 
+NM_inperson_party[2,2] <- state_stats[32,78] 
+NM_inperson_party[3,2] <- state_stats[32,79] 
+NM_inperson_party[4,2] <- state_stats[32,80] 
+NM_inperson_party[5,2] <- state_stats[32,7] 
+
+NM_inperson_party$Percent <- 100*NM_inperson_party$Count/NM_inperson_party[5,2]
+
+NM_accept_party <- party_shell_returned
+
+NM_accept_party[1,2] <- state_stats[32,29] 
+NM_accept_party[2,2] <- state_stats[32,30] 
+NM_accept_party[3,2] <- state_stats[32,31] 
+NM_accept_party[4,2] <- state_stats[32,32] 
+NM_accept_party[5,2] <- state_stats[32,6] 
+
+NM_accept_party[1,4] <- state_stats[32,10] 
+NM_accept_party[2,4] <- state_stats[32,11] 
+NM_accept_party[3,4] <- state_stats[32,12] 
+NM_accept_party[4,4] <- state_stats[32,13] 
+NM_accept_party[5,4] <- state_stats[32,5] 
+
+NM_accept_party$Frequency <- 100*NM_accept_party$Count/NM_accept_party[5,2]
+NM_accept_party$Rate <- 100*NM_accept_party$Count/NM_accept_party$Count2
+
+colnames(NM_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+NC_inperson_party <- party_shell
+
+NC_inperson_party[1,2] <- state_stats[34,77] 
+NC_inperson_party[2,2] <- state_stats[34,78] 
+NC_inperson_party[3,2] <- state_stats[34,79] 
+NC_inperson_party[4,2] <- state_stats[34,80] 
+NC_inperson_party[5,2] <- state_stats[34,7] 
+
+NC_inperson_party$Percent <- 100*NC_inperson_party$Count/NC_inperson_party[5,2]
+
+NC_accept_party <- party_shell_returned
+
+NC_accept_party[1,2] <- state_stats[34,29] 
+NC_accept_party[2,2] <- state_stats[34,30] 
+NC_accept_party[3,2] <- state_stats[34,31] 
+NC_accept_party[4,2] <- state_stats[34,32] 
+NC_accept_party[5,2] <- state_stats[34,6] 
+
+NC_accept_party[1,4] <- state_stats[34,10] 
+NC_accept_party[2,4] <- state_stats[34,11] 
+NC_accept_party[3,4] <- state_stats[34,12] 
+NC_accept_party[4,4] <- state_stats[34,13] 
+NC_accept_party[5,4] <- state_stats[34,5] 
+
+NC_accept_party$Frequency <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+NC_accept_party$Rate <- 100*NC_accept_party$Count/NC_accept_party$Count2
+
+colnames(NC_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+```
+
+## **Early Voting at a Record Pace**
+
+Again, the headline is that early voting continues at a record pace, with at least 27.9 million people who have voted in the 2020 general election. Four year ago, at a comparable point in time, I was tracking [5.9 million votes](https://www.huffpost.com/entry/early-voting-the-election_b_12614284).
+
+Ah ah! The pace has dropped, you might surmise, because last week the early vote ran about six-and-a-half times at the same point in 2016, whereas this week it is only a little less than five times the comparable 2016 point. The ratio is coming down for two reasons. 
+
+First, it's not like no one voted early in 2016. That was a record year for early voting, with about 40% of all votes cast early. We're at 20% of the 2016 total vote as I write this. The ratio of 2020 early vote to 2016 early vote is going to come down simply because it is impossible that early voting is going to be six times what it was in 2016.
+
+Second, we are now entering the in-person early voting period in many states. There is a simple capacity issue. In-person early voting is designed to spread out voting over several days, so in most states there are fewer in-person polling locations than what election officials provide on Election Day. It is difficult, if not impossible, to process in one day six times the number of voters as in 2016. Still, we are seeing impressive in-person early voting with two-fold increases over 2016 in [Georgia and Tennessee](https://www.timesfreepress.com/news/local/story/2020/oct/17/tennessee-georgia-early-voting/534278/#/questions),  [Texas](https://www.foxnews.com/politics/texas-early-voting-record-on-first-day), and [North Carolina](https://abc11.com/politics/nearly-230k-vote-on-first-day-of-early-voting-in-nc/7042576/). 
+
+I expect the national pace of early voting to pick up during the coming week. More states are coming online with in-person early voting this week and a greater number of ballots will start rolling in from the all-mail ballot states. But, it is possible that some states that have been offering early voting for a while will level off or decline slightly this week. That is a typical pattern. The pace typically picks up again the last week prior to the election, particularly as younger voters get into the mix, as I [explained last week](https://electproject.github.io/Early-Vote-2020G/Early_Vote_Analysis_10_11.html). Hard to believe, but there is only a little more than two weeks left before November 3rd.
+
+## **Where Are the Republicans?**
+
+In the states with party registration, registered Democrats have a huge advantage among early voters.
+
+#### **Total Voted by Party Registration**
+
+Reporting states with party registration data: CA, CO, FL, IA, KS, KY, LA, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD    
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_voted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Until this point, registered Democrats have dominated the early voting period on the strength of their higher mail ballots request rate **and** return rate advantages. Both of these patterns are different from prior elections where registered Republicans tended to request more mail ballots and return them at a higher rate. And the differences here are not small. Registered Democrats have returned more than 3 million more ballots than Republicans, a pattern that is replicated across states. Democrats are voting by mail, and returning their ballots at a higher clip.
+
+#### **Returned Mail Ballots by Party Registration**
+
+Reporting states with party registration data: CA, CO, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, PA, SD  
+
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+In past elections, Democrats have tended to dominate in-person early voting, in far greater numbers than mail ballots (in the states that offer both voting methods). We might expect that with so many registered Democrats voting by mail early, there would be a shift from Democrats away from voting in-person early. If Republicans are listening to President Trump's rhetoric disparaging mail balloting, we might expect to see more Republicans voting in-person early. Republicans have less of a disadvantage among in-person early voters than mail voters, but over-all a deficit continues to exist. 
+
+#### **In-Person Votes by Party Registration**    
+
+Reporting states with party registration data: CO, KS, KY, LA, MD, NC, NM, SD  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+The fewer states where in-person early voting by party registration is available tend to be more Republican than where mail ballot data by party registration is available, so some of the closing of the gap may be an artifact of the available states.
+
+A state where a fairly large number of in-person votes have been cast and Republicans are outperforming Democrats among in-person voters is New Mexico. More New Mexico voters have cast mail ballots, and Democrats have a larger edge among mail voters, so registered Democrats in New Mexico still have a sizable 20 percentage point lead among all early voters.
+
+#### **New Mexico In-Person Votes by Party Registration**
+
+``` {r echo = FALSE}
+kable(NM_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **New Mexico Mail Ballots Returned by Party Registration**
+
+``` {r echo = FALSE}
+kable(NM_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Another state where there is a large number of in-person early voters is North Carolina. Here, again, there are more registered Republicans voting-inperson early than by mail. But unlike New Mexico, Democrats dominate among both voting methods. 
+
+#### **North Carolina In-Person Votes by Party Registration**
+
+``` {r echo = FALSE}
+kable(NC_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### **North Carolina Mail Ballots Returned by Party Registration**
+
+``` {r echo = FALSE}
+kable(NC_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+There are impressive in-person early voting increases compared to 2016 in Georgia and Texas, as noted above. But these states do not have party registration. Georgia does [report early voting statistics](https://electproject.github.io/Early-Vote-2020G/GA.html) by race, and non-Hispanic Whites constitute nearly the same percentage of mail voters (55.1%) as they do in-person voters (56.0%).
+
+African-Americans tend to prefer voting in-person, particularly through so-called "Souls-to-Polls" voter mobilization that takes place through churches. This may explain why a state like New Mexico, with fewer African-Americans would see a registered Republican advantage among in-person early voters, while states like Georgia or North Carolina may not.
+
+There are two weeks left in the election, so there is plenty of time for Republicans to vote. I certainly want to see what happens in the coming weeks as more states offer in-person early voting. Of course, there is always Election Day, which will likely be flooded by Republican voters.
+
+## **Trump's Eggs Are Mostly in One Basket**
+
+While Democrats can feel good about the record number of early voters, I believe the most important story now is tactical.
+
+The Trump campaign spent millions of dollars sending mailers encouraging his supporters to request mail ballots and vote in-person. The Trump campaign sent three mailers to my household, addressed to the prior occupant, encouraging him to request a mail ballot and vote in-person early. (Who hasn't lived here in several years and is no longer on the voter file. That is some poor targeting.) His money has largely been wasted because Trump's supporters are listening to his rhetoric about mail ballot fraud. Even if occasionally he grudgingly tells his supporters to vote by mail or vote early, Republicans aren't doing it yet. Maybe Trump feels he can waste his money this way, but throwing away money only means the Biden campaign has even more of a cash advantage over Trump.
+
+Meanwhile, the Biden campaign is analyzing the same early voting data of individual voters available to me. They are merrily scratching names off their target universe and re-concentrating their efforts onto voters they want to vote who haven't participated yet. This means that Biden is able to more effectively use the money he has.
+
+Trump is putting his eggs into the Election Day basket, and that is risky. It is not unheard of for bad weather to happen on Election Day -- a snowstorm, rain, or even a tropical disturbance. Bad weather is known to depress turnout. There will be fewer polling locations because of COVID, so Election Day lines could be unusually long and miserable to stand in with bad weather. A COVID issue could unexpectedly shutter an election office or polling location, creating last minute chaos.
+
+Again, maybe Republicans start voting in-person over the next two weeks. If I were running a campaign, I'd much prefer to be the one where I've already banked millions of votes more than my opponent.
