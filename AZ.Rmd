@@ -33,9 +33,8 @@ party_shell_returned <- data.frame(Party=character(),
                                   stringsAsFactors=FALSE)
 party_shell_returned[1,1] <- "Democrats"
 party_shell_returned[2,1] <- "Republicans"
-party_shell_returned[3,1] <- "Minor"
-party_shell_returned[4,1] <- "No Party Affiliation"
-party_shell_returned[3,1] <- "TOTAL"
+party_shell_returned[3,1] <- "Minor/No Party Affiliation"
+party_shell_returned[4,1] <- "TOTAL"
 
 
 gender_shell <- data.frame(Gender=character(),
@@ -65,9 +64,8 @@ AZ_req_send_party <- party_shell
 
 AZ_req_send_party[1,2] <- state_stats[3,10] 
 AZ_req_send_party[2,2] <- state_stats[3,11] 
-AZ_req_send_party[3,2] <- state_stats[3,12] 
-AZ_req_send_party[4,2] <- state_stats[3,13] 
-AZ_req_send_party[3,2] <- state_stats[3,5] 
+AZ_req_send_party[3,2] <- state_stats[3,13] 
+AZ_req_send_party[4,2] <- state_stats[3,5] 
 
 AZ_req_send_party$Percent <- 100*AZ_req_send_party$Count/AZ_req_send_party[3,2]
 
@@ -75,15 +73,13 @@ AZ_accept_party <- party_shell_returned
 
 AZ_accept_party[1,2] <- state_stats[3,29] 
 AZ_accept_party[2,2] <- state_stats[3,30] 
-AZ_accept_party[3,2] <- state_stats[3,31] 
-AZ_accept_party[4,2] <- state_stats[3,32] 
-AZ_accept_party[3,2] <- state_stats[3,6] 
+AZ_accept_party[3,2] <- state_stats[3,32] 
+AZ_accept_party[4,2] <- state_stats[3,6] 
 
 AZ_accept_party[1,4] <- state_stats[3,10] 
 AZ_accept_party[2,4] <- state_stats[3,11] 
-AZ_accept_party[3,4] <- state_stats[3,12] 
-AZ_accept_party[4,4] <- state_stats[3,13] 
-AZ_accept_party[3,4] <- state_stats[3,5] 
+AZ_accept_party[3,4] <- state_stats[3,13] 
+AZ_accept_party[4,4] <- state_stats[3,5] 
 
 AZ_accept_party$Frequency <- 100*AZ_accept_party$Count/AZ_accept_party[3,2]
 AZ_accept_party$Rate <- 100*AZ_accept_party$Count/AZ_accept_party$Count2
@@ -101,6 +97,14 @@ Arizona does not distinguish between mail ballots returned and in-person votes.
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[3,6]), big.mark =",")`**
+
+#### **Mail Ballots Returned and Accepted by Party Registration**
+
+``` {r echo = FALSE}
+kable(AZ_accept_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Requested Mail Ballots
 
