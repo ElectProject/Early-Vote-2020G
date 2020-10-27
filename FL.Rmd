@@ -96,9 +96,6 @@ FL_voted_party[5,2] <- state_stats[10,7] + state_stats[10,6]
 
 FL_voted_party$Percent <- 100*FL_voted_party$Count/FL_voted_party[5,2]
 
-
-
-
 FL_req_send_party <- party_shell
 
 FL_req_send_party[1,2] <- state_stats[10,10] 
@@ -140,6 +137,30 @@ FL_return_party$Rate <- 100*FL_return_party$Count/FL_return_party$Count2
 
 colnames(FL_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+FL_out_party <- party_shell_returned
+
+FL_out_party[1,2] <- state_stats[10,10] - state_stats[10,29] 
+FL_out_party[2,2] <- state_stats[10,11] - state_stats[10,30]
+FL_out_party[3,2] <- state_stats[10,12] - state_stats[10,31]
+FL_out_party[4,2] <- state_stats[10,13] - state_stats[10,32]
+FL_out_party[5,2] <- state_stats[10,5] - state_stats[10,6]
+
+FL_out_party[1,5] <- state_stats[10,29] 
+FL_out_party[2,5] <- state_stats[10,30] 
+FL_out_party[3,5] <- state_stats[10,31] 
+FL_out_party[4,5] <- state_stats[10,32] 
+FL_out_party[5,5] <- state_stats[10,6] 
+
+FL_out_party[1,4] <- state_stats[10,10] 
+FL_out_party[2,4] <- state_stats[10,11] 
+FL_out_party[3,4] <- state_stats[10,12] 
+FL_out_party[4,4] <- state_stats[10,13] 
+FL_out_party[5,4] <- state_stats[10,5] 
+
+FL_out_party$Frequency <- 100*FL_out_party$Count/FL_out_party[5,2]
+
+colnames(FL_out_party) <- c("Party", "Outstanding Ballots", "Freq. Distribution", "Returned Ballots", "Requested Ballots")
+
 FL_stats_requests <- select(FL_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
 FL_stats_returns <- select(FL_stats, County, Mail.Req.Tot, Mail.Return.Tot, Pct.Return)
 FL_stats_voted <- select(FL_stats, County, Voted.Tot, Reg.Voters, Pct.Voted)
@@ -153,7 +174,6 @@ Source:  `r state_stats[10,2]`
 
 Total Voted: **`r format(as.numeric(state_stats[10,8]), big.mark =",")`**  
 Total Voted as Percentage of Registered Voters: **`r paste(round(100*as.integer(state_stats[10,8])/as.integer(sum(FL_stats$Reg.Voters)), digits = 1),"%", sep = "")`**
-
 
 #### **Total Voted by Party Registration**
 
@@ -206,7 +226,7 @@ kable(FL_inperson_party, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-### Mail Returned
+### Mail Ballots Returned
 
 #### Mail Ballots Returned by Party Registration
 
@@ -245,7 +265,15 @@ datatable(FL_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Return.Tot'), 0, mark = ",")
 ```
 
-### Mail Requested
+### Mail Balllots Outstanding
+
+``` {r echo = FALSE}
+kable(FL_out_party,format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### Mail Ballots Requested
 
 To calculate the number of requested ballots from the Florida Division of Elections website, add the rows *Vote-by-Mail Provided (Not Yet Returned)* and *Voted Vote-by-Mail*.
 
