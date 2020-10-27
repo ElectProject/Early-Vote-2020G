@@ -87,6 +87,8 @@ IL_stats_voted <- IL_stats %>%
 Last Report: `r state_stats[14,9]`  
 Source:  `r state_stats[14,2]`
 
+County reports have not been updated.
+
 For the maps, data for the cities of Bloomington, Chicago, Danville, East St. Louis, Galesburg, and Rockford have been added to their respective counties. **I am investigating an issue about how these county data are created. State statistics are correct.**
 
 ### Total In-person Early and Returned Mail Ballots  
