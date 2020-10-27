@@ -68,5 +68,5 @@ New York is reporting only in-person votes.
 
 ### In-Person Voted
 
-Mail Ballots Requested: **`r format(as.numeric(state_stats[48,7]), big.mark =",")`**  
+Mail Ballots Requested: **`r format(as.numeric(state_stats[33,7]), big.mark =",")`**  
 
