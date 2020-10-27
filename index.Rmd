@@ -268,7 +268,7 @@ hcmap(map = "countries/us/us-all", data = US_2020g_map_data,
 
 **Total Voted by Party Registration**  
 
-Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, LA, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD    
+Reporting states with party registration data: AZ, CA, CO, CT, FL, IA, KS, KY, LA, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD    
 ``` {r echo = FALSE}
 
 options(knitr.kable.NA = '')
@@ -294,7 +294,7 @@ kable(US_inperson_party, valign = 't', format.args = list(big.mark = ",", scient
 
 **Returned Mail Ballots by Party Registration**
 
-Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD  
+Reporting states with party registration data: AZ, CA, CO, CT, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD  
 ``` {r echo = FALSE}
 
 options(knitr.kable.NA = '')
