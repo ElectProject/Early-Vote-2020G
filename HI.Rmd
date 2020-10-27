@@ -75,14 +75,6 @@ HI_req_send_tot$Percent <- 100.0
 Last Report: `r state_stats[12,9]`  
 Source:  `r state_stats[12,2]`
 
-### Total Voted
-
-Total Early Votes: **`r format(as.numeric(state_stats[12,8]), big.mark =",")`**
-
-### In-Person Early Votes
-
-In-Person Early Votes: **`r format(as.numeric(state_stats[12,7]), big.mark =",")`**
-
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[12,6]), big.mark =",")`**
