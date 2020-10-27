@@ -70,7 +70,7 @@ Total Voted: **`r format(as.numeric(state_stats[33,8]), big.mark =",")`**
 
 ### In-Person Voted
 
-Mail Ballots Requested: **`r format(as.numeric(state_stats[33,7]), big.mark =",")`**  
+In-Person Voted: **`r format(as.numeric(state_stats[33,7]), big.mark =",")`**  
 
 ### Mail Ballots Returned
 
