@@ -104,6 +104,27 @@ MD_accept_party$Rate <- 100*MD_accept_party$Count/MD_accept_party$Count2
 
 colnames(MD_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+MD_inperson_party <- party_shell
+
+MD_inperson_party[1,2] <- state_stats[21,77] 
+MD_inperson_party[2,2] <- state_stats[21,78] 
+MD_inperson_party[3,2] <- state_stats[21,79] 
+MD_inperson_party[4,2] <- state_stats[21,80] 
+MD_inperson_party[5,2] <- state_stats[21,7] 
+
+MD_inperson_party$Percent <- 100*MD_inperson_party$Count/MD_inperson_party[5,2]
+
+MD_voted_party <- party_shell
+
+MD_voted_party[1,2] <- state_stats[21,77] + state_stats[21,29]
+MD_voted_party[2,2] <- state_stats[21,78] + state_stats[21,30] 
+MD_voted_party[3,2] <- state_stats[21,79] + state_stats[21,31] 
+MD_voted_party[4,2] <- state_stats[21,80] + state_stats[21,32] 
+MD_voted_party[5,2] <- state_stats[21,7] + state_stats[21,6]
+
+MD_voted_party$Percent <- 100*MD_voted_party$Count/MD_voted_party[5,2]
+
+
 MD_stats <- mutate(MD_stats, Pct.Request = Mail.Req.Tot/Reg.Voters)
 MD_stats <- mutate(MD_stats, Pct.Accept = Mail.Rtn.Tot/Mail.Req.Tot)
 
@@ -114,13 +135,34 @@ MD_stats_returns <- select(MD_stats, County, Mail.Req.Tot, Mail.Rtn.Tot, Pct.Acc
 Last Report: `r state_stats[21,9]`  
 Source:  `r state_stats[21,2]`
 
-Maryland reports all minor party and no-party affiliation voters in a single "Other category." I report these voters in the no-party affiliation category.
+Maryland reports mail ballots for all minor party and no-party affiliation voters in a single "Other category." I report these voters in the no-party affiliation category.
 
 Maryland provides party registration statistics for mail ballots sent to voters, not requested by voters.
 
+### Total Voted
+Total Voted: **`r format(as.numeric(state_stats[21,8]), big.mark =",")`**
+
+#### **Total Voted by Party Registration**
+``` {r echo = FALSE}
+kable(MD_voted_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### In-Person Votes
+In-Person Votes: **`r format(as.numeric(state_stats[21,7]), big.mark =",")`**
+
+#### **In-Person Votes by Party Registration**
+``` {r echo = FALSE}
+kable(MD_inperson_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+
 ### Mail Ballots Returned
 
-Ballots Returned: **`r format(as.numeric(state_stats[21,8]), big.mark =",")`**
+Mail Ballots Returned: **`r format(as.numeric(state_stats[21,8]), big.mark =",")`**
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
