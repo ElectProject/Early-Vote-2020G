@@ -125,6 +125,8 @@ Source:  `r state_stats[18,2]`
 
 **NOTE: The Kentucky Secretary of State combines statistics for voters with no party affiliation and all minor parties**  
 
+The Kentucky SoS provided a recent update on the number of mail ballots sent and received, but no statistics on in-person voting or breakdowns of absentee ballot actvity by party registration. I've updated the statistics for the total absentee ballots, but have no updated the party registration breakdowns. Numbers may thus not sum to 100%.
+
 ### Total Voted
 
 Total Voted: **`r format(as.numeric(state_stats[18,8]), big.mark =",")`**

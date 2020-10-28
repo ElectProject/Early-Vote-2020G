@@ -237,7 +237,7 @@ Read my analysis for the week ending:
 
 ### Total Voted
 
-Total Early Votes: **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** • Mail Ballots: **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** • In-Person Votes: **`r format(as.numeric(sum(state_stats$inperson_2020)), big.mark =",")`**  
+Total Early Votes: **`r format(as.numeric(sum(state_stats$total_early_2020)), big.mark =",")`** • In-Person Votes: **`r format(as.numeric(sum(state_stats$inperson_2020)), big.mark =",")`** • Mail Ballots Returned: **`r format(as.numeric(sum(state_stats$mail_accept_2020)), big.mark =",")`** • Mail Ballots Outstanding: **`r format(as.numeric(sum(state_stats$mail_sent_req_2020) - sum(state_stats$mail_accept_2020)), big.mark =",")`** 
 
 Note: Some states do not differentiate between mail ballots and in-person votes.
 
