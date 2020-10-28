@@ -168,8 +168,6 @@ FL_stats_voted <- select(FL_stats, County, Voted.Tot, Reg.Voters, Pct.Voted)
 Last Report: `r state_stats[10,9]`  
 Source:  `r state_stats[10,2]`
 
-Florida did not update their county data files today. Statewide data are current, but county maps and statistics are one day behind. I will post new data if this issue is resolved.
-
 ## {.tabset}
 
 ### Total Voted
