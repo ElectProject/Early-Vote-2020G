@@ -67,7 +67,7 @@ AZ_req_send_party[2,2] <- state_stats[3,11]
 AZ_req_send_party[3,2] <- state_stats[3,13] 
 AZ_req_send_party[4,2] <- state_stats[3,5] 
 
-AZ_req_send_party$Percent <- 100*AZ_req_send_party$Count/AZ_req_send_party[3,2]
+AZ_req_send_party$Percent <- 100*AZ_req_send_party$Count/AZ_req_send_party[4,2]
 
 AZ_accept_party <- party_shell_returned
 
@@ -81,7 +81,7 @@ AZ_accept_party[2,4] <- state_stats[3,11]
 AZ_accept_party[3,4] <- state_stats[3,13] 
 AZ_accept_party[4,4] <- state_stats[3,5] 
 
-AZ_accept_party$Frequency <- 100*AZ_accept_party$Count/AZ_accept_party[3,2]
+AZ_accept_party$Frequency <- 100*AZ_accept_party$Count/AZ_accept_party[4,2]
 AZ_accept_party$Rate <- 100*AZ_accept_party$Count/AZ_accept_party$Count2
 
 colnames(AZ_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
