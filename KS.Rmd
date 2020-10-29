@@ -148,7 +148,7 @@ kable(KS_inperson_party, format.args = list(big.mark = ",",
 
 ### Mail Ballots Returned
 
-Ballots Returned: **`r format(as.numeric(state_stats[17,6]), big.mark =",")`**
+Mail Ballots Returned: **`r format(as.numeric(state_stats[17,6]), big.mark =",")`**
 
 ``` {r echo = FALSE}
 
@@ -180,7 +180,6 @@ datatable(KS_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mai
 ```
 
 
-
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
 ``` {r echo = FALSE}
@@ -191,4 +190,4 @@ kable(KS_accept_party, format.args = list(big.mark = ",",
 
 ### Requested Mail Ballots
 
-Ballots Requested: **`r format(as.numeric(state_stats[17,5]), big.mark =",")`**
+Mail Ballots Requested: **`r format(as.numeric(state_stats[17,5]), big.mark =",")`**
