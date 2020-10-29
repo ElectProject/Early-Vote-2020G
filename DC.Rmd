@@ -96,8 +96,18 @@ colnames(DC_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution"
 Last Report: `r state_stats[9,9]`  
 Source:  `r state_stats[9,2]`
 
+### Total Voted
 Total Early Vote: **`r format(as.numeric(state_stats[9,8]), big.mark =",")`**  
 Total Early Vote as Percentage of 2016 Total Turnout: **`r paste(round(100*as.integer(state_stats[9,8])/as.integer(state_stats[9,3]), digits = 1),"%", sep = "")`**
+
+### In-Person Votes
+
+In-Person Votes: **`r format(as.numeric(state_stats[9,8]), big.mark =",")`**  
+
+### Mail Ballots Returned
+
+Ballots Returned: **`r format(as.numeric(state_stats[9,6]), big.mark =",")`**
+
 
 ### Mail Ballots Returned
 
