@@ -83,8 +83,7 @@ Source:  `r state_stats[27,2]`
 
 ### Returned Mail Ballots
 
-Montana voters have cast **`r format(as.numeric(state_stats[27,6]), big.mark =",")`** mail ballots.
-
+Mail Ballots Returned: **`r format(as.numeric(state_stats[27,6]), big.mark =",")`**
 
 ``` {r echo = FALSE}
 
@@ -110,14 +109,12 @@ hcmap(map = "countries/us/us-mt-all", data = MT_2020g_map_data,
 ```
 
 ``` {r echo = FALSE}
-datatable(MT_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mail Ballot Requests", "Percent Returned"), rownames = F) %>%
+datatable(MT_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mail Ballots Sent", "Percent Returned"), rownames = F) %>%
   formatPercentage('Pct.Return', 1) %>%
   formatRound(c('Mail.Rtn.Tot','Mail.Req.Tot'), 0, mark = ",")
 ```
 
 
-### Mail Ballot Requests
+### Mail Ballots Sent
 
-Montana voters have requested **`r format(as.numeric(state_stats[27,5]), big.mark =",")`** mail ballots.
-
-Montana gave its local election officials the option of conducting an all-mail ballot election. All but 10 smaller counties have chosen to run an all-mail ballot election. For now, ballot requests reported here are counts of the state's registered voters.
+Mail Ballots Sent: **`r format(as.numeric(state_stats[27,5]), big.mark =",")`**
