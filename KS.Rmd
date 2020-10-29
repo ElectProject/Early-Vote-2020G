@@ -12,6 +12,9 @@ library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
+KS_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_KS.csv")
+
+
 # Setup
 
 party_shell <- data.frame(Party=character(),
@@ -110,6 +113,9 @@ KS_accept_party$Rate <- 100*KS_accept_party$Count/KS_accept_party$Count2
 
 colnames(KS_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+KS_stats <- mutate(KS_stats, Pct.Return =  Mail.Rtn.Tot/Mail.Req.Tot)
+
+KS_stats_returns <- select(KS_stats, County, Mail.Rtn.Tot, Mail.Req.Tot, Pct.Return)
 
 ```
 ## {.tabset}
@@ -143,6 +149,37 @@ kable(KS_inperson_party, format.args = list(big.mark = ",",
 ### Mail Ballots Returned
 
 Ballots Returned: **`r format(as.numeric(state_stats[17,6]), big.mark =",")`**
+
+``` {r echo = FALSE}
+
+KS_2020g_map_data <- KS_stats
+
+KS_2020g_map_data$fips <- as.character(KS_2020g_map_data$fips)
+
+KS_2020g_map_data <- mutate(KS_2020g_map_data, percent = round(100*Pct.Return, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-ks-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+KS_2020g_map_data <- left_join(KS_2020g_map_data, mapdata, by = "fips")
+
+KS_2020g_map_data <- arrange(KS_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-ks-all", data = KS_2020g_map_data,
+  value = "percent", name = "Percent Returned", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(KS_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mail Ballot Requests", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return', 1) %>%
+  formatRound(c('Mail.Rtn.Tot','Mail.Req.Tot'), 0, mark = ",")
+```
+
+
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
