@@ -265,7 +265,7 @@ datatable(FL_stats_returns, colnames = c("County", "Mail Ballots Requested", "Ma
   formatRound(c('Mail.Req.Tot','Mail.Return.Tot'), 0, mark = ",")
 ```
 
-### Mail Balllots Outstanding
+### Mail Ballots Outstanding
 
 ``` {r echo = FALSE}
 kable(FL_out_party,format.args = list(big.mark = ",", 
