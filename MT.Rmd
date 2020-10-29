@@ -12,6 +12,8 @@ library(highcharter)
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 
+MT_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_MT.csv")
+
 # Setup
 
 party_shell <- data.frame(Party=character(),
@@ -70,6 +72,10 @@ MT_req_send_tot[1,2] <- sum(state_stats[27,5])
 
 MT_req_send_tot$Percent <- 100.0
 
+MT_stats <- mutate(MT_stats, Pct.Return =  Mail.Rtn.Tot/Mail.Req.Tot)
+
+MT_stats_returns <- select(MT_stats, County.Name, Mail.Rtn.Tot, Mail.Req.Tot, Pct.Return)
+
 ```
 ## {.tabset}
 Last Report: `r state_stats[27,9]`  
@@ -78,6 +84,37 @@ Source:  `r state_stats[27,2]`
 ### Returned Mail Ballots
 
 Montana voters have cast **`r format(as.numeric(state_stats[27,6]), big.mark =",")`** mail ballots.
+
+
+``` {r echo = FALSE}
+
+MT_2020g_map_data <- MT_stats
+
+MT_2020g_map_data$fips <- as.character(MT_2020g_map_data$fips)
+
+MT_2020g_map_data <- mutate(MT_2020g_map_data, percent = round(100*Pct.Return, digits = 1))
+
+mapfile <- download_map_data("countries/us/us-mt-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+MT_2020g_map_data <- left_join(MT_2020g_map_data, mapdata, by = "fips")
+
+MT_2020g_map_data <- arrange(MT_2020g_map_data, row)
+
+hcmap(map = "countries/us/us-mt-all", data = MT_2020g_map_data,
+  value = "percent", name = "Percent Returned", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Return Rates") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(MT_stats_returns, colnames = c("County", "Mail Ballots Returned", "Mail Ballot Requests", "Percent Returned"), rownames = F) %>%
+  formatPercentage('Pct.Return', 1) %>%
+  formatRound(c('Mail.Rtn.Tot','Mail.Req.Tot'), 0, mark = ",")
+```
+
 
 ### Mail Ballot Requests
 
