@@ -162,7 +162,7 @@ kable(MD_inperson_party, format.args = list(big.mark = ",",
 
 ### Mail Ballots Returned
 
-Mail Ballots Returned: **`r format(as.numeric(state_stats[21,8]), big.mark =",")`**
+Mail Ballots Returned: **`r format(as.numeric(state_stats[21,6]), big.mark =",")`**
 
 #### **Mail Ballots Returned and Accepted by Party Registration**
 
