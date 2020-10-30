@@ -108,11 +108,6 @@ In-Person Votes: **`r format(as.numeric(state_stats[9,7]), big.mark =",")`**
 
 Ballots Returned: **`r format(as.numeric(state_stats[9,6]), big.mark =",")`**
 
-
-### Mail Ballots Returned
-
-Ballots Returned: **`r format(as.numeric(state_stats[9,6]), big.mark =",")`**
-
 ### Requested Mail Ballots
 
 Ballots Requested: **`r format(as.numeric(state_stats[9,5]), big.mark =",")`**
