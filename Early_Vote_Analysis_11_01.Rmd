@@ -1,0 +1,347 @@
+---
+title: "Early Vote Analysis for Sunday, Nov. 1"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+party_shell_returned <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+party_shell_returned[1,1] <- "Democrats"
+party_shell_returned[2,1] <- "Republicans"
+party_shell_returned[3,1] <- "Minor"
+party_shell_returned[4,1] <- "No Party Affiliation"
+party_shell_returned[5,1] <- "TOTAL"
+
+
+US_accept_party <- party_shell_returned
+
+US_accept_party[1,2] <- sum(state_stats$mail_accept_2020_dem) 
+US_accept_party[2,2] <- sum(state_stats$mail_accept_2020_rep) 
+US_accept_party[3,2] <- sum(state_stats$mail_accept_2020_minor)
+US_accept_party[4,2] <- sum(state_stats$mail_accept_2020_npa) 
+US_accept_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_accept_party[1,4] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_accept_party[2,4] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_accept_party[3,4] <- sum(state_stats$mail_sent_req_2020_minor)
+US_accept_party[4,4] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_accept_party[5,4] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_accept_party$Frequency <- 100*US_accept_party$Count/US_accept_party[5,2]
+US_accept_party$Rate <- 100*US_accept_party$Count/US_accept_party$Count2
+
+colnames(US_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+US_out_party <- party_shell_returned
+
+US_out_party[1,2] <- sum(state_stats$mail_sent_req_2020_dem) - sum(state_stats$mail_accept_2020_dem) 
+US_out_party[2,2] <- sum(state_stats$mail_sent_req_2020_rep) - sum(state_stats$mail_accept_2020_rep) 
+US_out_party[3,2] <- sum(state_stats$mail_sent_req_2020_minor) - sum(state_stats$mail_accept_2020_minor)
+US_out_party[4,2] <- sum(state_stats$mail_sent_req_2020_npa) - sum(state_stats$mail_accept_2020_npa) 
+US_out_party[5,2] <- (sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa)) - (sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa))
+
+US_out_party[1,5] <- sum(state_stats$mail_sent_req_2020_dem) 
+US_out_party[2,5] <- sum(state_stats$mail_sent_req_2020_rep) 
+US_out_party[3,5] <- sum(state_stats$mail_sent_req_2020_minor)
+US_out_party[4,5] <- sum(state_stats$mail_sent_req_2020_npa) 
+US_out_party[5,5] <- sum(state_stats$mail_sent_req_2020_dem)+sum(state_stats$mail_sent_req_2020_rep)+sum(state_stats$mail_sent_req_2020_minor)+sum(state_stats$mail_sent_req_2020_npa) 
+
+US_out_party[1,4] <- sum(state_stats$mail_accept_2020_dem) 
+US_out_party[2,4] <- sum(state_stats$mail_accept_2020_rep) 
+US_out_party[3,4] <- sum(state_stats$mail_accept_2020_minor)
+US_out_party[4,4] <- sum(state_stats$mail_accept_2020_npa) 
+US_out_party[5,4] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa)
+
+US_out_party$Frequency <- 100*US_out_party$Count/US_out_party[5,2]
+
+colnames(US_out_party) <- c("Party", "Outstanding Ballots", "Freq. Distribution", "Returned Ballots", "Requested Ballots")
+
+# Voted
+
+US_voted_party <- party_shell
+
+US_voted_party[1,2] <- sum(state_stats$mail_accept_2020_dem) + sum(state_stats$inperson_2020_dem)
+US_voted_party[2,2] <- sum(state_stats$mail_accept_2020_rep) + sum(state_stats$inperson_2020_rep)
+US_voted_party[3,2] <- sum(state_stats$mail_accept_2020_minor) + sum(state_stats$inperson_2020_minor)
+US_voted_party[4,2] <- sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_npa)
+US_voted_party[5,2] <- sum(state_stats$mail_accept_2020_dem)+sum(state_stats$mail_accept_2020_rep)+sum(state_stats$mail_accept_2020_minor)+sum(state_stats$mail_accept_2020_npa) + sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_voted_party$Percent <- 100*US_voted_party$Count/US_voted_party[5,2]
+
+# Inperson
+
+US_inperson_party <- party_shell
+
+US_inperson_party[1,2] <- sum(state_stats$inperson_2020_dem) 
+US_inperson_party[2,2] <- sum(state_stats$inperson_2020_rep) 
+US_inperson_party[3,2] <- sum(state_stats$inperson_2020_minor)
+US_inperson_party[4,2] <- sum(state_stats$inperson_2020_npa) 
+US_inperson_party[5,2] <- sum(state_stats$inperson_2020_dem)+sum(state_stats$inperson_2020_rep)+sum(state_stats$inperson_2020_minor)+sum(state_stats$inperson_2020_npa)
+
+US_inperson_party$Percent <- 100*US_inperson_party$Count/US_inperson_party[5,2]
+
+NM_inperson_party <- party_shell
+
+NM_inperson_party[1,2] <- state_stats[32,77] 
+NM_inperson_party[2,2] <- state_stats[32,78] 
+NM_inperson_party[3,2] <- state_stats[32,79] 
+NM_inperson_party[4,2] <- state_stats[32,80] 
+NM_inperson_party[5,2] <- state_stats[32,7] 
+
+NM_inperson_party$Percent <- 100*NM_inperson_party$Count/NM_inperson_party[5,2]
+
+NM_accept_party <- party_shell_returned
+
+NM_accept_party[1,2] <- state_stats[32,29] 
+NM_accept_party[2,2] <- state_stats[32,30] 
+NM_accept_party[3,2] <- state_stats[32,31] 
+NM_accept_party[4,2] <- state_stats[32,32] 
+NM_accept_party[5,2] <- state_stats[32,6] 
+
+NM_accept_party[1,4] <- state_stats[32,10] 
+NM_accept_party[2,4] <- state_stats[32,11] 
+NM_accept_party[3,4] <- state_stats[32,12] 
+NM_accept_party[4,4] <- state_stats[32,13] 
+NM_accept_party[5,4] <- state_stats[32,5] 
+
+NM_accept_party$Frequency <- 100*NM_accept_party$Count/NM_accept_party[5,2]
+NM_accept_party$Rate <- 100*NM_accept_party$Count/NM_accept_party$Count2
+
+colnames(NM_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+NC_inperson_party <- party_shell
+
+NC_inperson_party[1,2] <- state_stats[34,77] 
+NC_inperson_party[2,2] <- state_stats[34,78] 
+NC_inperson_party[3,2] <- state_stats[34,79] 
+NC_inperson_party[4,2] <- state_stats[34,80] 
+NC_inperson_party[5,2] <- state_stats[34,7] 
+
+NC_inperson_party$Percent <- 100*NC_inperson_party$Count/NC_inperson_party[5,2]
+
+NC_accept_party <- party_shell_returned
+
+NC_accept_party[1,2] <- state_stats[34,29] 
+NC_accept_party[2,2] <- state_stats[34,30] 
+NC_accept_party[3,2] <- state_stats[34,31] 
+NC_accept_party[4,2] <- state_stats[34,32] 
+NC_accept_party[5,2] <- state_stats[34,6] 
+
+NC_accept_party[1,4] <- state_stats[34,10] 
+NC_accept_party[2,4] <- state_stats[34,11] 
+NC_accept_party[3,4] <- state_stats[34,12] 
+NC_accept_party[4,4] <- state_stats[34,13] 
+NC_accept_party[5,4] <- state_stats[34,5] 
+
+NC_accept_party$Frequency <- 100*NC_accept_party$Count/NC_accept_party[5,2]
+NC_accept_party$Rate <- 100*NC_accept_party$Count/NC_accept_party$Count2
+
+colnames(NC_accept_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+LA_inperson_party <- party_shell
+
+LA_inperson_party[1,2] <- state_stats[19,77] 
+LA_inperson_party[2,2] <- state_stats[19,78] 
+LA_inperson_party[3,2] <- state_stats[19,79] 
+LA_inperson_party[4,2] <- state_stats[19,80] 
+LA_inperson_party[5,2] <- state_stats[19,7] 
+
+LA_inperson_party$Percent <- 100*LA_inperson_party$Count/LA_inperson_party[5,2]
+
+FL_inperson_party <- party_shell
+
+FL_inperson_party[1,2] <- state_stats[10,77] 
+FL_inperson_party[2,2] <- state_stats[10,78] 
+FL_inperson_party[3,2] <- state_stats[10,79] 
+FL_inperson_party[4,2] <- state_stats[10,80] 
+FL_inperson_party[5,2] <- state_stats[10,7] 
+
+FL_inperson_party$Percent <- 100*FL_inperson_party$Count/FL_inperson_party[5,2]
+
+
+FL_voted_party <- party_shell
+
+FL_voted_party[1,2] <- state_stats[10,77] + state_stats[10,29] 
+FL_voted_party[2,2] <- state_stats[10,78] + state_stats[10,30] 
+FL_voted_party[3,2] <- state_stats[10,79] + state_stats[10,31]
+FL_voted_party[4,2] <- state_stats[10,80] + state_stats[10,32] 
+FL_voted_party[5,2] <- state_stats[10,7] + state_stats[10,6]
+
+FL_voted_party$Percent <- 100*FL_voted_party$Count/FL_voted_party[5,2]
+
+FL_return_party <- party_shell_returned
+
+FL_return_party[1,2] <- state_stats[10,29] 
+FL_return_party[2,2] <- state_stats[10,30] 
+FL_return_party[3,2] <- state_stats[10,31] 
+FL_return_party[4,2] <- state_stats[10,32] 
+FL_return_party[5,2] <- state_stats[10,6] 
+
+FL_return_party[1,4] <- state_stats[10,10] 
+FL_return_party[2,4] <- state_stats[10,11] 
+FL_return_party[3,4] <- state_stats[10,12] 
+FL_return_party[4,4] <- state_stats[10,13] 
+FL_return_party[5,4] <- state_stats[10,5] 
+
+FL_return_party$Frequency <- 100*FL_return_party$Count/FL_return_party[5,2]
+FL_return_party$Rate <- 100*FL_return_party$Count/FL_return_party$Count2
+
+colnames(FL_return_party) <- c("Party", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
+
+```
+
+## **Record Overall Turnout?**
+
+It appears likely that around 100 million early votes will be cast by the time Tuesday morning reports are processed. These reports will include early voting activity from the proceeding day. It is also likely reports by Tuesday morning will fail to capture all of the pre-election voting activity since there are sporadic reports of election officials experiencing delays in processing the unprecedented number of mail ballots. Furthermore, many states continue to accept mail ballots if they are postmarked on or before Election Day, as noted in this [New York Times article](https://www.nytimes.com/interactive/2020/10/27/upshot/election-results-timing.html). This report does not accurately describe mail ballot return deadlines for military and overseas civilian voters, which can be later than domestic voters.
+
+What does this mean for overall turnout, including Election Day voters?
+
+Before answering this question, let me first reiterate something very important about how to make forecasts with these data. The approach I use is known as difference-in-difference. In the election context, this technique makes a comparison to a past comparable election and then forecasts based on the current election. 
+
+For example, in 2016 40% of the vote was cast early (this is a reasonable estimate of all early voting activity in 2016). If nothing changed, knowing the current estimate of 100 million early votes we could forecast 100 million/40% = 250 million votes will be cast in the election. Now, that is a ridiculously high number and we will not come close since it would be higher than the 239 million people [I estimate](http://www.electproject.org/2020g) are eligible to vote!
+
+The obvious reason why an estimate of 40% of the vote will be cast early is wrong is that something changed. Does this mean that we cannot know anything from the early vote? No. There are some states where there is a good past comparison because they did not change their elections significantly or where we can make educated guesses about what the early vote is telling us.
+
+One strong signal is that turnout will be higher than in 2016.
+
+| State         | % 2016 Total Vote |
+| ------------- |-------------:|
+| Hawai'i         | 111% |
+| Texas         | 108% |
+| Montana       | 70% |
+| North Carolina | 65% |
+| Tennessee | 65% |
+| Georgia | 65% |
+| New Mexico | 60% |
+| Washington | 60% |
+| Florida | 60% |
+
+
+**Outstanding Mail Ballots**
+
+There are many unknowns with the outstanding mail ballots, so it is difficult to take these numbers at face value. As mentioned above, some mail ballots are in transit and some are at election offices but have not been entered into databases. Furthermore, it is unclear how election officials manage voters who requested a mail ballot, but decided to cast an in-person vote. Election officials in many states have never had to process so many mail ballots, so reporting delays and inconsistencies in reporting are understandable. When there were only tens of thousands of mail ballots statewide in some of these states, it was relatively easy to process the ballots and no one really cared about the few where someone may vote in-person. Increase the workload by two orders of magnitude, and delays will happen. Add to this the uncertainties with the post office driving more people to decide to vote in-person. We're making do in tough times with a poorly-funded election infrastructure in many places.
+
+
+
+
+
+
+## **Democrats and Republicans Have Different Concerns Moving Forward**
+
+The election is not over yet, not by a long shot. There is still a little more than a week before the election, and Election Day itself to go.
+
+Democrats and Republicans will commonly fret about their voters, but their concerns are in different places.
+
+### **Democrats**
+
+Democrats enjoy a huge advantage in mail ballot requests, and mail ballot return rates. These national numbers for the states with party registration are reflected in every party registration state; they are not just an artifact of heavily Democratic large states like California conducting all-mail ballot elections.
+
+#### Returned Mail Ballots by Party Registration
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+But let's turnout the mail ballot phenomenon on its head. Voters still haven't returned a little more than 47 million mail ballots to election officials. 
+
+Again, let's take a look at the party registation states.
+
+#### Outstanding Mail Ballots by Party Registration
+Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_out_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Because registered Democrats are voting in such large numbers by mail, even though their ballot return rate is higher than Republicans, they have more than 4 million mail ballots outstanding. This is just the states with party registration; we might surmise the total differential number of Democrats with outstanding mail ballots is higher.
+
+### **Republicans**
+
+Republicans need to vote in-person to make up ground on the Democratic mail voters, either early or on Election Day. There is still some play left in the in-person early vote, but time is starting to run short such that Republicans will need to rely heavily on Election Day vote, which has traditionally been a strong day of voting for Republicans in recent elections.
+
+Again, we turn to the reporting states with party registration. Republicans have a lead in the in-person early vote, but it is not as large as the Democrats' lead in the mail ballots, nor is it the margin as large.
+
+**In-Person Votes by Party Registration**  
+Reporting states with party registration data: CO, FL, KS, KY, LA, MD, NC, NM, NV, SD  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(US_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Still, there could be a bias from the selected states. Louisiana did not expand mail balloting, so more voters are casting ballots in-person, which is also happening in Texas. Texas -- which like Louisiana did not expand mail balloting options -- probably looks similar to Louisiana. (Louisiana also doesn't differentiate between in-person and mail ballots in its reporting of party registration statistics; mail ballot are only about a quarter of the reported early votes.)
+
+**Louisiana In-Person Votes by Party Registration**  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(LA_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+North Carolina is another interesting case, where Republicans are doing better among in-person early voters, but Democrats still have a lead. I'll point you to the [North Carolina dashboard](https://electproject.github.io/Early-Vote-2020G/NC.html) for supporting statistics. An election law that is different in North Carolina is same day registration during the in-person early voting period. It may be that new voters are adding to the Democratic numbers of in-person early voters.
+
+In the critical battleground state of Florida, Republicans are making up some ground on Democrats through the in-person early vote. 
+
+**Florida Mail Ballots Returned by Party Registration**
+``` {r echo = FALSE}
+kable(FL_return_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+**Florida In-Person Votes by Party Registration**  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(FL_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+The net sum is still a sizable Democratic lead, but not as large as it was before in-person early voting started. Similar patterns are evident in the remaining party registration states reporting in-person early voting statistics.
+
+**Florida Total Voted by Party Registration**  
+``` {r echo = FALSE}
+
+options(knitr.kable.NA = '')
+
+kable(FL_voted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+Florida election officials must provide early voting through Friday, and have the discretion to extend the days until Sunday. There are a lot of Democratic mail ballots still outstanding. Will Democrats return them by Election Day, as is required for all but military and overseas civilian voters? How much will Republicans make up ground with in-person early voting? Will African-Americans show up to vote in-person early during Sunday's Souls-to-Polls events, offsetting some Republican in-person gains? What will happen on Election Day? 
+
+Answers to these questions should come into sharper focus by my last update next week, where I plan to have more precise turnout forecasts and a couple of projections for all-mail states like Colorado, Oregon, and Nevada. And before you think these states are uninteresting because they aren't all battlegrounds, they may provide us with a sense of the direction and magnitude of the national swing towards Biden or Trump.
