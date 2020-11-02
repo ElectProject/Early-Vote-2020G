@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Early Vote Analysis for Sunday, Nov. 1</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">U.S. Elections Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FAQ.html">FAQ</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Early Vote Analysis for Sunday, Nov. 1</h1>
+
+</div>
+
+
+<div id="record-overall-turnout" class="section level2">
+<h2><strong>Record Overall Turnout?</strong></h2>
+<p>It appears likely that around 100 million early votes will be cast by the time Tuesday morning reports are processed. These reports will include early voting activity from the proceeding day. It is also likely reports by Tuesday morning will fail to capture all of the pre-election voting activity since there are sporadic reports of election officials experiencing delays in processing the unprecedented number of mail ballots. Furthermore, many states continue to accept mail ballots if they are postmarked on or before Election Day, as noted in this <a href="https://www.nytimes.com/interactive/2020/10/27/upshot/election-results-timing.html">New York Times article</a>. This report does not accurately describe mail ballot return deadlines for military and overseas civilian voters, which can be later than domestic voters.</p>
+<p>What does this mean for overall turnout, including Election Day voters?</p>
+<p>Before answering this question, let me first reiterate something very important about how to make forecasts with these data. The approach I use is known as difference-in-difference. In the election context, this technique makes a comparison to a past comparable election and then forecasts based on the current election.</p>
+<p>For example, in 2016 40% of the vote was cast early (this is a reasonable estimate of all early voting activity in 2016). If nothing changed, knowing the current estimate of 100 million early votes we could forecast 100 million/40% = 250 million votes will be cast in the election. Now, that is a ridiculously high number and we will not come close since it would be higher than the 239 million people <a href="http://www.electproject.org/2020g">I estimate</a> are eligible to vote!</p>
+<p>The obvious reason why an estimate of 40% of the vote will be cast early is wrong is that something changed. The difference-in-difference approach works best where there is a good comparison point. Does this mean that things are so different than 2016 that we cannot know anything from the early vote? No. There are some states where there is a good past comparison because they did not change their elections significantly or where we can make educated guesses about what the early vote is telling us relative to 2016.</p>
+<p>One strong signal is that turnout will be higher than in 2016, because some states have already exceeded their 2016 turnout or are close to doing so.</p>
+<table>
+<thead>
+<tr class="header">
+<th>State</th>
+<th align="right">% 2016 Total Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hawaii</td>
+<td align="right">111%</td>
+</tr>
+<tr class="even">
+<td>Texas</td>
+<td align="right">108%</td>
+</tr>
+<tr class="odd">
+<td>Montana</td>
+<td align="right">99%</td>
+</tr>
+<tr class="even">
+<td>North Carolina</td>
+<td align="right">95%</td>
+</tr>
+<tr class="odd">
+<td>Georgia</td>
+<td align="right">94%</td>
+</tr>
+<tr class="even">
+<td>New Mexico</td>
+<td align="right">93%</td>
+</tr>
+<tr class="odd">
+<td>Nevada</td>
+<td align="right">91%</td>
+</tr>
+<tr class="even">
+<td>Tennessee</td>
+<td align="right">90%</td>
+</tr>
+<tr class="odd">
+<td>Oregon</td>
+<td align="right">88%</td>
+</tr>
+<tr class="even">
+<td>Colorado</td>
+<td align="right">87%</td>
+</tr>
+<tr class="odd">
+<td>Arizona</td>
+<td align="right">87%</td>
+</tr>
+<tr class="even">
+<td>New Jersey</td>
+<td align="right">80%</td>
+</tr>
+</tbody>
+</table>
+<p>To forecast the 2020 turnout, the big unknowns are (in temporal order):</p>
+<ul>
+<li>How many early votes are left to be cast?</li>
+<li>How much Election Day vote there will be?</li>
+<li>How many legally cast mail ballots postmarked on or before Election Day will arrive afterwards (which depends on states’ ballot return deadlines)?</li>
+</ul>
+<p>I’ve been <a href="https://www.theatlantic.com/politics/archive/2019/06/2020-election-voter-turnout-could-be-record-breaking/591607/">saying for over a year</a> that 2020 could see record turnout for a modern election. More recently, I’ve been using a 150 million turnout estimate as a shorthand to convey that this number is just that, an estimate. Now that more early vote data are available, I’m ready to make a more concrete prediction.</p>
+<p>Examining each state in turn, and rolling up the state estimates to a national estimate, I arrive at a total turnout rate of 160.2 million votes, or a turnout rate for those <a href="http://www.electproject.org/2020g">eligible to vote</a> of 67.0%.</p>
+<p>Regrettably, I have signed a non-disclosure agreement with the national exit poll organization that prevents me from going into greater detail about state turnout estimates, as I have in past years. I will be allowed to post estimates late on election night, which I will continue to update in the days afterwards as results are reported. Trust me, no one is more disappointed than me about this situation.</p>
+</div>
+<div id="who-will-win" class="section level2">
+<h2><strong>Who Will Win?</strong></h2>
+<p>I know you could care less about a turnout prediction. What you really want to know is who will win.</p>
+<p>For the most part, the clues come from states that have party registration. The difference-in-difference approach can be applied by examining the difference in the percentage of early voters in 2016 registered with the Democratic and Republican Parties and comparing the party registration difference to 2020.</p>
+<p>The caveats that apply to forecasting turnout, also apply to forecasting who will win, with an additional caveat:</p>
+<ul>
+<li>We cannot know with certainty the vote preferences of registered Democrats, Republicans, or non-affiliated voters.</li>
+</ul>
+<p>Surveys are the best source of this latter information. For those who say surveys are the only source for forecasting election outcomes, I would point out that some survey samples are drawn from lists of registered voters and are weighted to party registration breakdowns. These pollsters implicitly believe there is value to party registration data.</p>
+<p>I believe that the party registration breakdowns of early voters can provide clues not only to the partisan composition of the electorate, but also to the relative enthusiasm of Democrats and Republicans to vote. If there is an electoral swing towards a candidates of a political party, some of that swing should be evident in relative enthusiasm to vote (early).</p>
+<p>Again, the big caution is that early voting has changed so much from 2016 in many states, that there is no good past comparison; a key assumption of the difference-in-difference approach.</p>
+<p>There are certain states that did not change the way they run their elections: the all-mail ballot states. Let’s start with analyzing three in particular: Colorado, Oregon, and Nevada (which had a large amount of early vote in 2016). These provide us with the best 2016 comparison.</p>
+<p><strong>Colorado</strong></p>
+<p>Colorado is not a battleground state, so it will not be bold for me to predict Biden will win. He will. That said, Republican Senator Cory Gardner looks to be in deep trouble. Let’s look at the <a href="https://electproject.github.io/Early-Vote-2020G/CO.html">Colorado data</a> to understand why:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">33.8%</td>
+<td align="right">34.0%</td>
+<td align="right">48.2%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">28.0%</td>
+<td align="right">34.8%</td>
+<td align="right">43.3%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+5.8</td>
+<td align="right">-0.2</td>
+<td align="right">+4.9</td>
+</tr>
+</tbody>
+</table>
+<p>In 2016, Hillary Clinton won Colorado by 4.9 percentage points, despite registered Republicans having a slight 0.2 percentage point advantage among the electorate in the final <a href="https://content.govdelivery.com/attachments/COSOS/2016/11/08/file_attachments/655240/Ballots%2BReceived%2Bto%2BDate_20161108.pdf">Election Day report</a> of from the Secretary of State’s office. If you just look at the early vote, there is currently a 6 point shift in the party registration breakdown of the state towards the Democrats.</p>
+<p>If candidate preferences haven’t changed, it is virtually impossible for Trump to win Colorado. He would need sizable defections from registered Democrats and a big swing among those not affiliated with a political party to win. The preponderance of the polling evidence does not support either possibility.</p>
+<p>These party differences are not just a product of a changing Colorado electorate. Registered Democrats are returning their mail ballots at a much higher rate that registered Republicans, 70.1% to 63.6% (at the time of this writing.) This speaks to a relative enthusiasm gap. If Trump voters are too shy to talk to pollsters, they are also too shy to vote. Maybe Republicans become embolded by Election Day. Maybe they vote in-person, since Colorado provides opportunities to cast ballots at vote centers, which are essentially super-polling locations. So far, only a little less than 40 thousand people have cast in-person votes. Trump (and really Senator Gardner) will need massive turnout on Election Day to make up the deficit. Anything is possible, but it this seems a remote possibility.</p>
+<p><strong>Oregon</strong></p>
+<p>Oregon is even less of a battleground than Colorado, so it will come as no surprise that Biden appears likely to win Oregon. But, there are shifts in the partisan composition of the electorate that mirror those in Colorado. These <a href="https://electproject.github.io/Early-Vote-2020G/OR.html">Oregon data</a> are a little more stale than Colorado, having been last updated on Friday, but they should be a fairly good snapshot of where Oregon stands.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">43.5%</td>
+<td align="right">44.7%</td>
+<td align="right">50.1%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">28.0%</td>
+<td align="right">32.6%</td>
+<td align="right">39.1%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+15.5</td>
+<td align="right">+12.1</td>
+<td align="right">+11.0</td>
+</tr>
+</tbody>
+</table>
+<p>Like Colorado, there has been a marked shift in the partisan composition of the electorate towards the Democrats. Indeed, we can also infer in both states those not affiliated with a political party, or aligned with a minor party, are also a greater share of the electorate than in 2016 since the percentages of those registered with a political party declined across Colorado and Oregon. (If there will be a high turnout election, those persons with weaker partisan attachments would be expected to vote in higher numbers.)</p>
+<p>Again, I’m not interested in predicting who will win these states since they are not battlegrounds. The point of interest in both states is we see a shift in the party composition of the electorate towards the Democrats. This is consistent with the polling showing Biden performing better than Clinton. We might thus have greater confidence that the polling showing a Biden lead is sending a true signal.</p>
+<p><strong>Nevada</strong></p>
+<p>Nevada is an all-mail state in 2020, but it was not an all-mail ballot state in 2016. A little more than 2/3rds of its votes were cast before Election Day in 2016, so there might be a reasonable comparison to be made. For these statistics, I’m including in my <a href="https://electproject.github.io/Early-Vote-2020G/NV.html">Nevada data</a> a large Clark County mail ballot report that I downloaded on Sunday that is not yet reflected in the state reports, and that Nevada reporter Jon Ralston <a href="https://thenevadaindependent.com/article/the-early-voting-blog-3">believes is key</a> to a Biden win.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">40.3%</td>
+<td align="right">42.1%</td>
+<td align="right">47.9%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">35.9%</td>
+<td align="right">36.2%</td>
+<td align="right">45.5%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+4.4</td>
+<td align="right">+5.9</td>
+<td align="right">+2.9</td>
+</tr>
+</tbody>
+</table>
+<p>Here, the early vote data suggests that Biden will eek out a very narrow win in Nevada, with a shift of 1.5 percentage points in the partisan distribution of the electorate. But, what is also suggestive in these data is that Trump made up ground on Election Day in 2016. This is the primarily forecasting confound for the all the other states. The past election is not the same, and comparisons must be made carefully. Most likely, Nevada will not see the same Election Day vote as in 2016. If it did, it would have a turnout rate off the charts, perhaps even higher than Colorado or Oregon. That seems unlikely. Most likely, the Election Day vote might be closer to, say, a quarter of the overall electorate. If this is the case, then there is less gas in the tank for Trump to roll to victory on the strength of the Election Day vote.</p>
+<p>Another factor present in Nevada is that there are more voters not aligned with the major political parties among the early voters. Again, this is expected if we are to have a high turnout election. All things equal, the percentage margin between the two major parties is reduced due to the increase of unaffiliated voters.</p>
+<p>On the early vote alone, it appears that Biden will win Nevada. It could be close. <a href="https://www1.realclearpolitics.com/epolls/2020/president/Nevada.html">The Real Clear Politics Nevada average</a> has a +3.6 point Biden lead, which seems in line with the early vote.</p>
+<p><strong>Florida</strong></p>
+<p>Florida looks darn close, again.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">39.2%</td>
+<td align="right">39.8%</td>
+<td align="right">47.8%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">38.1%</td>
+<td align="right">38.3%</td>
+<td align="right">49.0%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+1.1</td>
+<td align="right">+1.5</td>
+<td align="right">-1.2</td>
+</tr>
+</tbody>
+</table>
+<p>At first blush, the numbers are bullish for Trump. Republicans are doing slightly better in the partisan distribution of the 2020 early vote than in 2016, in a state Trump won narrowly in 2016.</p>
+<p>But, there are two factors suggesting these <a href="https://electproject.github.io/Early-Vote-2020G/FL.html">Florida data</a> are sending too bullish of a signal.</p>
+<p>First, as in-person early voting has ended, Democrats should build on their early vote lead on the strength of additional mail ballots to be returned, which are expected todecidedly break Democratic.</p>
+<p>Second, like Nevada, there is only so much more Election Day vote possible. In 2016, only 40% of Florida’s vote was cast early. We’re probably looking somewhere around 75% of Florida’s vote cast early, unless Florida will have astronomical turnout unlike anything ever seen before in any state in modern times. That isn’t supported in the early vote we’re seeing so far elsewhere, and it would be very odd to see a huge turnout spike localized in a single state.</p>
+<p>So, there is a lot of uncertainty. I think Florida is close, but there is no real way to determine which candidate is favored with the large unknown of the size of the Election Day vote. Of course, <a href="https://www.realclearpolitics.com/epolls/2020/president/fl/florida_trump_vs_biden-6841.html">the polls</a> are telling us the same thing. Florida is close.</p>
+<p><strong>North Carolina</strong></p>
+<p>Trump appears to be in a better position in North Carolina than Florida.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">37.4%</td>
+<td align="right">41.7%</td>
+<td align="right">46.2%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">31.7%</td>
+<td align="right">31.9%</td>
+<td align="right">49.8%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+5.7</td>
+<td align="right">+9.8</td>
+<td align="right">-3.6</td>
+</tr>
+</tbody>
+</table>
+<p>The North Carolina Board of Elections also provides data on the partisan composition of the entire 2016 electorate.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2016 All Voters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">39.3%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">32.0%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+7.3</td>
+</tr>
+</tbody>
+</table>
+<p>Unlike Florida, Biden cannot rely on an unknown smaller size of the Election Day vote to bolster his chances, since the Election Day vote is expected to be very Republican. He will have to rely on voters’ changing preferences. Also, note like before there are more unaffiliated voters among early voters in 2020. These, too, will be a key if Biden is to flip North Carolina. <a href="https://www.realclearpolitics.com/epolls/2020/president/nc/north_carolina_trump_vs_biden-6744.html">The polls</a> have North Carolina very close, closer than Florida, which is supported by the early voting data. If anything, the early voting data alone are pointing to a Trump win.</p>
+<p><strong>Maine</strong></p>
+<p>Biden appears to be well-positioned to win Maine. Again, this is not a surprise since <a href="https://www.realclearpolitics.com/epolls/2020/president/Maine.html">Biden is polling strongly in Maine</a>. The strong Democratic performance in the early vote is probably more consequential to the Senate race.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">48.1%</td>
+<td align="right">40.5%</td>
+<td align="right">47.8%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">23.7%</td>
+<td align="right">27.0%</td>
+<td align="right">44.9%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+24.4</td>
+<td align="right">+13.5</td>
+<td align="right">+2.9</td>
+</tr>
+</tbody>
+</table>
+<p>What may help Senator Collins is that I expect a much larger share of the electorate to vote on Election Day – perhaps as much as 40% – than in Florida or North Carolina. She will need a incredibly strong Republican presence on Election Day to help her with a surprise win, <a href="https://www.realclearpolitics.com/epolls/2020/senate/me/maine_senate_collins_vs_gideon-6928.html">according to the polls</a>.</p>
+<p><strong>Iowa</strong></p>
+<p>Ah, Iowa. The state <a href="https://www.huffpost.com/entry/early-vote-election-eve-p_b_12853864">I missed the most in my 2016 forecast</a>. If at first you don’t succeed, try, try, again.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">46.4%</td>
+<td align="right">41.3%</td>
+<td align="right">41.7%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">33.0%</td>
+<td align="right">34.6%</td>
+<td align="right">51.2%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+13.4</td>
+<td align="right">+6.7</td>
+<td align="right">-9.5</td>
+</tr>
+</tbody>
+</table>
+<p>While the early vote looks good for Biden, he can’t count on the signal from it alone, as he would make up only 6.7 points on his 9.5 point loss (yes, there is rounding error in there since Trump’s actual margin was 9.4 points…I have the choice of having people telling me the numbers don’t add up, or people telling me I don’t have the right margin because it’s off by a tenth of a percentage point.)</p>
+<p>Like Maine, I expect there to be a sizable Election Day vote, perhaps as much as 50% of the total. So, there is more gas in the Election Day tank for Republicans in Iowa.</p>
+<p>The <a href="https://www.realclearpolitics.com/epolls/2020/president/Iowa.html">Iowa polls average</a> point to a narrow Trump win. I think the <em>Des Moines Register</em> poll is probably a little too bullish on Trump, but due to random sampling error it makes sense we’d get an outlier poll like it if Trump had a slight Iowa lead, which is what the early vote suggests. Again, like Maine, there is a lot of uncertainty here about the size of the Election Day vote which will likely be very Republican, even more so than other states.</p>
+<p><strong>Arizona</strong></p>
+<p>The <a href="https://electproject.github.io/Early-Vote-2020G/AZ.html">Arizona data</a> is signaling a Biden win, but I’m very cautious about this because party registration is not quite the same here as elsewhere. Party registration is <a href="https://azsos.gov/elections">applied only to presidential elections</a>, whereas the state has semi-open primaries for all other primary elections. With only Democrats holding a contested primary in 2020, it may be that the changes in party registration of the early vote is sending too bullish of a signal. Still, here are the numbers.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Party</th>
+<th align="right">% 2020 Early Vote</th>
+<th align="right">% 2016 Early Vote</th>
+<th align="right">% 2016 Actual Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Democrats</td>
+<td align="right">38.2%</td>
+<td align="right">33.6%</td>
+<td align="right">45.1%</td>
+</tr>
+<tr class="even">
+<td>Republicans</td>
+<td align="right">36.3%</td>
+<td align="right">40.0%</td>
+<td align="right">48.7%</td>
+</tr>
+<tr class="odd">
+<td>Dem Lead</td>
+<td align="right">+1.9</td>
+<td align="right">-6.4</td>
+<td align="right">-3.6</td>
+</tr>
+</tbody>
+</table>
+<p>It doesn’t seem possible that there could be a 8.3 point shift in Arizona. <a href="https://www.realclearpolitics.com/epolls/2020/president/az/arizona_trump_vs_biden-6807.html">The polls</a> have the state much closer than that. I think the early vote is showing that Biden could indeed have a narrow lead, but it is probably overstating it.</p>
+<p>Arizona is actually a heavy early voting state, much like Nevada. So the Election Day vote is probably less of a factor here than elsewhere, with perhaps only 15% or so of the vote to be cast on Election Day.</p>
+<p><strong>Pennsylvania</strong></p>
+<p>I’m not saying anything about Pennsylvania, a state with party registration. The state had excuse-required absentee voting in 2016, so there no comparison should be made to the partisan distribution of the small number of voters who cast absentee ballots in 2016 to the much larger number voting in 2020.</p>
+<p><strong>Big Takeaways</strong></p>
+<p>The early vote appears to confirm the polls that there has been a swing to the Democrats since 2016, which should benefit Biden. But, the swing is not uniform, and some of the closest states in 2016 – Florida and North Carolina – appear to be close again.</p>
+<p>The early vote also is signaling that unaffiliated voters will be participating at higher rates than 2016. I should add that these voters are not the same as self-identified independents in polls. They are people who don’t tend to vote in party primaries. They tend to be younger, and more often persons of color. These infrequent voters are exactly the sorts of people you’d expect to see engaged if there will be a high turnout election. Their larger presence in the electorate could make a significant contribution to the election outcome, beyond the simple partisan differences I’m discussing here to make my election forecasts.</p>
+</div>
+<div id="outstanding-mail-ballots" class="section level2">
+<h2><strong>Outstanding Mail Ballots</strong></h2>
+<p>If much concern to Democrats are all the mail ballots that have yet to be returned. These should be of concern, but I want to put these statistics in context.</p>
+<p>As of this writing, there are <strong>31,958,869</strong> outstanding mail ballots that have not been entered as returned by election officials.</p>
+<p>There are many unknowns with the outstanding mail ballots, so it is difficult to take these numbers at face value.</p>
+<p>Factors in favor of the outstanding mail ballots being an over-count:</p>
+<ul>
+<li>Some mail ballots are in transit.</li>
+<li>Some states continue to accept mail ballots if postmarked by Election Day.</li>
+<li>Some are at election offices but have not been entered into their databases.</li>
+<li>It is unclear how election officials manage data for voters who requested a mail ballot, but decided to cast an in-person vote.</li>
+</ul>
+<p>Factors in favor of the outstanding mail ballots being an under-count:</p>
+<ul>
+<li>Some states do not report mail ballot applications or the number of ballots sent; Texas probably being the largest of these states.</li>
+<li>Although not affecting the total number, the mail ballot return rate is too high in states where in-person votes are co-mingled with mail ballots; states like Iowa, among others.</li>
+</ul>
+<p>Election officials in many states have never had to process so many mail ballots, so reporting delays and inconsistencies in reporting are understandable. When there were only tens of thousands of mail ballots statewide in some of these states, it was relatively easy to process the ballots and no one really cared about the few where someone may vote in-person. Increase the workload by two orders of magnitude, and delays will happen. Add to this the uncertainties with the post office driving more people to decide to vote in-person. We’re making do in tough times with a poorly-funded election infrastructure in many places.</p>
+<p>I believe on balance that there are more returned ballots than reflected in my tracking. How many, I cannot say.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
