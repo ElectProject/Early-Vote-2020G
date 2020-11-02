@@ -225,123 +225,58 @@ For example, in 2016 40% of the vote was cast early (this is a reasonable estima
 
 The obvious reason why an estimate of 40% of the vote will be cast early is wrong is that something changed. Does this mean that we cannot know anything from the early vote? No. There are some states where there is a good past comparison because they did not change their elections significantly or where we can make educated guesses about what the early vote is telling us.
 
-One strong signal is that turnout will be higher than in 2016.
+One strong signal is that turnout will be higher than in 2016, because some states have already exceeded their 2016 turnout or are close to doing so.
 
 | State         | % 2016 Total Vote |
 | ------------- |-------------:|
-| Hawai'i         | 111% |
+| Hawaii         | 111% |
 | Texas         | 108% |
-| Montana       | 70% |
-| North Carolina | 65% |
-| Tennessee | 65% |
-| Georgia | 65% |
-| New Mexico | 60% |
-| Washington | 60% |
-| Florida | 60% |
+| Montana       | 99% |
+| North Carolina | 95% |
+| Georgia | 94% |
+| New Mexico | 93% |
+| Nevada | 91% |
+| Tennessee |90% |
+| Oregon | 88% |
+| Colorado | 87% |
+| Arizona | 87% |
+| New Jersey | 80% |
+
+To forecast the 2020 turnout, the big unknowns are (in temporal order):
+
+* How many early votes are left to be cast?
+* How much Election Day vote there will be? 
+* How many legally cast mail ballots postmarked on or before Election Day will arrive afterwards (which depends on states' ballot return deadlines)? 
+
+I've been [saying for over a year](https://www.theatlantic.com/politics/archive/2019/06/2020-election-voter-turnout-could-be-record-breaking/591607/) that 2020 could see record turnout for a modern election. More recently, I've been using a 150 million turnout estimate as a shorthand to convey that this number is just that, an estimate. Now that more early vote data are available, I'm ready to make a more concrete prediction.
+
+Examining each state in turn, and rolling up the state estimates to a national estimate, I arrive at a total turnout rate of 160.2 million votes, or a turnout rate for those [eligible to vote](http://www.electproject.org/2020g) of 67.0%.
+
+Regrettably, I have signed a non-disclosure agreement with the national exit poll organization that prevents me from going into greater detail about state turnout estimates, as I have in past years. I will be allowed to post estimates late on election night, which I will continue to update in the days afterwards as results are reported. This 
 
 
 **Outstanding Mail Ballots**
 
-There are many unknowns with the outstanding mail ballots, so it is difficult to take these numbers at face value. As mentioned above, some mail ballots are in transit and some are at election offices but have not been entered into databases. Furthermore, it is unclear how election officials manage voters who requested a mail ballot, but decided to cast an in-person vote. Election officials in many states have never had to process so many mail ballots, so reporting delays and inconsistencies in reporting are understandable. When there were only tens of thousands of mail ballots statewide in some of these states, it was relatively easy to process the ballots and no one really cared about the few where someone may vote in-person. Increase the workload by two orders of magnitude, and delays will happen. Add to this the uncertainties with the post office driving more people to decide to vote in-person. We're making do in tough times with a poorly-funded election infrastructure in many places.
+As of this writing, there are **`r format(as.numeric(sum(state_stats$mail_sent_req_2020) - sum(state_stats$mail_accept_2020)), big.mark =",")`** outstanding mail ballots that have not been entered as returned by election officials.  
+
+There are many unknowns with the outstanding mail ballots, so it is difficult to take these numbers at face value.
+
+Factors in favor of the outstanding mail ballots being an over-count:
+
+* Some mail ballots are in transit. 
+* Some states continue to accept mail ballots if postmarked by Election Day.
+* Some are at election offices but have not been entered into their databases. 
+* It is unclear how election officials manage data for voters who requested a mail ballot, but decided to cast an in-person vote.
+
+Factors in favor of the outstanding mail ballots being an under-count:
+
+* Some states do not report mail ballot applications or the number of ballots sent; Texas probably being the largest of these states.
+* Although not affecting the total number, the mail ballot return rate is too high in states where in-person votes are co-mingled with mail ballots; states like Iowa, among others.
+
+Election officials in many states have never had to process so many mail ballots, so reporting delays and inconsistencies in reporting are understandable. When there were only tens of thousands of mail ballots statewide in some of these states, it was relatively easy to process the ballots and no one really cared about the few where someone may vote in-person. Increase the workload by two orders of magnitude, and delays will happen. Add to this the uncertainties with the post office driving more people to decide to vote in-person. We're making do in tough times with a poorly-funded election infrastructure in many places.
 
 
 
 
 
 
-## **Democrats and Republicans Have Different Concerns Moving Forward**
-
-The election is not over yet, not by a long shot. There is still a little more than a week before the election, and Election Day itself to go.
-
-Democrats and Republicans will commonly fret about their voters, but their concerns are in different places.
-
-### **Democrats**
-
-Democrats enjoy a huge advantage in mail ballot requests, and mail ballot return rates. These national numbers for the states with party registration are reflected in every party registration state; they are not just an artifact of heavily Democratic large states like California conducting all-mail ballot elections.
-
-#### Returned Mail Ballots by Party Registration
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(US_accept_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-But let's turnout the mail ballot phenomenon on its head. Voters still haven't returned a little more than 47 million mail ballots to election officials. 
-
-Again, let's take a look at the party registation states.
-
-#### Outstanding Mail Ballots by Party Registration
-Reporting states with party registration data: CA, CO, CT, FL, IA, KS, KY, MD, ME, NC, NE, NJ, NM, NV, OK, OR, PA, SD  
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(US_out_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-Because registered Democrats are voting in such large numbers by mail, even though their ballot return rate is higher than Republicans, they have more than 4 million mail ballots outstanding. This is just the states with party registration; we might surmise the total differential number of Democrats with outstanding mail ballots is higher.
-
-### **Republicans**
-
-Republicans need to vote in-person to make up ground on the Democratic mail voters, either early or on Election Day. There is still some play left in the in-person early vote, but time is starting to run short such that Republicans will need to rely heavily on Election Day vote, which has traditionally been a strong day of voting for Republicans in recent elections.
-
-Again, we turn to the reporting states with party registration. Republicans have a lead in the in-person early vote, but it is not as large as the Democrats' lead in the mail ballots, nor is it the margin as large.
-
-**In-Person Votes by Party Registration**  
-Reporting states with party registration data: CO, FL, KS, KY, LA, MD, NC, NM, NV, SD  
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(US_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-Still, there could be a bias from the selected states. Louisiana did not expand mail balloting, so more voters are casting ballots in-person, which is also happening in Texas. Texas -- which like Louisiana did not expand mail balloting options -- probably looks similar to Louisiana. (Louisiana also doesn't differentiate between in-person and mail ballots in its reporting of party registration statistics; mail ballot are only about a quarter of the reported early votes.)
-
-**Louisiana In-Person Votes by Party Registration**  
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(LA_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-North Carolina is another interesting case, where Republicans are doing better among in-person early voters, but Democrats still have a lead. I'll point you to the [North Carolina dashboard](https://electproject.github.io/Early-Vote-2020G/NC.html) for supporting statistics. An election law that is different in North Carolina is same day registration during the in-person early voting period. It may be that new voters are adding to the Democratic numbers of in-person early voters.
-
-In the critical battleground state of Florida, Republicans are making up some ground on Democrats through the in-person early vote. 
-
-**Florida Mail Ballots Returned by Party Registration**
-``` {r echo = FALSE}
-kable(FL_return_party, format.args = list(big.mark = ",", 
-  scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-**Florida In-Person Votes by Party Registration**  
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(FL_inperson_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-The net sum is still a sizable Democratic lead, but not as large as it was before in-person early voting started. Similar patterns are evident in the remaining party registration states reporting in-person early voting statistics.
-
-**Florida Total Voted by Party Registration**  
-``` {r echo = FALSE}
-
-options(knitr.kable.NA = '')
-
-kable(FL_voted_party, valign = 't', format.args = list(big.mark = ",", scientific = FALSE), digits = 1) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
-```
-
-Florida election officials must provide early voting through Friday, and have the discretion to extend the days until Sunday. There are a lot of Democratic mail ballots still outstanding. Will Democrats return them by Election Day, as is required for all but military and overseas civilian voters? How much will Republicans make up ground with in-person early voting? Will African-Americans show up to vote in-person early during Sunday's Souls-to-Polls events, offsetting some Republican in-person gains? What will happen on Election Day? 
-
-Answers to these questions should come into sharper focus by my last update next week, where I plan to have more precise turnout forecasts and a couple of projections for all-mail states like Colorado, Oregon, and Nevada. And before you think these states are uninteresting because they aren't all battlegrounds, they may provide us with a sense of the direction and magnitude of the national swing towards Biden or Trump.
