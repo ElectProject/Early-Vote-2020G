@@ -351,6 +351,34 @@ NC_accept_age$Rate <- 100*NC_accept_age$Count/NC_accept_age$Count2
 
 colnames(NC_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
+
+NC_out_party <- party_shell_returned
+
+NC_out_party[1,2] <- state_stats[34,10] - state_stats[34,29] 
+NC_out_party[2,2] <- state_stats[34,11] - state_stats[34,30]
+NC_out_party[3,2] <- state_stats[34,12] - state_stats[34,31]
+NC_out_party[4,2] <- state_stats[34,13] - state_stats[34,32]
+NC_out_party[5,2] <- state_stats[34,5] - state_stats[34,6]
+
+NC_out_party[1,4] <- state_stats[34,29] 
+NC_out_party[2,4] <- state_stats[34,30] 
+NC_out_party[3,4] <- state_stats[34,31] 
+NC_out_party[4,4] <- state_stats[34,32] 
+NC_out_party[5,4] <- state_stats[34,6] 
+
+NC_out_party[1,5] <- state_stats[34,10] 
+NC_out_party[2,5] <- state_stats[34,11] 
+NC_out_party[3,5] <- state_stats[34,12] 
+NC_out_party[4,5] <- state_stats[34,13] 
+NC_out_party[5,5] <- state_stats[34,5] 
+
+NC_out_party$Frequency <- 100*NC_out_party$Count/NC_out_party[5,2]
+
+colnames(NC_out_party) <- c("Party", "Outstanding Ballots", "Freq. Distribution", "Returned Ballots", "Requested Ballots")
+
+
+
+
 NC_stats_voted <- select(NC_stats, County, Reg.Voters, Voted.Tot, Pct.Voted)
 
 NC_stats_requests <- select(NC_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Request)
@@ -391,7 +419,15 @@ NC_stats_rejects_nh_black <- mutate(NC_stats_rejects_nh_black, Mail.Rtn.nh_black
 Last Report: `r state_stats[34,9]`  
 Source:  `r state_stats[34,2]`
 
-**More statistics for in-person and total voters coming soon**
+### Outstanding Mail Ballots
+
+#### **Total Voted by Party Registration**
+
+``` {r echo = FALSE}
+kable(NC_out_party, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
 
 ### Total Voted
 
