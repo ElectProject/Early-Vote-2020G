@@ -393,6 +393,7 @@ NC_stats_returns_Rep <- select(NC_stats, County, Mail.Req.Rep, Mail.Rtn.Rep, Pct
 NC_stats_returns_NPA <- select(NC_stats, County, Mail.Req.NPA, Mail.Rtn.NPA, Pct.Return.NPA)
 NC_stats_returns_Minor <- select(NC_stats, County, Mail.Req.Minor, Mail.Rtn.Minor, Pct.Return.Minor)
 
+
 NC_stats_rejects <- select(NC_stats, County, Mail.Rtn.Tot, Mail.Reject.Tot, Pct.Reject)
 NC_stats_rejects <- mutate(NC_stats_rejects, Mail.Rtn.Tot = Mail.Rtn.Tot + Mail.Reject.Tot)
 
@@ -414,6 +415,13 @@ NC_stats_rejects_nh_white <- mutate(NC_stats_rejects_nh_white, Mail.Rtn.nh_white
 NC_stats_rejects_nh_black <- select(NC_stats, County, Mail.Rtn.nh_black, Mail.Reject.nh_black, Pct.Reject.nh_black)
 NC_stats_rejects_nh_black <- mutate(NC_stats_rejects_nh_black, Mail.Rtn.nh_black = Mail.Rtn.nh_black + Mail.Reject.nh_black)
 
+NC_stats_out <- select(NC_stats, County, Mail.Req.Tot, Mail.Rtn.Tot)
+
+NC_stats_out <- NC_stats_out %>%
+  mutate(Mail.Out.Tot = Mail.Req.Tot - Mail.Rtn.Tot)
+
+NC_stats_out <- NC_stats_out[c(1,4,3,2)]
+
 ```
 ## {.tabset}
 Last Report: `r state_stats[34,9]`  
@@ -428,6 +436,12 @@ kable(NC_out_party, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
+
+``` {r echo = FALSE}
+datatable(NC_stats_out, colnames = c("County", "Outstanding Mail Ballots", "Returned Mail Ballots", "Requested Mail Ballots"), rownames = F) %>%
+  formatRound(c('Mail.Out.Tot', 'Mail.Rtn.Tot', 'Mail.Req.Tot'), 0, mark = ",")
+```
+
 
 ### Total Voted
 
