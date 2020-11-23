@@ -7,6 +7,9 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(DT)
+library(highcharter)
+
 
 state_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote.csv")
 PA_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020G_Early_Vote_PA.csv")

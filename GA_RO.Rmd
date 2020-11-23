@@ -1,0 +1,176 @@
+---
+title: "Georgia Early Voting Statistics - 2021 Senate Run-Off Election"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(DT)
+library(highcharter)
+
+GA_stats <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020RO_Early_Vote_GA.csv")
+
+# Setup
+
+party_shell <- data.frame(Party=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+party_shell[1,1] <- "Democrats"
+party_shell[2,1] <- "Republicans"
+party_shell[3,1] <- "Minor"
+party_shell[4,1] <- "No Party Affiliation"
+party_shell[5,1] <- "TOTAL"
+
+race_shell <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+race_shell[1,1] <- "Non-Hispanic White"
+race_shell[2,1] <- "Non-Hispanic Black"
+race_shell[3,1] <- "Hispanic"
+race_shell[4,1] <- "Non-Hispanic Asian American"
+race_shell[5,1] <- "Non-Hispanic Native American"
+race_shell[6,1] <- "Other/Multiple/Unknown"
+race_shell[7,1] <- "TOTAL"
+
+race_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+race_shell_returned[1,1] <- "Non-Hispanic White"
+race_shell_returned[2,1] <- "Non-Hispanic Black"
+race_shell_returned[3,1] <- "Hispanic"
+race_shell_returned[4,1] <- "Non-Hispanic Asian American"
+race_shell_returned[5,1] <- "Non-Hispanic Native American"
+race_shell_returned[6,1] <- "Other/Multiple/Unknown"
+race_shell_returned[7,1] <- "TOTAL"
+
+GA_age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+GA_age_shell[1,1] <- "18 to 24"
+GA_age_shell[2,1] <- "25 to 34"
+GA_age_shell[3,1] <- "35 to 44"
+GA_age_shell[4,1] <- "45 and 55"
+GA_age_shell[5,1] <- "56 and 65"
+GA_age_shell[6,1] <- "66 and up"
+GA_age_shell[7,1] <- "Age Unknown"
+GA_age_shell[8,1] <- "TOTAL"
+
+GA_age_shell_returned <- data.frame(Race=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+GA_age_shell_returned[1,1] <- "18 to 24"
+GA_age_shell_returned[2,1] <- "25 to 34"
+GA_age_shell_returned[3,1] <- "35 to 44"
+GA_age_shell_returned[4,1] <- "45 and 55"
+GA_age_shell_returned[5,1] <- "56 and 65"
+GA_age_shell_returned[6,1] <- "66 and up"
+GA_age_shell_returned[7,1] <- "Age Unknown"
+GA_age_shell_returned[8,1] <- "TOTAL"
+
+gender_shell <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+gender_shell[1,1] <- "Female"
+gender_shell[2,1] <- "Male"
+gender_shell[3,1] <- "Unknown"
+gender_shell[4,1] <- "TOTAL"
+
+
+gender_shell_full <- data.frame(Gender=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+gender_shell_full[1,1] <- "Female"
+gender_shell_full[2,1] <- "Male"
+gender_shell_full[3,1] <- "Unknown"
+gender_shell_full[4,1] <- "TOTAL"
+
+age_shell <- data.frame(Age=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+age_shell[1,1] <- "18 to 24"
+age_shell[2,1] <- "25 to 34"
+age_shell[3,1] <- "35 to 44"
+age_shell[4,1] <- "45 to 54"
+age_shell[5,1] <- "55 to 64"
+age_shell[6,1] <- "65 and up"
+age_shell[7,1] <- "TOTAL"
+
+
+voted_shell <- data.frame(Voted=character(),
+                                  Count=integer(),
+                                  Percent=double(),
+                                  stringsAsFactors=FALSE)
+voted_shell[1,1] <- "Voted in 2016 General"
+voted_shell[2,1] <- "Did Not Vote in 2016 General"
+voted_shell[3,1] <- "TOTAL"
+
+voted_shell_full <- data.frame(Voted=character(),
+                                  Count=integer(),
+                                  Frequency=double(),
+                                  Count2=integer(),
+                                  Rate=integer(),
+                                  stringsAsFactors=FALSE)
+voted_shell_full[1,1] <- "Voted in 2016 General"
+voted_shell_full[2,1] <- "Did Not Vote in 2016 General"
+voted_shell_full[3,1] <- "TOTAL"
+
+# Georgia
+
+GA_stats_req <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Req)
+```
+## {.tabset}
+Last Report: 11/23/2020  
+Source: [https://elections.sos.ga.gov/Elections/voterabsenteefile.do](https://elections.sos.ga.gov/Elections/voterabsenteefile.do)
+
+### Mail Ballot Accepted Applications  
+
+Total Applications: **`r format(as.numeric(sum(GA_stats$Mail.Req.Tot)), big.mark =",")`**  
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Pct.Req), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Requested", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Request Rate of Registered Voters") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_req, colnames = c("County", "Total Requests", "Registered Voters", "Percent Requested"), rownames = F) %>%
+  formatPercentage('Pct.Req', 1) %>%
+  formatRound(c('Mail.Req.Tot', 'Reg.Voters'), 0, mark = ",")
+```
+
+### Mail Ballot Rejected Applications  
+
+Total Rejected Applications: **`r format(as.numeric(sum(GA_stats$Mail.App.Reject.Tot)), big.mark =",")`**  
