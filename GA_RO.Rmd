@@ -132,15 +132,34 @@ voted_shell_full[3,1] <- "TOTAL"
 
 # Georgia
 
+GA_req_race <- race_shell
+
+GA_req_race[1,2] <- sum(GA_stats$Mail.Req.nhwhite.Tot)
+GA_req_race[2,2] <- sum(GA_stats$Mail.Req.nhblack.Tot)
+GA_req_race[3,2] <- sum(GA_stats$Mail.Req.hisp.Tot) 
+GA_req_race[4,2] <- sum(GA_stats$Mail.Req.nhasian.Tot) 
+GA_req_race[5,2] <- sum(GA_stats$Mail.Req.nhna.Tot) 
+GA_req_race[6,2] <- sum(GA_stats$Mail.Req.oth.Tot) 
+GA_req_race[7,2] <- sum(GA_stats$Mail.Req.Tot) 
+
+GA_req_race$Percent <- 100*GA_req_race$Count/GA_req_race[7,2]
+
+GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
+
 GA_stats_req <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Req)
+GA_stats_reject <- select(GA_stats, County, Mail.Req.All, Mail.App.Reject.Tot, Pct.App.Reject)
 ```
 ## {.tabset}
 Last Report: 11/23/2020  
 Source: [https://elections.sos.ga.gov/Elections/voterabsenteefile.do](https://elections.sos.ga.gov/Elections/voterabsenteefile.do)
 
+Comparable statistics from the 2020 general election are available [here](https://electproject.github.io/Early-Vote-2020G/GA.html)
+
 ### Mail Ballot Accepted Applications  
 
 Total Applications: **`r format(as.numeric(sum(GA_stats$Mail.Req.Tot)), big.mark =",")`**  
+Application Rate (of Registered voters): **`r paste(round(100*sum(GA_stats$Mail.Req.Tot)/sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**  
+
 
 ``` {r echo = FALSE}
 GA_map_data <- GA_stats
@@ -171,6 +190,46 @@ datatable(GA_stats_req, colnames = c("County", "Total Requests", "Registered Vot
   formatRound(c('Mail.Req.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
 
+#### Mail Ballots Requested by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_req_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 ### Mail Ballot Rejected Applications  
 
 Total Rejected Applications: **`r format(as.numeric(sum(GA_stats$Mail.App.Reject.Tot)), big.mark =",")`**  
+Rejection Rate (of All Applications): **`r paste(round(100* sum(GA_stats$Mail.App.Reject.Tot)/(sum(GA_stats$Mail.App.Reject.Tot)+sum(GA_stats$Mail.Req.Tot)), digits = 1),"%", sep = "")`**  
+
+Notes: The mail ballot application rejection rate is the number of rejected applications divided by the sum of the number of accepted applications plus the number of rejected applications. I count only once voters with multiple rejected applications and I exclude any voters who had a rejected application but subsequently successfully corrected their application issue. 
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Pct.App.Reject), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent App Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Application Rejection Rate of All Applications") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_reject, colnames = c("County", "All Mail Ballot Applications", "Rejected Applications", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.App.Reject', 1) %>%
+  formatRound(c('Mail.Req.All', 'Mail.App.Reject.Tot'), 0, mark = ",")
+```
