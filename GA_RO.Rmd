@@ -185,7 +185,7 @@ hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
 ```
 
 ``` {r echo = FALSE}
-datatable(GA_stats_req, colnames = c("County", "Total Requests", "Registered Voters", "Percent Requested"), rownames = F) %>%
+datatable(GA_stats_req, colnames = c("County", "Registered Voters", "Mail Ballot Requests", "Percent Requested"), rownames = F) %>%
   formatPercentage('Pct.Req', 1) %>%
   formatRound(c('Mail.Req.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
