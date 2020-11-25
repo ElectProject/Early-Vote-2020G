@@ -8,12 +8,11 @@ library(rvest)
 # Setup
 ###################
 
-
 #######################
 # Georgia
 #######################
 
-GA_report_date <- "11/23/2020"
+GA_report_date <- "11/24/2020"
 
 # Start here if already concatenated county files
 
@@ -117,9 +116,16 @@ GA_2020ro_app_accept_county_oth <- GA_2020ro_app_accept %>%
   count(County) %>%
   rename(Mail.Req.oth.Tot = n)
 
+GA_2020ro_app_accept_county_voted <- GA_2020ro_app_accept %>%
+  filter(!is.na(voted_2020g)) %>%
+  count(County) %>%
+  rename(Mail.Req.Vote.Tot = n)
 
-GA_2020ro_race <- GA_2020ro_app_accept %>%
-  count(RACE)
+GA_2020ro_app_accept_county_novoted <- GA_2020ro_app_accept %>%
+  filter(is.na(voted_2020g)) %>%
+  count(County) %>%
+  rename(Mail.Req.Novote.Tot = n)
+
 
 GA_2020ro_app_reject_county <- GA_2020ro_app_reject_unique %>%
   ungroup() %>%
@@ -140,6 +146,10 @@ GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_nhna, by
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_hisp, by = "County")
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_oth, by = "County")
 
+GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_voted, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_novoted, by = "County")
+
+
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_reject_county, by = "County")
 
 GA_county_data <- GA_county_data %>% 
@@ -150,7 +160,9 @@ GA_county_data <- GA_county_data %>%
   mutate(Mail.Req.nhasian.Tot = replace_na(Mail.Req.nhasian.Tot, 0)) %>%
   mutate(Mail.Req.nhna.Tot = replace_na(Mail.Req.nhna.Tot, 0)) %>%
   mutate(Mail.Req.hisp.Tot = replace_na(Mail.Req.hisp.Tot, 0)) %>%
-  mutate(Mail.Req.oth.Tot = replace_na(Mail.Req.oth.Tot, 0))
+  mutate(Mail.Req.oth.Tot = replace_na(Mail.Req.oth.Tot, 0)) %>%
+  mutate(Mail.Req.Vote.Tot = replace_na(Mail.Req.Vote.Tot, 0)) %>%
+  mutate(Mail.Req.Novote.Tot = replace_na(Mail.Req.Novote.Tot, 0))
 
 GA_county_data <- GA_county_data %>% 
   mutate(Pct.Req = Mail.Req.Tot/Reg.Voters) %>%
