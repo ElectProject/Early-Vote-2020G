@@ -144,13 +144,22 @@ GA_req_race[7,2] <- sum(GA_stats$Mail.Req.Tot)
 
 GA_req_race$Percent <- 100*GA_req_race$Count/GA_req_race[7,2]
 
+GA_req_voted <- voted_shell
+
+GA_req_voted[1,2] <- sum(GA_stats$Mail.Req.Vote.Tot)
+GA_req_voted[2,2] <- sum(GA_stats$Mail.Req.Novote.Tot) 
+GA_req_voted[3,2] <- sum(GA_stats$Mail.Req.Tot) 
+
+GA_req_voted$Percent <- 100*GA_req_voted$Count/GA_req_voted[3,2]
+
+
 GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
 
 GA_stats_req <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Req)
 GA_stats_reject <- select(GA_stats, County, Mail.Req.All, Mail.App.Reject.Tot, Pct.App.Reject)
 ```
 ## {.tabset}
-Last Report: 11/24/2020  
+Last Report: 11/25/2020  
 Source: [https://elections.sos.ga.gov/Elections/voterabsenteefile.do](https://elections.sos.ga.gov/Elections/voterabsenteefile.do)
 
 Comparable statistics from the 2020 general election are available [here](https://electproject.github.io/Early-Vote-2020G/GA.html)
@@ -194,6 +203,14 @@ datatable(GA_stats_req, colnames = c("County", "Registered Voters", "Mail Ballot
 
 ``` {r echo = FALSE}
 kable(GA_req_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Requested by Vote in 2020 General Election
+
+``` {r echo = FALSE}
+kable(GA_req_voted, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
