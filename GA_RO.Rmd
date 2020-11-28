@@ -144,6 +144,20 @@ GA_req_race[7,2] <- sum(GA_stats$Mail.Req.Tot)
 
 GA_req_race$Percent <- 100*GA_req_race$Count/GA_req_race[7,2]
 
+
+GA_req_age <- GA_age_shell
+
+GA_req_age[1,2] <- sum(GA_stats$Mail.Req.age1824.Tot)
+GA_req_age[2,2] <- sum(GA_stats$Mail.Req.age2534.Tot)
+GA_req_age[3,2] <- sum(GA_stats$Mail.Req.age3544.Tot) 
+GA_req_age[4,2] <- sum(GA_stats$Mail.Req.age4554.Tot) 
+GA_req_age[5,2] <- sum(GA_stats$Mail.Req.age5564.Tot) 
+GA_req_age[6,2] <- sum(GA_stats$Mail.Req.age65up.Tot) 
+GA_req_age[7,2] <- sum(GA_stats$Mail.Req.ageunk.Tot) 
+GA_req_age[8,2] <- sum(GA_stats$Mail.Req.Tot) 
+
+GA_req_age$Percent <- 100*GA_req_age$Count/GA_req_age[8,2]
+
 GA_req_voted <- voted_shell
 
 GA_req_voted[1,2] <- sum(GA_stats$Mail.Req.Vote.Tot)
@@ -203,6 +217,14 @@ datatable(GA_stats_req, colnames = c("County", "Registered Voters", "Mail Ballot
 
 ``` {r echo = FALSE}
 kable(GA_req_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### Mail Ballots Requested by Age
+
+``` {r echo = FALSE}
+kable(GA_req_age, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
