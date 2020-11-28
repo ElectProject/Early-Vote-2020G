@@ -116,8 +116,8 @@ voted_shell <- data.frame(Voted=character(),
                                   Count=integer(),
                                   Percent=double(),
                                   stringsAsFactors=FALSE)
-voted_shell[1,1] <- "Voted in 2016 General"
-voted_shell[2,1] <- "Did Not Vote in 2016 General"
+voted_shell[1,1] <- "Voted in 2020 General"
+voted_shell[2,1] <- "Did Not Vote in 2020 General"
 voted_shell[3,1] <- "TOTAL"
 
 voted_shell_full <- data.frame(Voted=character(),
