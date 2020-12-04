@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "11/25/2020"
+GA_report_date <- "12/3/2020"
 
 # Start here if already concatenated county files
 
@@ -161,16 +161,129 @@ GA_2020ro_county_req_ageunk <- GA_2020ro_app_accept %>%
   count(County) %>%
   rename(Mail.Req.ageunk.Tot = n)
 
+## Application Rejections
+
 GA_2020ro_app_reject_county <- GA_2020ro_app_reject_unique %>%
   ungroup() %>%
   count(County) %>%
   rename(Mail.App.Reject.Tot = n)
 
+## Voter Registration
+
 GA_vr_county <- GA_vr_file %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters = n, County = COUNTY_NAME)
-  
+
+## Accepted Mail Ballots
+
+GA_2020ro_mail_accept <- GA_2020ro %>%
+  filter(Ballot.Status == "A")
+
+GA_2020ro_mail_accept_county <- GA_2020ro_mail_accept %>%
+  count(County) %>%
+  rename(Mail.Accept.Tot = n)
+
+GA_2020ro_mail_accept_county_nhwhite <- GA_2020ro_mail_accept %>%
+  filter(RACE == "White not of Hispanic Origin") %>%
+  count(County) %>%
+  rename(Mail.Accept.nhwhite.Tot = n)
+
+GA_2020ro_mail_accept_county_nhblack <- GA_2020ro_mail_accept %>%
+  filter(RACE == "Black not of Hispanic Origin") %>%
+  count(County) %>%
+  rename(Mail.Accept.nhblack.Tot = n)
+
+GA_2020ro_mail_accept_county_nhasian <- GA_2020ro_mail_accept %>%
+  filter(RACE == "Asian or Pacific Islander") %>%
+  count(County) %>%
+  rename(Mail.Accept.nhasian.Tot = n)
+
+GA_2020ro_mail_accept_county_nhna <- GA_2020ro_mail_accept %>%
+  filter(RACE == "American Indian or Alaskan Native") %>%
+  count(County) %>%
+  rename(Mail.Accept.nhna.Tot = n)
+
+GA_2020ro_mail_accept_county_hisp <- GA_2020ro_mail_accept %>%
+  filter(RACE == "Hispanic") %>%
+  count(County) %>%
+  rename(Mail.Accept.hisp.Tot = n)
+
+GA_2020ro_mail_accept_county_oth <- GA_2020ro_mail_accept %>%
+  filter(RACE != "Hispanic") %>%
+  filter(RACE != "White not of Hispanic Origin") %>%
+  filter(RACE != "Black not of Hispanic Origin") %>%
+  filter(RACE != "Asian or Pacific Islander") %>%
+  filter(RACE != "American Indian or Alaskan Native") %>%
+  count(County) %>%
+  rename(Mail.Accept.oth.Tot = n)
+
+GA_2020ro_mail_accept_county_voted <- GA_2020ro_mail_accept %>%
+  filter(!is.na(voted_2020g)) %>%
+  count(County) %>%
+  rename(Mail.Accept.Vote.Tot = n)
+
+GA_2020ro_mail_accept_county_novoted <- GA_2020ro_mail_accept %>%
+  filter(is.na(voted_2020g)) %>%
+  count(County) %>%
+  rename(Mail.Accept.Novote.Tot = n)
+
+GA_2020ro_mail_accept_county_age1824 <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR>1995) %>%
+  count(County) %>%
+  rename(Mail.Accept.age1824.Tot = n)
+
+GA_2020ro_mail_accept_county_age2534 <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR>1985 & BIRTHYEAR<1996) %>%
+  count(County) %>%
+  rename(Mail.Accept.age2534.Tot = n)
+
+GA_2020ro_mail_accept_county_age3544 <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR>1975 & BIRTHYEAR<1986) %>%
+  count(County) %>%
+  rename(Mail.Accept.age3544.Tot = n)
+
+GA_2020ro_mail_accept_county_age4554 <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR>1965 & BIRTHYEAR<1976) %>%
+  count(County) %>%
+  rename(Mail.Accept.age4554.Tot = n)
+
+GA_2020ro_mail_accept_county_age5564 <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR>1955 & BIRTHYEAR<1966) %>%
+  count(County) %>%
+  rename(Mail.Accept.age5564.Tot = n)
+
+GA_2020ro_mail_accept_county_age65up <- GA_2020ro_mail_accept %>%
+  filter(BIRTHYEAR<1956) %>%
+  count(County) %>%
+  rename(Mail.Accept.age65up.Tot = n)
+
+GA_2020ro_mail_accept_county_ageunk <- GA_2020ro_mail_accept %>%
+  filter(is.na(BIRTHYEAR)) %>%
+  count(County) %>%
+  rename(Mail.Accept.ageunk.Tot = n)
+
+
 GA_county_data <- inner_join(GA_FIPS, GA_vr_county, by = "County")
+
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_nhwhite, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_nhblack, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_nhasian, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_nhna, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_hisp, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_oth, by = "County")
+
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_voted, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_novoted, by = "County")
+
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age1824, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age2534, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age3544, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age4554, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age5564, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_age65up, by = "County")
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county_ageunk, by = "County")
+
 
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county, by = "County")
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_accept_county_nhwhite, by = "County")
@@ -211,9 +324,26 @@ GA_county_data <- GA_county_data %>%
   mutate(Mail.Req.age4554.Tot = replace_na(Mail.Req.age4554.Tot, 0)) %>%
   mutate(Mail.Req.age5564.Tot = replace_na(Mail.Req.age5564.Tot, 0)) %>%
   mutate(Mail.Req.age65up.Tot = replace_na(Mail.Req.age65up.Tot, 0)) %>%
-  mutate(Mail.Req.ageunk.Tot = replace_na(Mail.Req.ageunk.Tot, 0))
-  
+  mutate(Mail.Req.ageunk.Tot = replace_na(Mail.Req.ageunk.Tot, 0)) %>%
+  mutate(Mail.Accept.Tot = replace_na(Mail.Accept.Tot, 0)) %>%
+  mutate(Mail.Accept.nhwhite.Tot = replace_na(Mail.Accept.nhwhite.Tot, 0)) %>%
+  mutate(Mail.Accept.nhblack.Tot = replace_na(Mail.Accept.nhblack.Tot, 0)) %>%
+  mutate(Mail.Accept.nhasian.Tot = replace_na(Mail.Accept.nhasian.Tot, 0)) %>%
+  mutate(Mail.Accept.nhna.Tot = replace_na(Mail.Accept.nhna.Tot, 0)) %>%
+  mutate(Mail.Accept.hisp.Tot = replace_na(Mail.Accept.hisp.Tot, 0)) %>%
+  mutate(Mail.Accept.oth.Tot = replace_na(Mail.Accept.oth.Tot, 0)) %>%
+  mutate(Mail.Accept.Vote.Tot = replace_na(Mail.Accept.Vote.Tot, 0)) %>%
+  mutate(Mail.Accept.Novote.Tot = replace_na(Mail.Accept.Novote.Tot, 0)) %>%
+  mutate(Mail.Accept.age1824.Tot = replace_na(Mail.Accept.age1824.Tot, 0)) %>%
+  mutate(Mail.Accept.age2534.Tot = replace_na(Mail.Accept.age2534.Tot, 0)) %>%
+  mutate(Mail.Accept.age3544.Tot = replace_na(Mail.Accept.age3544.Tot, 0)) %>%
+  mutate(Mail.Accept.age4554.Tot = replace_na(Mail.Accept.age4554.Tot, 0)) %>%
+  mutate(Mail.Accept.age5564.Tot = replace_na(Mail.Accept.age5564.Tot, 0)) %>%
+  mutate(Mail.Accept.age65up.Tot = replace_na(Mail.Accept.age65up.Tot, 0)) %>%
+  mutate(Mail.Accept.ageunk.Tot = replace_na(Mail.Accept.ageunk.Tot, 0))
+
 GA_county_data <- GA_county_data %>% 
+  mutate(Pct.Mail.Accept = Mail.Accept.Tot/Mail.Req.Tot) %>%
   mutate(Pct.Req = Mail.Req.Tot/Reg.Voters) %>%
   mutate(Pct.App.Reject = Mail.App.Reject.Tot/(Mail.App.Reject.Tot + Mail.Req.Tot))
 
