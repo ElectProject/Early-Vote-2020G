@@ -179,8 +179,28 @@ GA_mail_accept_race[7,2] <- sum(GA_stats$Mail.Accept.Tot)
 
 GA_mail_accept_race$Percent <- 100*GA_mail_accept_race$Count/GA_mail_accept_race[7,2]
 
+GA_mail_accept_race <- race_shell_returned
 
-GA_mail_accept_age <- GA_age_shell
+GA_mail_accept_race[1,2] <- sum(GA_stats$Mail.Accept.nhwhite.Tot)
+GA_mail_accept_race[2,2] <- sum(GA_stats$Mail.Accept.nhblack.Tot)
+GA_mail_accept_race[3,2] <- sum(GA_stats$Mail.Accept.hisp.Tot) 
+GA_mail_accept_race[4,2] <- sum(GA_stats$Mail.Accept.nhasian.Tot) 
+GA_mail_accept_race[5,2] <- sum(GA_stats$Mail.Accept.nhna.Tot) 
+GA_mail_accept_race[6,2] <- sum(GA_stats$Mail.Accept.oth.Tot) 
+GA_mail_accept_race[7,2] <- sum(GA_stats$Mail.Accept.Tot) 
+
+GA_mail_accept_race[1,4] <- sum(GA_stats$Mail.Req.nhwhite.Tot)
+GA_mail_accept_race[2,4] <- sum(GA_stats$Mail.Req.nhblack.Tot)
+GA_mail_accept_race[3,4] <- sum(GA_stats$Mail.Req.hisp.Tot) 
+GA_mail_accept_race[4,4] <- sum(GA_stats$Mail.Req.nhasian.Tot) 
+GA_mail_accept_race[5,4] <- sum(GA_stats$Mail.Req.nhna.Tot) 
+GA_mail_accept_race[6,4] <- sum(GA_stats$Mail.Req.oth.Tot) 
+GA_mail_accept_race[7,4] <- sum(GA_stats$Mail.Req.Tot) 
+
+GA_mail_accept_race$Frequency <- 100 * GA_mail_accept_race$Count/GA_mail_accept_race[7,2]
+GA_mail_accept_race$Rate <- 100*GA_mail_accept_race$Count/GA_mail_accept_race$Count2
+
+GA_mail_accept_age <- GA_age_shell_returned
 
 GA_mail_accept_age[1,2] <- sum(GA_stats$Mail.Accept.age1824.Tot)
 GA_mail_accept_age[2,2] <- sum(GA_stats$Mail.Accept.age2534.Tot)
@@ -191,22 +211,38 @@ GA_mail_accept_age[6,2] <- sum(GA_stats$Mail.Accept.age65up.Tot)
 GA_mail_accept_age[7,2] <- sum(GA_stats$Mail.Accept.ageunk.Tot) 
 GA_mail_accept_age[8,2] <- sum(GA_stats$Mail.Accept.Tot) 
 
-GA_mail_accept_age$Percent <- 100*GA_mail_accept_age$Count/GA_mail_accept_age[8,2]
+GA_mail_accept_age[1,4] <- sum(GA_stats$Mail.Req.age1824.Tot)
+GA_mail_accept_age[2,4] <- sum(GA_stats$Mail.Req.age2534.Tot)
+GA_mail_accept_age[3,4] <- sum(GA_stats$Mail.Req.age3544.Tot) 
+GA_mail_accept_age[4,4] <- sum(GA_stats$Mail.Req.age4554.Tot) 
+GA_mail_accept_age[5,4] <- sum(GA_stats$Mail.Req.age5564.Tot) 
+GA_mail_accept_age[6,4] <- sum(GA_stats$Mail.Req.age65up.Tot) 
+GA_mail_accept_age[7,4] <- sum(GA_stats$Mail.Req.ageunk.Tot) 
+GA_mail_accept_age[8,4] <- sum(GA_stats$Mail.Req.Tot) 
 
-GA_mail_accept_voted <- voted_shell
+GA_mail_accept_age$Frequency <- 100 * GA_mail_accept_age$Count/GA_mail_accept_age[8,2]
+GA_mail_accept_age$Rate <- 100*GA_mail_accept_age$Count/GA_mail_accept_age$Count2
+
+GA_mail_accept_voted <- voted_shell_full
 
 GA_mail_accept_voted[1,2] <- sum(GA_stats$Mail.Accept.Vote.Tot)
 GA_mail_accept_voted[2,2] <- sum(GA_stats$Mail.Accept.Novote.Tot) 
 GA_mail_accept_voted[3,2] <- sum(GA_stats$Mail.Accept.Tot) 
 
-GA_mail_accept_voted$Percent <- 100*GA_mail_accept_voted$Count/GA_mail_accept_voted[3,2]
+GA_mail_accept_voted[1,4] <- sum(GA_stats$Mail.Req.Vote.Tot)
+GA_mail_accept_voted[2,4] <- sum(GA_stats$Mail.Req.Novote.Tot) 
+GA_mail_accept_voted[3,4] <- sum(GA_stats$Mail.Req.Tot) 
 
+GA_mail_accept_voted$Frequency <- 100 * GA_mail_accept_voted$Count/GA_mail_accept_voted[3,2]
+GA_mail_accept_voted$Rate <- 100*GA_mail_accept_voted$Count/GA_mail_accept_voted$Count2
 
 GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
+GA_stats <- mutate(GA_stats, Mail.Return.All = Mail.Accept.Tot + Mail.Reject.Tot)
 
 GA_stats_req <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Req)
-GA_stats_reject <- select(GA_stats, County, Mail.Req.All, Mail.App.Reject.Tot, Pct.App.Reject)
+GA_stats_reject_app <- select(GA_stats, County, Mail.Req.All, Mail.App.Reject.Tot, Pct.App.Reject)
 GA_stats_accept <- select(GA_stats, County, Mail.Accept.Tot, Mail.Req.Tot, Pct.Mail.Accept)
+GA_stats_reject_mail <- select(GA_stats, County, Mail.Return.All, Mail.Reject.Tot, Pct.Mail.Reject)
 ```
 ## {.tabset}
 Last Report: 12/7/2020  
@@ -271,6 +307,43 @@ kable(GA_mail_accept_age, format.args = list(big.mark = ",",
 kable(GA_mail_accept_voted, format.args = list(big.mark = ",", 
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+
+### Mail Ballots Rejected
+
+Total Rejected Mail Ballots: **`r format(as.numeric(sum(GA_stats$Mail.Reject.Tot)), big.mark =",")`**  
+Rejection Rate (of All Returned Mail Ballots): **`r paste(round(100*sum(GA_stats$Mail.Reject.Tot)/sum(GA_stats$Mail.Return.All), digits = 1),"%", sep = "")`**  
+
+Note: "All Returned Mail Ballots" includes Accepted Mail Ballots and Rejected Mail Ballots. I count only once voters with multiple rejected mail ballots and I exclude any voters who had a rejected mail ballot but subsequently successfully voted.
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Pct.Mail.Reject), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Rejected", joinBy = "fips") %>%
+  hc_title(text ="Mail Ballot Rejection Rate of All Returned Mail Ballots") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_reject_mail, colnames = c("County", "All Mail Ballots Returned", "Rejected Mail Ballots", "Percent Rejected"), rownames = F) %>%
+  formatPercentage('Pct.Mail.Reject', 1) %>%
+  formatRound(c('Mail.Reject.Tot', 'Mail.Return.All'), 0, mark = ",")
 ```
 
 ### Mail Ballot Requests 
@@ -363,7 +436,7 @@ hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
 ```
 
 ``` {r echo = FALSE}
-datatable(GA_stats_reject, colnames = c("County", "All Mail Ballot Applications", "Rejected Applications", "Percent Rejected"), rownames = F) %>%
+datatable(GA_stats_reject_app, colnames = c("County", "All Mail Ballot Applications", "Rejected Applications", "Percent Rejected"), rownames = F) %>%
   formatPercentage('Pct.App.Reject', 1) %>%
   formatRound(c('Mail.Req.All', 'Mail.App.Reject.Tot'), 0, mark = ",")
 ```
