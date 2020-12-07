@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "12/3/2020"
+GA_report_date <- "12/7/2020"
 
 # Start here if already concatenated county files
 
@@ -69,12 +69,12 @@ GA_2020ro_app_reject_unique <- left_join(GA_2020ro_app_reject, GA_2020ro_app_rej
 GA_2020ro_app_reject_unique <- GA_2020ro_app_reject_unique %>%
   filter(!is.na(app_recent))
 
-write_csv(GA_2020ro_app_reject_unique, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO_Applications_Rejected_Statewide.csv")
+write_csv(GA_2020ro_app_reject_unique, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Applications_Rejected_Statewide.csv")
 
 GA_2020ro_app_reject_unique_ag <- GA_2020ro_app_reject_unique %>%
   filter(BIRTHYEAR>1995)
 
-write_csv(GA_2020ro_app_reject_unique_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO_AG_Applications_Rejected_Statewide.csv")
+write_csv(GA_2020ro_app_reject_unique_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Applications_Rejected_Statewide.csv")
 
 GA_FIPS <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/GA_FIPS.csv", col_types = "cc")
 
@@ -177,6 +177,7 @@ GA_vr_county <- GA_vr_file %>%
 ## Accepted Mail Ballots
 
 GA_2020ro_mail_accept <- GA_2020ro %>%
+  filter(Ballot.Style == "MAILED"|Ballot.Style == "ELECTRONIC") %>%
   filter(Ballot.Status == "A")
 
 GA_2020ro_mail_accept_county <- GA_2020ro_mail_accept %>%
@@ -263,6 +264,54 @@ GA_2020ro_mail_accept_county_ageunk <- GA_2020ro_mail_accept %>%
   rename(Mail.Accept.ageunk.Tot = n)
 
 
+## Rejected ballots
+
+GA_2020ro_mail_reject <- GA_2020ro %>%
+  filter(Ballot.Style == "MAILED"|Ballot.Style == "ELECTRONIC") %>%
+  filter(Ballot.Status == "R")
+
+# de-dupe
+
+GA_2020ro_mail_reject_most_recent <- GA_2020ro_mail_reject %>%
+  arrange(REGISTRATION_NUMBER, Ballot.Return.Date) %>%
+  group_by(REGISTRATION_NUMBER) %>%
+  summarise(recent = last(Ballot.Return.Date), applications=n()) %>%
+  mutate(mail_recent = "Y") %>%
+  rename(Ballot.Return.Date = recent) %>%
+  mutate(date_added = GA_report_date)
+
+GA_2020ro_mail_reject_unique <- left_join(GA_2020ro_mail_reject, GA_2020ro_mail_reject_most_recent, by = c("REGISTRATION_NUMBER", "Ballot.Return.Date"))
+
+GA_2020ro_mail_reject_unique <- GA_2020ro_mail_reject_unique %>%
+  filter(!is.na(mail_recent))
+
+# Remove rejected ballots for registrants who voted
+
+GA_2020ro_voted <- GA_2020ro %>%
+  filter(Ballot.Status == "A") %>%
+  select(REGISTRATION_NUMBER) %>%
+  mutate(voted = "Y")
+
+GA_2020ro_mail_reject_unique <- left_join(GA_2020ro_mail_reject_unique, GA_2020ro_voted, by = "REGISTRATION_NUMBER") 
+
+GA_2020ro_mail_reject_unique <- GA_2020ro_mail_reject_unique %>%
+  filter(is.na(voted))
+
+# write files
+
+write_csv(GA_2020ro_mail_reject_unique, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
+
+GA_2020ro_mail_reject_unique_ag <- GA_2020ro_mail_reject_unique %>%
+  filter(BIRTHYEAR>1995)
+
+write_csv(GA_2020ro_mail_reject_unique_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Mail_Rejected_Statewide.csv")
+
+GA_2020ro_mail_reject_county <- GA_2020ro_mail_reject_unique %>%
+  count(County) %>%
+  rename(Mail.Reject.Tot = n)
+
+# Build County Database
+
 GA_county_data <- inner_join(GA_FIPS, GA_vr_county, by = "County")
 
 GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_accept_county, by = "County")
@@ -307,6 +356,8 @@ GA_county_data <- left_join(GA_county_data, GA_2020ro_county_req_ageunk, by = "C
 
 GA_county_data <- left_join(GA_county_data, GA_2020ro_app_reject_county, by = "County")
 
+GA_county_data <- left_join(GA_county_data, GA_2020ro_mail_reject_county, by = "County")
+
 GA_county_data <- GA_county_data %>% 
   mutate(Mail.Req.Tot = replace_na(Mail.Req.Tot, 0)) %>%
   mutate(Mail.App.Reject.Tot = replace_na(Mail.App.Reject.Tot, 0)) %>%
@@ -340,12 +391,14 @@ GA_county_data <- GA_county_data %>%
   mutate(Mail.Accept.age4554.Tot = replace_na(Mail.Accept.age4554.Tot, 0)) %>%
   mutate(Mail.Accept.age5564.Tot = replace_na(Mail.Accept.age5564.Tot, 0)) %>%
   mutate(Mail.Accept.age65up.Tot = replace_na(Mail.Accept.age65up.Tot, 0)) %>%
-  mutate(Mail.Accept.ageunk.Tot = replace_na(Mail.Accept.ageunk.Tot, 0))
-
+  mutate(Mail.Accept.ageunk.Tot = replace_na(Mail.Accept.ageunk.Tot, 0)) %>%
+  mutate(Mail.Reject.Tot = replace_na(Mail.Reject.Tot, 0))
+  
 GA_county_data <- GA_county_data %>% 
   mutate(Pct.Mail.Accept = Mail.Accept.Tot/Mail.Req.Tot) %>%
   mutate(Pct.Req = Mail.Req.Tot/Reg.Voters) %>%
-  mutate(Pct.App.Reject = Mail.App.Reject.Tot/(Mail.App.Reject.Tot + Mail.Req.Tot))
+  mutate(Pct.App.Reject = Mail.App.Reject.Tot/(Mail.App.Reject.Tot + Mail.Req.Tot)) %>%
+  mutate(Pct.Mail.Reject = Mail.Reject.Tot/(Mail.Reject.Tot + Mail.Accept.Tot))
 
 write_csv(GA_county_data, "D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/2020RO_Early_Vote_GA.csv")
 
