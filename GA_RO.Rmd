@@ -245,7 +245,7 @@ GA_stats_accept <- select(GA_stats, County, Mail.Accept.Tot, Mail.Req.Tot, Pct.M
 GA_stats_reject_mail <- select(GA_stats, County, Mail.Return.All, Mail.Reject.Tot, Pct.Mail.Reject)
 ```
 ## {.tabset}
-Last Report: 12/7/2020  
+Last Report: 12/8/2020  
 Source: [https://elections.sos.ga.gov/Elections/voterabsenteefile.do](https://elections.sos.ga.gov/Elections/voterabsenteefile.do)
 
 Comparable statistics from the 2020 general election are available [here](https://electproject.github.io/Early-Vote-2020G/GA.html)
