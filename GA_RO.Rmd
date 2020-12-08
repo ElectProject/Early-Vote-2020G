@@ -200,6 +200,8 @@ GA_mail_accept_race[7,4] <- sum(GA_stats$Mail.Req.Tot)
 GA_mail_accept_race$Frequency <- 100 * GA_mail_accept_race$Count/GA_mail_accept_race[7,2]
 GA_mail_accept_race$Rate <- 100*GA_mail_accept_race$Count/GA_mail_accept_race$Count2
 
+colnames(GA_mail_accept_race) <- c("Race/Ethnicity", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
 GA_mail_accept_age <- GA_age_shell_returned
 
 GA_mail_accept_age[1,2] <- sum(GA_stats$Mail.Accept.age1824.Tot)
@@ -223,6 +225,8 @@ GA_mail_accept_age[8,4] <- sum(GA_stats$Mail.Req.Tot)
 GA_mail_accept_age$Frequency <- 100 * GA_mail_accept_age$Count/GA_mail_accept_age[8,2]
 GA_mail_accept_age$Rate <- 100*GA_mail_accept_age$Count/GA_mail_accept_age$Count2
 
+colnames(GA_mail_accept_age) <- c("Age", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+
 GA_mail_accept_voted <- voted_shell_full
 
 GA_mail_accept_voted[1,2] <- sum(GA_stats$Mail.Accept.Vote.Tot)
@@ -235,6 +239,8 @@ GA_mail_accept_voted[3,4] <- sum(GA_stats$Mail.Req.Tot)
 
 GA_mail_accept_voted$Frequency <- 100 * GA_mail_accept_voted$Count/GA_mail_accept_voted[3,2]
 GA_mail_accept_voted$Rate <- 100*GA_mail_accept_voted$Count/GA_mail_accept_voted$Count2
+
+colnames(GA_mail_accept_voted) <- c("2020 General Voted", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
 
 GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
 GA_stats <- mutate(GA_stats, Mail.Return.All = Mail.Accept.Tot + Mail.Reject.Tot)
