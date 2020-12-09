@@ -126,8 +126,8 @@ voted_shell_full <- data.frame(Voted=character(),
                                   Count2=integer(),
                                   Rate=integer(),
                                   stringsAsFactors=FALSE)
-voted_shell_full[1,1] <- "Voted in 2016 General"
-voted_shell_full[2,1] <- "Did Not Vote in 2016 General"
+voted_shell_full[1,1] <- "Voted in 2020 General"
+voted_shell_full[2,1] <- "Did Not Vote in 2020 General"
 voted_shell_full[3,1] <- "TOTAL"
 
 # Georgia
