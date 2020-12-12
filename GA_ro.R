@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "12/11/2020"
+GA_report_date <- "12/12/2020"
 
 # Start here if already concatenated county files
 
@@ -297,14 +297,42 @@ GA_2020ro_mail_reject_unique <- left_join(GA_2020ro_mail_reject_unique, GA_2020r
 GA_2020ro_mail_reject_unique <- GA_2020ro_mail_reject_unique %>%
   filter(is.na(voted))
 
+# merge in prior file
+
+GA_2020ro_mail_reject_prior <- read_csv("D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
+
+GA_2020ro_mail_reject_prior_list <- GA_2020ro_mail_reject_prior %>%
+  select(REGISTRATION_NUMBER) %>%
+  mutate(prior = "Y")
+
+GA_2020ro_mail_reject_unique_new <- left_join(GA_2020ro_mail_reject_unique, GA_2020ro_mail_reject_prior_list, by = "REGISTRATION_NUMBER")
+
+GA_2020ro_mail_reject_unique_new <- GA_2020ro_mail_reject_unique_new %>%
+  filter(is.na(prior)) %>%
+  select(-prior)
+
+GA_2020ro_mail_reject_dated <- rbind(GA_2020ro_mail_reject_prior, GA_2020ro_mail_reject_unique_new)
+
+# add if prior ballot rejection has been cured
+# IMPORTANT: in future need to change since rbind won't work (columns unbalanced)
+
+GA_2020ro_mail_accept_list <- GA_2020ro_mail_accept %>%
+  select(REGISTRATION_NUMBER) %>%
+  mutate(cured = "Y")
+
+GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_dated, GA_2020ro_mail_accept_list, by = "REGISTRATION_NUMBER")
+
+GA_2020ro_mail_reject_dated <- GA_2020ro_mail_reject_dated %>%
+  select(-voted)
+
 # write files
 
-write_csv(GA_2020ro_mail_reject_unique, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
+write_csv(GA_2020ro_mail_reject_dated, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
 
-GA_2020ro_mail_reject_unique_ag <- GA_2020ro_mail_reject_unique %>%
+GA_2020ro_mail_reject_dated_ag <- GA_2020ro_mail_reject_dated %>%
   filter(BIRTHYEAR>1995)
 
-write_csv(GA_2020ro_mail_reject_unique_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Mail_Rejected_Statewide.csv")
+write_csv(GA_2020ro_mail_reject_dated_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Mail_Rejected_Statewide.csv")
 
 GA_2020ro_mail_reject_county <- GA_2020ro_mail_reject_unique %>%
   count(County) %>%
