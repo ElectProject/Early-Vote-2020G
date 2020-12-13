@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "12/12/2020"
+GA_report_date <- "12/13/2020"
 
 # Start here if already concatenated county files
 
@@ -301,6 +301,9 @@ GA_2020ro_mail_reject_unique <- GA_2020ro_mail_reject_unique %>%
 
 GA_2020ro_mail_reject_prior <- read_csv("D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
 
+GA_2020ro_mail_reject_prior <- GA_2020ro_mail_reject_prior %>%
+  select(-cured)
+
 GA_2020ro_mail_reject_prior_list <- GA_2020ro_mail_reject_prior %>%
   select(REGISTRATION_NUMBER) %>%
   mutate(prior = "Y")
@@ -309,7 +312,8 @@ GA_2020ro_mail_reject_unique_new <- left_join(GA_2020ro_mail_reject_unique, GA_2
 
 GA_2020ro_mail_reject_unique_new <- GA_2020ro_mail_reject_unique_new %>%
   filter(is.na(prior)) %>%
-  select(-prior)
+  select(-prior) %>%
+  select(-voted) 
 
 GA_2020ro_mail_reject_dated <- rbind(GA_2020ro_mail_reject_prior, GA_2020ro_mail_reject_unique_new)
 
@@ -322,8 +326,6 @@ GA_2020ro_mail_accept_list <- GA_2020ro_mail_accept %>%
 
 GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_dated, GA_2020ro_mail_accept_list, by = "REGISTRATION_NUMBER")
 
-GA_2020ro_mail_reject_dated <- GA_2020ro_mail_reject_dated %>%
-  select(-voted)
 
 # write files
 
