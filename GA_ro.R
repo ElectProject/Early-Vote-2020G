@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "12/13/2020"
+GA_report_date <- "12/14/2020"
 
 # Start here if already concatenated county files
 
