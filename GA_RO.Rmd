@@ -337,6 +337,8 @@ GA_voted_age[8,4] <- sum(GA_stats$Reg.Voters)
 GA_voted_age$Frequency <- 100 * GA_voted_age$Count/GA_voted_age[8,2]
 GA_voted_age$Rate <- 100*GA_voted_age$Count/GA_voted_age$Count2
 
+GA_voted_age[7,5] <- NA
+
 colnames(GA_voted_age) <- c("Age", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
 
 GA_voted_voted <- voted_shell_full
@@ -420,6 +422,8 @@ kable(GA_voted_age, format.args = list(big.mark = ",",
   scientific = FALSE), digits = 1) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
+
+Note: The "Unknown" Age category is primarily voters who registered to vote after I purchased my most recent statewide voter file in October.
 
 #### In-Person Votes by Vote in 2020 General Election
 
