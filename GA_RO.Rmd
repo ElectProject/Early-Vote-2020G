@@ -167,18 +167,6 @@ GA_req_voted[3,2] <- sum(GA_stats$Mail.Req.Tot)
 GA_req_voted$Percent <- 100*GA_req_voted$Count/GA_req_voted[3,2]
 
 
-GA_mail_accept_race <- race_shell
-
-GA_mail_accept_race[1,2] <- sum(GA_stats$Mail.Accept.nhwhite.Tot)
-GA_mail_accept_race[2,2] <- sum(GA_stats$Mail.Accept.nhblack.Tot)
-GA_mail_accept_race[3,2] <- sum(GA_stats$Mail.Accept.hisp.Tot) 
-GA_mail_accept_race[4,2] <- sum(GA_stats$Mail.Accept.nhasian.Tot) 
-GA_mail_accept_race[5,2] <- sum(GA_stats$Mail.Accept.nhna.Tot) 
-GA_mail_accept_race[6,2] <- sum(GA_stats$Mail.Accept.oth.Tot) 
-GA_mail_accept_race[7,2] <- sum(GA_stats$Mail.Accept.Tot) 
-
-GA_mail_accept_race$Percent <- 100*GA_mail_accept_race$Count/GA_mail_accept_race[7,2]
-
 GA_mail_accept_race <- race_shell_returned
 
 GA_mail_accept_race[1,2] <- sum(GA_stats$Mail.Accept.nhwhite.Tot)
@@ -240,21 +228,265 @@ GA_mail_accept_voted[3,4] <- sum(GA_stats$Mail.Req.Tot)
 GA_mail_accept_voted$Frequency <- 100 * GA_mail_accept_voted$Count/GA_mail_accept_voted[3,2]
 GA_mail_accept_voted$Rate <- 100*GA_mail_accept_voted$Count/GA_mail_accept_voted$Count2
 
-colnames(GA_mail_accept_voted) <- c("2020 General Voted", "Returned Ballots", "Freq. Distribution", "Requested Ballots", "Return Rate")
+GA_inperson_accept_race <- race_shell_returned
+
+GA_inperson_accept_race[1,2] <- sum(GA_stats$Inperson.Accept.nhwhite.Tot)
+GA_inperson_accept_race[2,2] <- sum(GA_stats$Inperson.Accept.nhblack.Tot)
+GA_inperson_accept_race[3,2] <- sum(GA_stats$Inperson.Accept.hisp.Tot) 
+GA_inperson_accept_race[4,2] <- sum(GA_stats$Inperson.Accept.nhasian.Tot) 
+GA_inperson_accept_race[5,2] <- sum(GA_stats$Inperson.Accept.nhna.Tot) 
+GA_inperson_accept_race[6,2] <- sum(GA_stats$Inperson.Accept.oth.Tot) 
+GA_inperson_accept_race[7,2] <- sum(GA_stats$Inperson.Accept.Tot) 
+
+GA_inperson_accept_race[1,4] <- sum(GA_stats$Reg.Voters.nhwhite)
+GA_inperson_accept_race[2,4] <- sum(GA_stats$Reg.Voters.nhblack)
+GA_inperson_accept_race[3,4] <- sum(GA_stats$Reg.Voters.hisp) 
+GA_inperson_accept_race[4,4] <- sum(GA_stats$Reg.Voters.nhasian) 
+GA_inperson_accept_race[5,4] <- sum(GA_stats$Reg.Voters.nhna) 
+GA_inperson_accept_race[6,4] <- sum(GA_stats$Reg.Voters.oth) 
+GA_inperson_accept_race[7,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_inperson_accept_race$Frequency <- 100 * GA_inperson_accept_race$Count/GA_inperson_accept_race[7,2]
+GA_inperson_accept_race$Rate <- 100*GA_inperson_accept_race$Count/GA_inperson_accept_race$Count2
+
+colnames(GA_inperson_accept_race) <- c("Race/Ethnicity", "In-Person Votes", "Freq. Distribution", "Registered Voters", "In-Person Rate")
+
+GA_inperson_accept_age <- GA_age_shell_returned
+
+GA_inperson_accept_age[1,2] <- sum(GA_stats$Inperson.Accept.age1824.Tot)
+GA_inperson_accept_age[2,2] <- sum(GA_stats$Inperson.Accept.age2534.Tot)
+GA_inperson_accept_age[3,2] <- sum(GA_stats$Inperson.Accept.age3544.Tot) 
+GA_inperson_accept_age[4,2] <- sum(GA_stats$Inperson.Accept.age4554.Tot) 
+GA_inperson_accept_age[5,2] <- sum(GA_stats$Inperson.Accept.age5564.Tot) 
+GA_inperson_accept_age[6,2] <- sum(GA_stats$Inperson.Accept.age65up.Tot) 
+GA_inperson_accept_age[7,2] <- sum(GA_stats$Inperson.Accept.ageunk.Tot) 
+GA_inperson_accept_age[8,2] <- sum(GA_stats$Inperson.Accept.Tot) 
+
+GA_inperson_accept_age[1,4] <- sum(GA_stats$Reg.Voters.age1824)
+GA_inperson_accept_age[2,4] <- sum(GA_stats$Reg.Voters.age2534)
+GA_inperson_accept_age[3,4] <- sum(GA_stats$Reg.Voters.age3544) 
+GA_inperson_accept_age[4,4] <- sum(GA_stats$Reg.Voters.age4554) 
+GA_inperson_accept_age[5,4] <- sum(GA_stats$Reg.Voters.age5564) 
+GA_inperson_accept_age[6,4] <- sum(GA_stats$Reg.Voters.age65up) 
+GA_inperson_accept_age[7,4] <- sum(GA_stats$Reg.Voters.ageunk) 
+GA_inperson_accept_age[8,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_inperson_accept_age$Frequency <- 100 * GA_inperson_accept_age$Count/GA_inperson_accept_age[8,2]
+GA_inperson_accept_age$Rate <- 100*GA_inperson_accept_age$Count/GA_inperson_accept_age$Count2
+
+colnames(GA_inperson_accept_age) <- c("Age", "In-Person Votes", "Freq. Distribution", "Registered Voters", "In-Person Rate")
+
+GA_inperson_accept_voted <- voted_shell_full
+
+GA_inperson_accept_voted[1,2] <- sum(GA_stats$Inperson.Accept.Vote.Tot)
+GA_inperson_accept_voted[2,2] <- sum(GA_stats$Inperson.Accept.Novote.Tot) 
+GA_inperson_accept_voted[3,2] <- sum(GA_stats$Inperson.Accept.Tot) 
+
+GA_inperson_accept_voted[1,4] <- sum(GA_stats$Reg.Voters.Vote)
+GA_inperson_accept_voted[2,4] <- sum(GA_stats$Reg.Voters.Novote) 
+GA_inperson_accept_voted[3,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_inperson_accept_voted$Frequency <- 100 * GA_inperson_accept_voted$Count/GA_inperson_accept_voted[3,2]
+GA_inperson_accept_voted$Rate <- 100*GA_inperson_accept_voted$Count/GA_inperson_accept_voted$Count2
+
+colnames(GA_inperson_accept_voted) <- c("2020 General Voted", "In-Person Votes", "Freq. Distribution", "Registered Voters", "In-Person Rate")
+
+GA_voted_race <- race_shell_returned
+
+GA_voted_race[1,2] <- sum(GA_stats$Inperson.Accept.nhwhite.Tot) + sum(GA_stats$Mail.Accept.nhwhite.Tot)
+GA_voted_race[2,2] <- sum(GA_stats$Inperson.Accept.nhblack.Tot) + sum(GA_stats$Mail.Accept.nhblack.Tot)
+GA_voted_race[3,2] <- sum(GA_stats$Inperson.Accept.hisp.Tot) + sum(GA_stats$Mail.Accept.hisp.Tot) 
+GA_voted_race[4,2] <- sum(GA_stats$Inperson.Accept.nhasian.Tot) + sum(GA_stats$Mail.Accept.nhasian.Tot)
+GA_voted_race[5,2] <- sum(GA_stats$Inperson.Accept.nhna.Tot) + sum(GA_stats$Mail.Accept.nhna.Tot) 
+GA_voted_race[6,2] <- sum(GA_stats$Inperson.Accept.oth.Tot) + sum(GA_stats$Mail.Accept.oth.Tot)
+GA_voted_race[7,2] <- sum(GA_stats$Inperson.Accept.Tot) + sum(GA_stats$Mail.Accept.Tot) 
+
+GA_voted_race[1,4] <- sum(GA_stats$Reg.Voters.nhwhite)
+GA_voted_race[2,4] <- sum(GA_stats$Reg.Voters.nhblack)
+GA_voted_race[3,4] <- sum(GA_stats$Reg.Voters.hisp) 
+GA_voted_race[4,4] <- sum(GA_stats$Reg.Voters.nhasian) 
+GA_voted_race[5,4] <- sum(GA_stats$Reg.Voters.nhna) 
+GA_voted_race[6,4] <- sum(GA_stats$Reg.Voters.oth) 
+GA_voted_race[7,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_voted_race$Frequency <- 100 * GA_voted_race$Count/GA_voted_race[7,2]
+GA_voted_race$Rate <- 100*GA_voted_race$Count/GA_voted_race$Count2
+
+colnames(GA_voted_race) <- c("Race/Ethnicity", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
+
+GA_voted_age <- GA_age_shell_returned
+
+GA_voted_age[1,2] <- sum(GA_stats$Inperson.Accept.age1824.Tot) + sum(GA_stats$Mail.Accept.age1824.Tot)
+GA_voted_age[2,2] <- sum(GA_stats$Inperson.Accept.age2534.Tot) + sum(GA_stats$Mail.Accept.age2534.Tot)
+GA_voted_age[3,2] <- sum(GA_stats$Inperson.Accept.age3544.Tot) + sum(GA_stats$Mail.Accept.age3544.Tot) 
+GA_voted_age[4,2] <- sum(GA_stats$Inperson.Accept.age4554.Tot) + sum(GA_stats$Mail.Accept.age4554.Tot) 
+GA_voted_age[5,2] <- sum(GA_stats$Inperson.Accept.age5564.Tot) + sum(GA_stats$Mail.Accept.age5564.Tot) 
+GA_voted_age[6,2] <- sum(GA_stats$Inperson.Accept.age65up.Tot) + sum(GA_stats$Mail.Accept.age65up.Tot) 
+GA_voted_age[7,2] <- sum(GA_stats$Inperson.Accept.ageunk.Tot) + sum(GA_stats$Mail.Accept.ageunk.Tot) 
+GA_voted_age[8,2] <- sum(GA_stats$Inperson.Accept.Tot) + sum(GA_stats$Mail.Accept.Tot) 
+
+GA_voted_age[1,4] <- sum(GA_stats$Reg.Voters.age1824)
+GA_voted_age[2,4] <- sum(GA_stats$Reg.Voters.age2534)
+GA_voted_age[3,4] <- sum(GA_stats$Reg.Voters.age3544) 
+GA_voted_age[4,4] <- sum(GA_stats$Reg.Voters.age4554) 
+GA_voted_age[5,4] <- sum(GA_stats$Reg.Voters.age5564) 
+GA_voted_age[6,4] <- sum(GA_stats$Reg.Voters.age65up) 
+GA_voted_age[7,4] <- sum(GA_stats$Reg.Voters.ageunk) 
+GA_voted_age[8,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_voted_age$Frequency <- 100 * GA_voted_age$Count/GA_voted_age[8,2]
+GA_voted_age$Rate <- 100*GA_voted_age$Count/GA_voted_age$Count2
+
+colnames(GA_voted_age) <- c("Age", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
+
+GA_voted_voted <- voted_shell_full
+
+GA_voted_voted[1,2] <- sum(GA_stats$Inperson.Accept.Vote.Tot) + sum(GA_stats$Mail.Accept.Vote.Tot)
+GA_voted_voted[2,2] <- sum(GA_stats$Inperson.Accept.Novote.Tot) + sum(GA_stats$Mail.Accept.Novote.Tot) 
+GA_voted_voted[3,2] <- sum(GA_stats$Inperson.Accept.Tot) + sum(GA_stats$Mail.Accept.Tot)
+
+GA_voted_voted[1,4] <- sum(GA_stats$Reg.Voters.Vote)
+GA_voted_voted[2,4] <- sum(GA_stats$Reg.Voters.Novote) 
+GA_voted_voted[3,4] <- sum(GA_stats$Reg.Voters) 
+
+GA_voted_voted$Frequency <- 100 * GA_voted_voted$Count/GA_voted_voted[3,2]
+GA_voted_voted$Rate <- 100*GA_voted_voted$Count/GA_voted_voted$Count2
+
+colnames(GA_voted_voted) <- c("2020 General Voted", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
 
 GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
 GA_stats <- mutate(GA_stats, Mail.Return.All = Mail.Accept.Tot + Mail.Reject.Tot)
+GA_stats <- mutate(GA_stats, Voted.Tot = (Mail.Accept.Tot + Inperson.Accept.Tot))
 
 GA_stats_req <- select(GA_stats, County, Reg.Voters, Mail.Req.Tot, Pct.Req)
 GA_stats_reject_app <- select(GA_stats, County, Mail.Req.All, Mail.App.Reject.Tot, Pct.App.Reject)
 GA_stats_accept <- select(GA_stats, County, Mail.Accept.Tot, Mail.Req.Tot, Pct.Mail.Accept)
+GA_stats_inperson <- select(GA_stats, County, Inperson.Accept.Tot, Reg.Voters, Pct.Inperson)
+GA_stats_voted <- select(GA_stats, County, Voted.Tot, Reg.Voters, Pct.Voted)
 GA_stats_reject_mail <- select(GA_stats, County, Mail.Return.All, Mail.Reject.Tot, Pct.Mail.Reject)
 ```
 ## {.tabset}
-Last Report: 12/14/2020  
+Last Report: 12/15/2020  
 Source: [https://elections.sos.ga.gov/Elections/voterabsenteefile.do](https://elections.sos.ga.gov/Elections/voterabsenteefile.do)
 
-Comparable statistics from the 2020 general election are available [here](https://electproject.github.io/Early-Vote-2020G/GA.html)
+Statistics from the 2020 general election are available [here](https://electproject.github.io/Early-Vote-2020G/GA.html)
+
+### Total Votes
+
+Total Votes: **`r format(as.numeric(sum(GA_stats$Inperson.Accept.Tot) + sum(GA_stats$Mail.Accept.Tot)), big.mark =",")`**  
+Percent Turnout (of Registered Voters): **`r paste(round(100*(sum(GA_stats$Inperson.Accept.Tot) + sum(GA_stats$Mail.Accept.Tot)) /sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**  
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Pct.Voted), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="Total Votes as Percent of Registered Voters") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_voted, colnames = c("County", "Total Votes", "Reg Voters", "Turnout Rate"), rownames = F) %>%
+  formatPercentage('Pct.Voted', 1) %>%
+  formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
+```
+
+#### In-Person Votes by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_voted_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### In-Person Votes by Age
+
+``` {r echo = FALSE}
+kable(GA_voted_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### In-Person Votes by Vote in 2020 General Election
+
+``` {r echo = FALSE}
+kable(GA_voted_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+### In-Person Votes
+
+Total In-Person Votes: **`r format(as.numeric(sum(GA_stats$Inperson.Accept.Tot)), big.mark =",")`**  
+Percent In-Person Votes (of Registered Voters): **`r paste(round(100*sum(GA_stats$Inperson.Accept.Tot)/sum(GA_stats$Reg.Voters), digits = 1),"%", sep = "")`**  
+
+``` {r echo = FALSE}
+GA_map_data <- GA_stats
+
+GA_map_data <- mutate(GA_map_data, percent = round(100*(Pct.Inperson), digits = 1))
+
+# GA_map_data <- rename(GA_map_data, fips = FIPS_CODE)
+GA_map_data <- mutate(GA_map_data, fips = as.character(FIPS_CODE))
+
+mapfile <- download_map_data("countries/us/us-ga-all.js")
+mapdata <- get_data_from_map(mapfile)
+
+mapdata$row <- as.integer(rownames(mapdata))
+
+GA_map_data <- left_join(GA_map_data, mapdata, by = "fips")
+
+GA_map_data <- arrange(GA_map_data, row)
+
+hcmap(map = "countries/us/us-ga-all", data = GA_map_data,
+      value = "percent", name = "Percent Accepted", joinBy = "fips") %>%
+  hc_title(text ="In-Person Votes as Percent of Registered Voters") %>%
+  hc_subtitle(text = "County plots may not be shaded using the same scale")
+```
+
+``` {r echo = FALSE}
+datatable(GA_stats_inperson, colnames = c("County", "In-Person Votes", "Reg Voters", "Percent Voted"), rownames = F) %>%
+  formatPercentage('Pct.Inperson', 1) %>%
+  formatRound(c('Inperson.Accept.Tot', 'Reg.Voters'), 0, mark = ",")
+```
+
+#### In-Person Votes by Race and Ethnicity
+
+``` {r echo = FALSE}
+kable(GA_inperson_accept_race, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### In-Person Votes by Age
+
+``` {r echo = FALSE}
+kable(GA_inperson_accept_age, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+#### In-Person Votes by Vote in 2020 General Election
+
+``` {r echo = FALSE}
+kable(GA_inperson_accept_voted, format.args = list(big.mark = ",", 
+  scientific = FALSE), digits = 1) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
 
 ### Mail Ballots Accepted
 
