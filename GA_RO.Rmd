@@ -407,7 +407,7 @@ datatable(GA_stats_voted, colnames = c("County", "Total Votes", "Reg Voters", "T
   formatRound(c('Voted.Tot', 'Reg.Voters'), 0, mark = ",")
 ```
 
-#### In-Person Votes by Race and Ethnicity
+#### Total Early Votes by Race and Ethnicity
 
 ``` {r echo = FALSE}
 kable(GA_voted_race, format.args = list(big.mark = ",", 
@@ -415,7 +415,7 @@ kable(GA_voted_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-#### In-Person Votes by Age
+#### Total Early Votes by Age
 
 ``` {r echo = FALSE}
 kable(GA_voted_age, format.args = list(big.mark = ",", 
@@ -425,7 +425,7 @@ kable(GA_voted_age, format.args = list(big.mark = ",",
 
 Note: The "Unknown" Age category is primarily voters who registered to vote after I purchased my most recent statewide voter file in October.
 
-#### In-Person Votes by Vote in 2020 General Election
+#### Total Early Votes by Vote in 2020 General Election
 
 ``` {r echo = FALSE}
 kable(GA_voted_voted, format.args = list(big.mark = ",", 
