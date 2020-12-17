@@ -42,9 +42,11 @@ GA_2020ro <- left_join(GA_2020ro, GA_vr_file, by = "REGISTRATION_NUMBER")
 GA_2020ro <- left_join(GA_2020ro, GA_vh_2020g, by = "REGISTRATION_NUMBER")
 
 GA_2020ro_app_accept <- GA_2020ro %>%
+  filter(Ballot.Style == "MAILED"|Ballot.Style == "ELECTRONIC") %>%
   filter(Application.Status == "A")
 
 GA_2020ro_app_reject <- GA_2020ro %>%
+  filter(Ballot.Style == "MAILED"|Ballot.Style == "ELECTRONIC") %>%
   filter(Application.Status == "R")
 
 GA_2020ro_app_accept_list <- GA_2020ro_app_accept %>%
