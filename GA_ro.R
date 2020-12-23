@@ -24,10 +24,22 @@ names(GA_2020ro)<-str_replace_all(names(GA_2020ro), c("#" = ""))
 GA_2020ro <- GA_2020ro %>%
   rename(REGISTRATION_NUMBER = Voter.Registration.)
 
-voter.file <- "D:/DropBox/Dropbox/Voter Files/GA/20201015/GA Voter List - Statewide - Alpha List.csv"
+# voter.file <- "D:/DropBox/Dropbox/Voter Files/GA/20201015/GA Voter List - Statewide - Alpha List.csv"
 # readcolumns <- "ccccc_________cccc__c_________________________cccccc___________"
-readcolumns <- "ccccccccccccccccccccccccccccc"
-GA_vr_file <- read_csv(voter.file, col_types = readcolumns)
+# readcolumns <- "ccccccccccccccccccccccccccccc"
+# GA_vr_file <- read_csv(voter.file, col_types = readcolumns)
+
+voter.file <- "D:/DropBox/Dropbox/Voter Files/GA/20201222/Georgia_Daily_VoterBase.txt"
+readcolumns <- "ccccc_________cccc__c_________________________cccccc___________"
+GA_vr_file <- read_delim(voter.file, delim = "|", quote = "", col_types = readcolumns)
+
+GA_FIPS <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/markdown/GA_FIPS.csv", col_types = "ccc")
+
+GA_vr_file <- left_join(GA_vr_file, GA_FIPS, by = "COUNTY_CODE")
+
+GA_vr_file <- rename(GA_vr_file, COUNTY_NAME = County)
+
+GA_race <- count(GA_vr_file, RACE)
 
 # GA_vh_2016g <- read_fwf("D:/DropBox/Dropbox/Voter Files/GA/32668.TXT", fwf_widths(c(3,8,8,3,2,1,1,1)), col_types = "cccccccc")
 
@@ -74,7 +86,7 @@ GA_2020ro_app_reject_unique <- GA_2020ro_app_reject_unique %>%
 write_csv(GA_2020ro_app_reject_unique, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Applications_Rejected_Statewide.csv")
 
 GA_2020ro_app_reject_unique_ag <- GA_2020ro_app_reject_unique %>%
-  filter(BIRTHYEAR>1995)
+  filter(BIRTHDATE>1995)
 
 write_csv(GA_2020ro_app_reject_unique_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Applications_Rejected_Statewide.csv")
 
@@ -85,36 +97,36 @@ GA_2020ro_app_accept_county <- GA_2020ro_app_accept %>%
   rename(Mail.Req.Tot = n)
 
 GA_2020ro_app_accept_county_nhwhite <- GA_2020ro_app_accept %>%
-  filter(RACE == "White not of Hispanic Origin") %>%
+  filter(RACE == "WH") %>%
   count(County) %>%
   rename(Mail.Req.nhwhite.Tot = n)
 
 GA_2020ro_app_accept_county_nhblack <- GA_2020ro_app_accept %>%
-  filter(RACE == "Black not of Hispanic Origin") %>%
+  filter(RACE == "BH") %>%
   count(County) %>%
   rename(Mail.Req.nhblack.Tot = n)
 
 GA_2020ro_app_accept_county_nhasian <- GA_2020ro_app_accept %>%
-  filter(RACE == "Asian or Pacific Islander") %>%
+  filter(RACE == "AP") %>%
   count(County) %>%
   rename(Mail.Req.nhasian.Tot = n)
 
 GA_2020ro_app_accept_county_nhna <- GA_2020ro_app_accept %>%
-  filter(RACE == "American Indian or Alaskan Native") %>%
+  filter(RACE == "AI") %>%
   count(County) %>%
   rename(Mail.Req.nhna.Tot = n)
 
 GA_2020ro_app_accept_county_hisp <- GA_2020ro_app_accept %>%
-  filter(RACE == "Hispanic") %>%
+  filter(RACE == "HP") %>%
   count(County) %>%
   rename(Mail.Req.hisp.Tot = n)
 
 GA_2020ro_app_accept_county_oth <- GA_2020ro_app_accept %>%
-  filter(RACE != "Hispanic") %>%
-  filter(RACE != "White not of Hispanic Origin") %>%
-  filter(RACE != "Black not of Hispanic Origin") %>%
-  filter(RACE != "Asian or Pacific Islander") %>%
-  filter(RACE != "American Indian or Alaskan Native") %>%
+  filter(RACE != "HP") %>%
+  filter(RACE != "WH") %>%
+  filter(RACE != "BH") %>%
+  filter(RACE != "AP") %>%
+  filter(RACE != "AI") %>%
   count(County) %>%
   rename(Mail.Req.oth.Tot = n)
 
@@ -129,37 +141,37 @@ GA_2020ro_app_accept_county_novoted <- GA_2020ro_app_accept %>%
   rename(Mail.Req.Novote.Tot = n)
 
 GA_2020ro_county_req_age1824 <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR>1995) %>%
+  filter(BIRTHDATE>1995) %>%
   count(County) %>%
   rename(Mail.Req.age1824.Tot = n)
 
 GA_2020ro_county_req_age2534 <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR>1985 & BIRTHYEAR<1996) %>%
+  filter(BIRTHDATE>1985 & BIRTHDATE<1996) %>%
   count(County) %>%
   rename(Mail.Req.age2534.Tot = n)
 
 GA_2020ro_county_req_age3544 <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR>1975 & BIRTHYEAR<1986) %>%
+  filter(BIRTHDATE>1975 & BIRTHDATE<1986) %>%
   count(County) %>%
   rename(Mail.Req.age3544.Tot = n)
 
 GA_2020ro_county_req_age4554 <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR>1965 & BIRTHYEAR<1976) %>%
+  filter(BIRTHDATE>1965 & BIRTHDATE<1976) %>%
   count(County) %>%
   rename(Mail.Req.age4554.Tot = n)
 
 GA_2020ro_county_req_age5564 <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR>1955 & BIRTHYEAR<1966) %>%
+  filter(BIRTHDATE>1955 & BIRTHDATE<1966) %>%
   count(County) %>%
   rename(Mail.Req.age5564.Tot = n)
 
 GA_2020ro_county_req_age65up <- GA_2020ro_app_accept %>%
-  filter(BIRTHYEAR<1956) %>%
+  filter(BIRTHDATE<1956) %>%
   count(County) %>%
   rename(Mail.Req.age65up.Tot = n)
 
 GA_2020ro_county_req_ageunk <- GA_2020ro_app_accept %>%
-  filter(is.na(BIRTHYEAR)) %>%
+  filter(is.na(BIRTHDATE)) %>%
   count(County) %>%
   rename(Mail.Req.ageunk.Tot = n)
 
@@ -179,36 +191,36 @@ GA_vr_county <- GA_vr_file %>%
   rename(Reg.Voters = n, County = COUNTY_NAME)
 
 GA_vr_county_nhwhite <- GA_vr_file %>%
-  filter(RACE == "White not of Hispanic Origin") %>%
+  filter(RACE == "WH") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.nhwhite = n, County = COUNTY_NAME)
 
 GA_vr_county_nhblack <- GA_vr_file %>%
-  filter(RACE == "Black not of Hispanic Origin") %>%
+  filter(RACE == "BH") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.nhblack = n, County = COUNTY_NAME)
 
 GA_vr_county_nhasian <- GA_vr_file %>%
-  filter(RACE == "Asian or Pacific Islander") %>%
+  filter(RACE == "AP") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.nhasian = n, County = COUNTY_NAME)
 
 GA_vr_county_nhna <- GA_vr_file %>%
-  filter(RACE == "American Indian or Alaskan Native") %>%
+  filter(RACE == "AI") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.nhna = n, County = COUNTY_NAME)
 
 GA_vr_county_hisp <- GA_vr_file %>%
-  filter(RACE == "Hispanic") %>%
+  filter(RACE == "HP") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.hisp = n, County = COUNTY_NAME)
 
 GA_vr_county_oth <- GA_vr_file %>%
-  filter(RACE != "Hispanic") %>%
-  filter(RACE != "White not of Hispanic Origin") %>%
-  filter(RACE != "Black not of Hispanic Origin") %>%
-  filter(RACE != "Asian or Pacific Islander") %>%
-  filter(RACE != "American Indian or Alaskan Native") %>%
+  filter(RACE != "HP") %>%
+  filter(RACE != "WH") %>%
+  filter(RACE != "BH") %>%
+  filter(RACE != "AP") %>%
+  filter(RACE != "AI") %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.oth = n, County = COUNTY_NAME)
 
@@ -223,37 +235,37 @@ GA_vr_county_novoted <- GA_vr_file %>%
   rename(Reg.Voters.Novote = n, County = COUNTY_NAME)
 
 GA_vr_county_age1824 <- GA_vr_file %>%
-  filter(BIRTHYEAR>1995) %>%
+  filter(BIRTHDATE>1995) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age1824 = n, County = COUNTY_NAME)
 
 GA_vr_county_age2534 <- GA_vr_file %>%
-  filter(BIRTHYEAR>1985 & BIRTHYEAR<1996) %>%
+  filter(BIRTHDATE>1985 & BIRTHDATE<1996) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age2534 = n, County = COUNTY_NAME)
 
 GA_vr_county_age3544 <- GA_vr_file %>%
-  filter(BIRTHYEAR>1975 & BIRTHYEAR<1986) %>%
+  filter(BIRTHDATE>1975 & BIRTHDATE<1986) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age3544 = n, County = COUNTY_NAME)
 
 GA_vr_county_age4554 <- GA_vr_file %>%
-  filter(BIRTHYEAR>1965 & BIRTHYEAR<1976) %>%
+  filter(BIRTHDATE>1965 & BIRTHDATE<1976) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age4554 = n, County = COUNTY_NAME)
 
 GA_vr_county_age5564 <- GA_vr_file %>%
-  filter(BIRTHYEAR>1955 & BIRTHYEAR<1966) %>%
+  filter(BIRTHDATE>1955 & BIRTHDATE<1966) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age5564 = n, County = COUNTY_NAME)
 
 GA_vr_county_age65up <- GA_vr_file %>%
-  filter(BIRTHYEAR<1956) %>%
+  filter(BIRTHDATE<1956) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.age65up = n, County = COUNTY_NAME)
 
 GA_vr_county_ageunk <- GA_vr_file %>%
-  filter(is.na(BIRTHYEAR)) %>%
+  filter(is.na(BIRTHDATE)) %>%
   count(COUNTY_NAME) %>%
   rename(Reg.Voters.ageunk = n, County = COUNTY_NAME)
 
@@ -268,36 +280,36 @@ GA_2020ro_mail_accept_county <- GA_2020ro_mail_accept %>%
   rename(Mail.Accept.Tot = n)
 
 GA_2020ro_mail_accept_county_nhwhite <- GA_2020ro_mail_accept %>%
-  filter(RACE == "White not of Hispanic Origin") %>%
+  filter(RACE == "WH") %>%
   count(County) %>%
   rename(Mail.Accept.nhwhite.Tot = n)
 
 GA_2020ro_mail_accept_county_nhblack <- GA_2020ro_mail_accept %>%
-  filter(RACE == "Black not of Hispanic Origin") %>%
+  filter(RACE == "BH") %>%
   count(County) %>%
   rename(Mail.Accept.nhblack.Tot = n)
 
 GA_2020ro_mail_accept_county_nhasian <- GA_2020ro_mail_accept %>%
-  filter(RACE == "Asian or Pacific Islander") %>%
+  filter(RACE == "AP") %>%
   count(County) %>%
   rename(Mail.Accept.nhasian.Tot = n)
 
 GA_2020ro_mail_accept_county_nhna <- GA_2020ro_mail_accept %>%
-  filter(RACE == "American Indian or Alaskan Native") %>%
+  filter(RACE == "AI") %>%
   count(County) %>%
   rename(Mail.Accept.nhna.Tot = n)
 
 GA_2020ro_mail_accept_county_hisp <- GA_2020ro_mail_accept %>%
-  filter(RACE == "Hispanic") %>%
+  filter(RACE == "HP") %>%
   count(County) %>%
   rename(Mail.Accept.hisp.Tot = n)
 
 GA_2020ro_mail_accept_county_oth <- GA_2020ro_mail_accept %>%
-  filter(RACE != "Hispanic") %>%
-  filter(RACE != "White not of Hispanic Origin") %>%
-  filter(RACE != "Black not of Hispanic Origin") %>%
-  filter(RACE != "Asian or Pacific Islander") %>%
-  filter(RACE != "American Indian or Alaskan Native") %>%
+  filter(RACE != "HP") %>%
+  filter(RACE != "WH") %>%
+  filter(RACE != "BH") %>%
+  filter(RACE != "AP") %>%
+  filter(RACE != "AI") %>%
   count(County) %>%
   rename(Mail.Accept.oth.Tot = n)
 
@@ -312,37 +324,37 @@ GA_2020ro_mail_accept_county_novoted <- GA_2020ro_mail_accept %>%
   rename(Mail.Accept.Novote.Tot = n)
 
 GA_2020ro_mail_accept_county_age1824 <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR>1995) %>%
+  filter(BIRTHDATE>1995) %>%
   count(County) %>%
   rename(Mail.Accept.age1824.Tot = n)
 
 GA_2020ro_mail_accept_county_age2534 <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR>1985 & BIRTHYEAR<1996) %>%
+  filter(BIRTHDATE>1985 & BIRTHDATE<1996) %>%
   count(County) %>%
   rename(Mail.Accept.age2534.Tot = n)
 
 GA_2020ro_mail_accept_county_age3544 <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR>1975 & BIRTHYEAR<1986) %>%
+  filter(BIRTHDATE>1975 & BIRTHDATE<1986) %>%
   count(County) %>%
   rename(Mail.Accept.age3544.Tot = n)
 
 GA_2020ro_mail_accept_county_age4554 <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR>1965 & BIRTHYEAR<1976) %>%
+  filter(BIRTHDATE>1965 & BIRTHDATE<1976) %>%
   count(County) %>%
   rename(Mail.Accept.age4554.Tot = n)
 
 GA_2020ro_mail_accept_county_age5564 <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR>1955 & BIRTHYEAR<1966) %>%
+  filter(BIRTHDATE>1955 & BIRTHDATE<1966) %>%
   count(County) %>%
   rename(Mail.Accept.age5564.Tot = n)
 
 GA_2020ro_mail_accept_county_age65up <- GA_2020ro_mail_accept %>%
-  filter(BIRTHYEAR<1956) %>%
+  filter(BIRTHDATE<1956) %>%
   count(County) %>%
   rename(Mail.Accept.age65up.Tot = n)
 
 GA_2020ro_mail_accept_county_ageunk <- GA_2020ro_mail_accept %>%
-  filter(is.na(BIRTHYEAR)) %>%
+  filter(is.na(BIRTHDATE)) %>%
   count(County) %>%
   rename(Mail.Accept.ageunk.Tot = n)
 
@@ -357,36 +369,36 @@ GA_2020ro_inperson_accept_county <- GA_2020ro_inperson_accept %>%
   rename(Inperson.Accept.Tot = n)
 
 GA_2020ro_inperson_accept_county_nhwhite <- GA_2020ro_inperson_accept %>%
-  filter(RACE == "White not of Hispanic Origin") %>%
+  filter(RACE == "WH") %>%
   count(County) %>%
   rename(Inperson.Accept.nhwhite.Tot = n)
 
 GA_2020ro_inperson_accept_county_nhblack <- GA_2020ro_inperson_accept %>%
-  filter(RACE == "Black not of Hispanic Origin") %>%
+  filter(RACE == "BH") %>%
   count(County) %>%
   rename(Inperson.Accept.nhblack.Tot = n)
 
 GA_2020ro_inperson_accept_county_nhasian <- GA_2020ro_inperson_accept %>%
-  filter(RACE == "Asian or Pacific Islander") %>%
+  filter(RACE == "AP") %>%
   count(County) %>%
   rename(Inperson.Accept.nhasian.Tot = n)
 
 GA_2020ro_inperson_accept_county_nhna <- GA_2020ro_inperson_accept %>%
-  filter(RACE == "American Indian or Alaskan Native") %>%
+  filter(RACE == "AI") %>%
   count(County) %>%
   rename(Inperson.Accept.nhna.Tot = n)
 
 GA_2020ro_inperson_accept_county_hisp <- GA_2020ro_inperson_accept %>%
-  filter(RACE == "Hispanic") %>%
+  filter(RACE == "HP") %>%
   count(County) %>%
   rename(Inperson.Accept.hisp.Tot = n)
 
 GA_2020ro_inperson_accept_county_oth <- GA_2020ro_inperson_accept %>%
-  filter(RACE != "Hispanic") %>%
-  filter(RACE != "White not of Hispanic Origin") %>%
-  filter(RACE != "Black not of Hispanic Origin") %>%
-  filter(RACE != "Asian or Pacific Islander") %>%
-  filter(RACE != "American Indian or Alaskan Native") %>%
+  filter(RACE != "HP") %>%
+  filter(RACE != "WH") %>%
+  filter(RACE != "BH") %>%
+  filter(RACE != "AP") %>%
+  filter(RACE != "AI") %>%
   count(County) %>%
   rename(Inperson.Accept.oth.Tot = n)
 
@@ -401,37 +413,37 @@ GA_2020ro_inperson_accept_county_novoted <- GA_2020ro_inperson_accept %>%
   rename(Inperson.Accept.Novote.Tot = n)
 
 GA_2020ro_inperson_accept_county_age1824 <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR>1995) %>%
+  filter(BIRTHDATE>1995) %>%
   count(County) %>%
   rename(Inperson.Accept.age1824.Tot = n)
 
 GA_2020ro_inperson_accept_county_age2534 <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR>1985 & BIRTHYEAR<1996) %>%
+  filter(BIRTHDATE>1985 & BIRTHDATE<1996) %>%
   count(County) %>%
   rename(Inperson.Accept.age2534.Tot = n)
 
 GA_2020ro_inperson_accept_county_age3544 <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR>1975 & BIRTHYEAR<1986) %>%
+  filter(BIRTHDATE>1975 & BIRTHDATE<1986) %>%
   count(County) %>%
   rename(Inperson.Accept.age3544.Tot = n)
 
 GA_2020ro_inperson_accept_county_age4554 <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR>1965 & BIRTHYEAR<1976) %>%
+  filter(BIRTHDATE>1965 & BIRTHDATE<1976) %>%
   count(County) %>%
   rename(Inperson.Accept.age4554.Tot = n)
 
 GA_2020ro_inperson_accept_county_age5564 <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR>1955 & BIRTHYEAR<1966) %>%
+  filter(BIRTHDATE>1955 & BIRTHDATE<1966) %>%
   count(County) %>%
   rename(Inperson.Accept.age5564.Tot = n)
 
 GA_2020ro_inperson_accept_county_age65up <- GA_2020ro_inperson_accept %>%
-  filter(BIRTHYEAR<1956) %>%
+  filter(BIRTHDATE<1956) %>%
   count(County) %>%
   rename(Inperson.Accept.age65up.Tot = n)
 
 GA_2020ro_inperson_accept_county_ageunk <- GA_2020ro_inperson_accept %>%
-  filter(is.na(BIRTHYEAR)) %>%
+  filter(is.na(BIRTHDATE)) %>%
   count(County) %>%
   rename(Inperson.Accept.ageunk.Tot = n)
 
@@ -502,7 +514,7 @@ GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_dated, GA_2020ro_
 write_csv(GA_2020ro_mail_reject_dated, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_Mail_Rejected_Statewide.csv")
 
 GA_2020ro_mail_reject_dated_ag <- GA_2020ro_mail_reject_dated %>%
-  filter(BIRTHYEAR>1995)
+  filter(BIRTHDATE>1995)
 
 write_csv(GA_2020ro_mail_reject_dated_ag, "D:/DropBox/Dropbox/Rejected_Ballots/GA_RO/GA_RO_AG_Mail_Rejected_Statewide.csv")
 
