@@ -312,7 +312,7 @@ GA_voted_race[7,4] <- sum(GA_stats$Reg.Voters)
 GA_voted_race$Frequency <- 100 * GA_voted_race$Count/GA_voted_race[7,2]
 GA_voted_race$Rate <- 100*GA_voted_race$Count/GA_voted_race$Count2
 
-colnames(GA_voted_race) <- c("Race/Ethnicity", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
+colnames(GA_voted_race) <- c("Race/Ethnicity", "Total Early Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
 
 GA_voted_age <- GA_age_shell_returned
 
@@ -339,7 +339,7 @@ GA_voted_age$Rate <- 100*GA_voted_age$Count/GA_voted_age$Count2
 
 GA_voted_age[7,5] <- NA
 
-colnames(GA_voted_age) <- c("Age", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
+colnames(GA_voted_age) <- c("Age", "Total Early Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
 
 GA_voted_voted <- voted_shell_full
 
@@ -354,7 +354,7 @@ GA_voted_voted[3,4] <- sum(GA_stats$Reg.Voters)
 GA_voted_voted$Frequency <- 100 * GA_voted_voted$Count/GA_voted_voted[3,2]
 GA_voted_voted$Rate <- 100*GA_voted_voted$Count/GA_voted_voted$Count2
 
-colnames(GA_voted_voted) <- c("2020 General Voted", "In-Person Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
+colnames(GA_voted_voted) <- c("2020 General Voted", "Total Early Votes", "Freq. Distribution", "Registered Voters", "Turnout Rate")
 
 GA_stats <- mutate(GA_stats, Mail.Req.All = Mail.Req.Tot + Mail.App.Reject.Tot)
 GA_stats <- mutate(GA_stats, Mail.Return.All = Mail.Accept.Tot + Mail.Reject.Tot)
