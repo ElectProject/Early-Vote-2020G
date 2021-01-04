@@ -12,7 +12,7 @@ library(rvest)
 # Georgia
 #######################
 
-GA_report_date <- "1/3/2020"
+GA_report_date <- "1/4/2020"
 
 # Start here if already concatenated county files
 
@@ -20,6 +20,7 @@ GA_2020ro <- read_csv("D:/DropBox/Dropbox/Mail_Ballots_2020/GA/2020RO/STATEWIDE.
 
 names(GA_2020ro)<-str_replace_all(names(GA_2020ro), c(" " = "."))
 names(GA_2020ro)<-str_replace_all(names(GA_2020ro), c("#" = ""))
+names(GA_2020ro)<-str_replace_all(names(GA_2020ro), c("/" = "."))
 
 GA_2020ro <- GA_2020ro %>%
   rename(REGISTRATION_NUMBER = Voter.Registration.)
@@ -452,7 +453,7 @@ GA_2020ro_inperson_accept_county_ageunk <- GA_2020ro_inperson_accept %>%
 
 GA_2020ro_mail_reject <- GA_2020ro %>%
   filter(Ballot.Style == "MAILED"|Ballot.Style == "ELECTRONIC") %>%
-  filter(Ballot.Status == "R")
+  filter(Ballot.Status == "R"|(County == "GWINNETT" & Challenged.Provisional == "YES"))
 
 # de-dupe
 
@@ -495,7 +496,7 @@ GA_2020ro_mail_reject_prior_list <- GA_2020ro_mail_reject_prior %>%
 GA_2020ro_mail_reject_unique_new <- left_join(GA_2020ro_mail_reject_unique, GA_2020ro_mail_reject_prior_list, by = "REGISTRATION_NUMBER")
 
 GA_2020ro_mail_reject_unique_new <- GA_2020ro_mail_reject_unique_new %>%
-  filter(is.na(prior)) %>%
+#  filter(is.na(prior)) %>%
   select(-prior) %>%
   select(-voted) 
 
@@ -507,7 +508,10 @@ GA_2020ro_mail_reject_dated <- rbind(GA_2020ro_mail_reject_prior, GA_2020ro_mail
 GA_2020ro_voted <- GA_2020ro_voted %>%
   rename(cured = voted)
 
-GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_dated, GA_2020ro_voted, by = "REGISTRATION_NUMBER")
+# GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_dated, GA_2020ro_voted, by = "REGISTRATION_NUMBER")
+
+GA_2020ro_mail_reject_dated <- left_join(GA_2020ro_mail_reject_unique_new, GA_2020ro_voted, by = "REGISTRATION_NUMBER")
+
 
 # write files
 
