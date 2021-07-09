@@ -467,7 +467,7 @@ kable(GA_voted_race, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-#### Total Voted by by Age
+#### Total Voted by Age
 
 ``` {r echo = FALSE}
 kable(GA_voted_age, format.args = list(big.mark = ",", 
@@ -475,7 +475,7 @@ kable(GA_voted_age, format.args = list(big.mark = ",",
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
 ```
 
-#### Total Voted by by Gender
+#### Total Voted by Gender
 
 ``` {r echo = FALSE}
 kable(GA_voted_gender, format.args = list(big.mark = ",", 
